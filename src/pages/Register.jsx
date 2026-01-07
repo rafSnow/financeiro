@@ -3,9 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import { getAuthErrorMessage, register } from '../services/auth.service';
+import { useAuthStore } from '../store/authStore';
 
 const Register = () => {
   const navigate = useNavigate();
+  const { setUser } = useAuthStore();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -79,7 +81,8 @@ const Register = () => {
 
     setLoading(true);
     try {
-      await register(formData.email, formData.password, formData.name, formData.salary);
+      const userData = await register(formData.email, formData.password, formData.name, formData.salary);
+      setUser(userData);
       navigate('/dashboard');
     } catch (error) {
       setErrors({
@@ -147,7 +150,10 @@ const Register = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="mt-8">
-          <div className="bg-white shadow-lg rounded-2xl flex flex-col gap-6" style={{ padding: '2rem' }}>
+          <div
+            className="bg-white shadow-lg rounded-2xl flex flex-col gap-6"
+            style={{ padding: '2rem' }}
+          >
             {errors.general && (
               <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
                 {errors.general}

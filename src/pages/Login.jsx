@@ -3,9 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import { getAuthErrorMessage, login, resetPassword } from '../services/auth.service';
+import { useAuthStore } from '../store/authStore';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { setUser } = useAuthStore();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -59,7 +61,8 @@ const Login = () => {
 
     setLoading(true);
     try {
-      await login(formData.email, formData.password);
+      const userData = await login(formData.email, formData.password);
+      setUser(userData);
       navigate('/dashboard');
     } catch (error) {
       setErrors({
@@ -133,7 +136,10 @@ const Login = () => {
           </div>
 
           <form onSubmit={handleResetPassword} className="mt-8">
-            <div className="bg-white shadow-lg rounded-2xl flex flex-col gap-6" style={{ padding: '2rem' }}>
+            <div
+              className="bg-white shadow-lg rounded-2xl flex flex-col gap-6"
+              style={{ padding: '2rem' }}
+            >
               <Input
                 label="Email"
                 type="email"
@@ -179,7 +185,10 @@ const Login = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="mt-8">
-          <div className="bg-white shadow-lg rounded-2xl flex flex-col gap-6" style={{ padding: '2rem' }}>
+          <div
+            className="bg-white shadow-lg rounded-2xl flex flex-col gap-6"
+            style={{ padding: '2rem' }}
+          >
             {errors.general && (
               <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
                 {errors.general}
