@@ -14,9 +14,9 @@ Gerenciamento de estado global com Zustand.
 ```javascript
 import { create } from 'zustand';
 
-export const useAuthStore = create((set) => ({
+export const useAuthStore = create(set => ({
   user: null,
-  setUser: (user) => set({ user }),
-  clearUser: () => set({ user: null })
+  setUser: user => set({ user }),
+  clearUser: () => set({ user: null }),
 }));
 ```

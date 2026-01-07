@@ -44,12 +44,14 @@ src/
 ## 🎯 Funcionalidades
 
 ### Fase 1 - MVP (Atual)
+
 - ✅ Autenticação (Login/Cadastro)
 - 🚧 Controle de despesas
 - 🚧 Gerenciamento de dívidas
 - 🚧 Dashboard com visão geral
 
 ### Fase 2 - Essenciais
+
 - ⏳ Método Bola de Neve
 - ⏳ Simulador de quitação
 - ⏳ Sistema de metas
@@ -57,12 +59,14 @@ src/
 - ⏳ PWA (Progressive Web App)
 
 ### Fase 3 - Automação
+
 - ⏳ Importação de extratos (OFX/CSV)
 - ⏳ Categorização automática com IA
 - ⏳ Notificações push
 - ⏳ Insights automáticos
 
 ### Fase 4 - Avançado
+
 - ⏳ Open Finance
 - ⏳ Controle de investimentos
 - ⏳ Modo família
@@ -95,11 +99,11 @@ MIT
 
 ## 👨‍💻 Desenvolvimento
 
-Sprint atual: **Sprint 1 - Setup + Autenticação**  
+Sprint atual: **Sprint 1 - Setup + Autenticação**
 Veja a documentação completa em `../financeiro-docs/`
 
 ---
 
-**Status:** 🚧 Em desenvolvimento  
-**Versão:** 0.1.0  
+**Status:** 🚧 Em desenvolvimento
+**Versão:** 0.1.0
 **Última atualização:** 07/01/2026

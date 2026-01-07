@@ -16,7 +16,7 @@ Serviços para comunicação com APIs e Firebase.
 import { db } from './firebase';
 import { collection, addDoc } from 'firebase/firestore';
 
-export const createExpense = async (data) => {
+export const createExpense = async data => {
   const docRef = await addDoc(collection(db, 'expenses'), data);
   return docRef.id;
 };
