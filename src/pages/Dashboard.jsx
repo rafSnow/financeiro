@@ -1,6 +1,6 @@
-import { useAuthStore } from '../store/authStore';
-import Header from '../components/Header';
 import BottomNav from '../components/BottomNav';
+import Header from '../components/Header';
+import { useAuthStore } from '../store/authStore';
 
 /**
  * Página do Dashboard
@@ -13,9 +13,16 @@ const Dashboard = () => {
   const summaryCards = [
     {
       title: 'Renda do Mês',
-      value: user?.salary ? `R$ ${user.salary.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : 'R$ 0,00',
+      value: user?.salary
+        ? `R$ ${user.salary.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
+        : 'R$ 0,00',
       icon: (
-        <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg
+          className="w-8 h-8 text-green-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -43,9 +50,16 @@ const Dashboard = () => {
     },
     {
       title: 'Saldo Disponível',
-      value: user?.salary ? `R$ ${user.salary.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : 'R$ 0,00',
+      value: user?.salary
+        ? `R$ ${user.salary.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
+        : 'R$ 0,00',
       icon: (
-        <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg
+          className="w-8 h-8 text-blue-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -60,7 +74,12 @@ const Dashboard = () => {
       title: 'Total de Dívidas',
       value: 'R$ 0,00',
       icon: (
-        <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg
+          className="w-8 h-8 text-yellow-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -77,7 +96,7 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gray-50 pb-20 lg:pb-0">
       <Header />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="w-full px-4 sm:px-6 lg:px-8 py-8">
         {/* Boas-vindas */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-gray-900">
