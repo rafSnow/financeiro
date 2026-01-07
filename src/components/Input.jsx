@@ -39,7 +39,7 @@ const Input = ({
       )}
       <div className="relative">
         {icon && (
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
             {icon}
           </div>
         )}
@@ -52,9 +52,10 @@ const Input = ({
           placeholder={placeholder}
           required={required}
           disabled={disabled}
+          style={icon ? { paddingLeft: '2.5rem' } : {}}
           className={`
-            w-full px-4 py-3 rounded-lg border transition-all duration-200
-            ${icon ? 'pl-10' : ''}
+            w-full rounded-lg border transition-all duration-200
+            ${icon ? 'pr-4 py-3' : 'px-4 py-3'}
             ${
               error
                 ? 'border-red-500 focus:ring-red-500 focus:border-red-500'

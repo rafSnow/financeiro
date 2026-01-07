@@ -1,11 +1,12 @@
 # ✅ Dia 3 - Sprint 1 - CONCLUÍDO
 
-**Data:** 07/01/2026  
+**Data:** 07/01/2026
 **Objetivo:** Implementar telas de Login e Cadastro
 
 ## 📦 Componentes Criados
 
 ### 1. Button Component ([src/components/Button.jsx](../src/components/Button.jsx))
+
 - ✅ Componente reutilizável com 3 variantes:
   - `primary` - Azul (ações principais)
   - `secondary` - Cinza (ações secundárias)
@@ -16,10 +17,11 @@
 - ✅ Classes Tailwind CSS customizáveis
 
 ### 2. Input Component ([src/components/Input.jsx](../src/components/Input.jsx))
+
 - ✅ Componente reutilizável de input
 - ✅ Suporte a ícones (SVG icons)
 - ✅ Estados de erro com mensagem
-- ✅ Label com indicador de campo obrigatório (*)
+- ✅ Label com indicador de campo obrigatório (\*)
 - ✅ Tipos suportados: text, email, password, number, tel
 - ✅ Focus states com ring azul/vermelho
 - ✅ Disabled state
@@ -30,6 +32,7 @@
 ### 3. Login Page ([src/pages/Login.jsx](../src/pages/Login.jsx))
 
 **Funcionalidades:**
+
 - ✅ Formulário de login (email + senha)
 - ✅ Validação client-side:
   - Email obrigatório e formato válido
@@ -44,12 +47,14 @@
 - ✅ Design responsivo
 
 **Ícones SVG:**
+
 - Email icon
 - Lock icon
 
 ### 4. Register Page ([src/pages/Register.jsx](../src/pages/Register.jsx))
 
 **Funcionalidades:**
+
 - ✅ Formulário de cadastro completo:
   - Nome completo
   - Email
@@ -71,6 +76,7 @@
 - ✅ Design responsivo
 
 **Ícones SVG:**
+
 - User icon
 - Email icon
 - Lock icon
@@ -79,6 +85,7 @@
 ## 🎨 Estilos e Design
 
 ### 5. CSS Global Atualizado ([src/index.css](../src/index.css))
+
 - ✅ Fonte Inter importada do Google Fonts
 - ✅ Design System implementado:
   - Variáveis CSS para cores
@@ -88,6 +95,7 @@
 - ✅ Background cinza claro (#f9fafb)
 
 ### 6. Roteamento ([src/App.jsx](../src/App.jsx))
+
 - ✅ React Router configurado
 - ✅ Rotas implementadas:
   - `/` - Redirect para /login
@@ -96,6 +104,7 @@
 - ✅ Preparado para rotas protegidas (Dia 4)
 
 ## 📦 Dependências Instaladas
+
 - ✅ `prop-types` - Validação de props dos componentes
 
 ## 🎯 Funcionalidades Testadas
@@ -147,6 +156,7 @@
 ## 📸 Páginas Implementadas
 
 - **Login**: `/login`
+
   - Email + Senha
   - Esqueci minha senha
   - Link para cadastro
@@ -158,7 +168,7 @@
 
 ---
 
-**Status:** ✅ CONCLUÍDO  
-**Tempo estimado:** 4-6 horas  
-**Tempo real:** Concluído conforme planejado  
+**Status:** ✅ CONCLUÍDO
+**Tempo estimado:** 4-6 horas
+**Tempo real:** Concluído conforme planejado
 **Próximo:** Dia 4 - Dashboard e Navegação
