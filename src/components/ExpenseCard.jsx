@@ -1,0 +1,107 @@
+import PropTypes from 'prop-types';
+import { formatCurrency, formatDate, getCategoryById } from '../utils/constants';
+
+/**
+ * Card de despesa
+ * Exibe informações de uma despesa com ações de editar/excluir
+ */
+const ExpenseCard = ({ expense, onEdit, onDelete }) => {
+  const category = getCategoryById(expense.category);
+
+  return (
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+      <div className="flex items-start gap-4" style={{ padding: '1rem' }}>
+        {/* Ícone da categoria */}
+        <div
+          className="flex items-center justify-center w-12 h-12 rounded-xl shrink-0"
+          style={{ backgroundColor: category.color + '20' }}
+        >
+          <span className="text-2xl">{category.icon}</span>
+        </div>
+
+        {/* Informações */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-start justify-between gap-2">
+            <div className="flex-1 min-w-0">
+              <h3 className="font-semibold text-gray-900 truncate">{expense.description}</h3>
+              <div className="flex items-center gap-2 mt-1">
+                <span className="text-sm text-gray-500">{category.name}</span>
+                {expense.isFixed && (
+                  <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                    Fixa
+                  </span>
+                )}
+              </div>
+            </div>
+            <div className="text-right shrink-0">
+              <p className="text-lg font-bold text-gray-900">{formatCurrency(expense.amount)}</p>
+              <p className="text-xs text-gray-500 mt-1">{formatDate(expense.date)}</p>
+            </div>
+          </div>
+
+          {/* Forma de pagamento */}
+          {expense.paymentMethod && (
+            <div className="mt-2">
+              <span className="text-xs text-gray-500">
+                {expense.paymentMethod === 'dinheiro' && '💵 Dinheiro'}
+                {expense.paymentMethod === 'debito' && '💳 Débito'}
+                {expense.paymentMethod === 'credito' && '💳 Crédito'}
+                {expense.paymentMethod === 'pix' && '📱 PIX'}
+                {expense.paymentMethod === 'transferencia' && '🏦 Transferência'}
+                {expense.paymentMethod === 'boleto' && '📄 Boleto'}
+              </span>
+            </div>
+          )}
+
+          {/* Ações */}
+          <div className="flex items-center gap-2 mt-3">
+            <button
+              onClick={() => onEdit(expense)}
+              className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                />
+              </svg>
+              Editar
+            </button>
+            <button
+              onClick={() => onDelete(expense)}
+              className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                />
+              </svg>
+              Excluir
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+ExpenseCard.propTypes = {
+  expense: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    amount: PropTypes.number.isRequired,
+    date: PropTypes.any.isRequired,
+    category: PropTypes.string.isRequired,
+    paymentMethod: PropTypes.string,
+    isFixed: PropTypes.bool,
+  }).isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+};
+
+export default ExpenseCard;
