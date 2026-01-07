@@ -17,15 +17,15 @@ const Login = () => {
   const [resetLoading, setResetLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
+    setFormData(prev => ({
       ...prev,
       [name]: value,
     }));
     // Limpar erro do campo ao digitar
     if (errors[name]) {
-      setErrors((prev) => ({
+      setErrors(prev => ({
         ...prev,
         [name]: '',
       }));
@@ -49,7 +49,7 @@ const Login = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     setSuccessMessage('');
 
@@ -70,7 +70,7 @@ const Login = () => {
     }
   };
 
-  const handleResetPassword = async (e) => {
+  const handleResetPassword = async e => {
     e.preventDefault();
     if (!resetEmail) {
       setErrors({ reset: 'Digite seu email' });
@@ -140,7 +140,7 @@ const Login = () => {
                 name="resetEmail"
                 placeholder="seu@email.com"
                 value={resetEmail}
-                onChange={(e) => setResetEmail(e.target.value)}
+                onChange={e => setResetEmail(e.target.value)}
                 error={errors.reset}
                 icon={<EmailIcon />}
                 required
