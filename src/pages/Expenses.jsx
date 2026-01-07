@@ -1,8 +1,15 @@
 import { useEffect, useState } from 'react';
 import BottomNav from '../components/BottomNav';
 import ExpenseCard from '../components/ExpenseCard';
+import ExpenseForm from '../components/ExpenseForm';
 import Header from '../components/Header';
-import { getExpenses } from '../services/expenses.service';
+import Modal from '../components/Modal';
+import {
+  createExpense,
+  deleteExpense,
+  getExpenses,
+  updateExpense,
+} from '../services/expenses.service';
 import { useAuthStore } from '../store/authStore';
 import { useExpensesStore } from '../store/expensesStore';
 import {
@@ -32,6 +39,10 @@ const Expenses = () => {
   } = useExpensesStore();
 
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [selectedExpense, setSelectedExpense] = useState(null);
+  const [formLoading, setFormLoading] = useState(false);
 
   // Carregar despesas ao montar o componente
   useEffect(() => {
@@ -53,13 +64,76 @@ const Expenses = () => {
   }, [currentMonth, currentYear, user, setExpenses, setLoading]);
 
   const handleEdit = expense => {
-    // TODO: Implementar modal de edição no Dia 2
-    console.log('Editar despesa:', expense);
+    setSelectedExpense(expense);
+    setIsFormOpen(true);
   };
 
   const handleDelete = expense => {
-    // TODO: Implementar modal de confirmação no Dia 2
-    console.log('Excluir despesa:', expense);
+    setSelectedExpense(expense);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleNewExpense = () => {
+    setSelectedExpense(null);
+    setIsFormOpen(true);
+  };
+
+  const handleCloseForm = () => {
+    setIsFormOpen(false);
+    setSelectedExpense(null);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+    setSelectedExpense(null);
+  };
+
+  const handleSubmitForm = async data => {
+    if (!user?.uid) return;
+
+    setFormLoading(true);
+    try {
+      if (selectedExpense) {
+        // Editar despesa existente
+        await updateExpense(selectedExpense.id, data);
+      } else {
+        // Criar nova despesa
+        await createExpense(user.uid, data);
+      }
+
+      // Recarregar lista
+      const updatedExpenses = await getExpenses(user.uid, currentMonth, currentYear);
+      setExpenses(updatedExpenses);
+
+      // Fechar modal
+      handleCloseForm();
+    } catch (error) {
+      console.error('Erro ao salvar despesa:', error);
+      alert('Erro ao salvar despesa. Tente novamente.');
+    } finally {
+      setFormLoading(false);
+    }
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!selectedExpense || !user?.uid) return;
+
+    setFormLoading(true);
+    try {
+      await deleteExpense(selectedExpense.id);
+
+      // Recarregar lista
+      const updatedExpenses = await getExpenses(user.uid, currentMonth, currentYear);
+      setExpenses(updatedExpenses);
+
+      // Fechar modal
+      handleCloseDeleteModal();
+    } catch (error) {
+      console.error('Erro ao excluir despesa:', error);
+      alert('Erro ao excluir despesa. Tente novamente.');
+    } finally {
+      setFormLoading(false);
+    }
   };
 
   const handlePreviousMonth = () => {
@@ -103,7 +177,10 @@ const Expenses = () => {
               <p className="text-gray-600 mt-1">Gerencie seus gastos mensais</p>
             </div>
 
-            <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+            <button
+              onClick={handleNewExpense}
+              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+            >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
@@ -285,6 +362,71 @@ const Expenses = () => {
       </main>
 
       <BottomNav />
+
+      {/* Modal de formulário */}
+      <Modal
+        isOpen={isFormOpen}
+        onClose={handleCloseForm}
+        title={selectedExpense ? 'Editar Despesa' : 'Nova Despesa'}
+        size="lg"
+      >
+        <ExpenseForm
+          expense={selectedExpense}
+          onSubmit={handleSubmitForm}
+          onCancel={handleCloseForm}
+          loading={formLoading}
+        />
+      </Modal>
+
+      {/* Modal de confirmação de exclusão */}
+      <Modal
+        isOpen={isDeleteModalOpen}
+        onClose={handleCloseDeleteModal}
+        title="Excluir Despesa"
+        size="sm"
+      >
+        <div className="text-center">
+          <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg
+              className="w-6 h-6 text-red-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+              />
+            </svg>
+          </div>
+          <p className="text-gray-700 mb-6">
+            Tem certeza que deseja excluir esta despesa?
+            {selectedExpense && (
+              <span className="block mt-2 font-semibold text-gray-900">
+                {selectedExpense.description} - {formatCurrency(selectedExpense.amount)}
+              </span>
+            )}
+          </p>
+          <div className="flex gap-3">
+            <button
+              onClick={handleCloseDeleteModal}
+              disabled={formLoading}
+              className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50"
+            >
+              Cancelar
+            </button>
+            <button
+              onClick={handleConfirmDelete}
+              disabled={formLoading}
+              className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50"
+            >
+              {formLoading ? 'Excluindo...' : 'Excluir'}
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };
