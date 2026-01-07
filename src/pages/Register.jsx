@@ -81,7 +81,12 @@ const Register = () => {
 
     setLoading(true);
     try {
-      const userData = await register(formData.email, formData.password, formData.name, formData.salary);
+      const userData = await register(
+        formData.email,
+        formData.password,
+        formData.name,
+        formData.salary
+      );
       setUser(userData);
       navigate('/dashboard');
     } catch (error) {
