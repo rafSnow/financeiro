@@ -45,22 +45,22 @@ service cloud.firestore {
     match /users/{userId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
-    
+
     // Despesas
     match /expenses/{expenseId} {
-      allow read, write: if request.auth != null && 
+      allow read, write: if request.auth != null &&
                            resource.data.userId == request.auth.uid;
     }
-    
+
     // Dívidas
     match /debts/{debtId} {
-      allow read, write: if request.auth != null && 
+      allow read, write: if request.auth != null &&
                            resource.data.userId == request.auth.uid;
     }
-    
+
     // Metas
     match /goals/{goalId} {
-      allow read, write: if request.auth != null && 
+      allow read, write: if request.auth != null &&
                            resource.data.userId == request.auth.uid;
     }
   }
@@ -83,12 +83,12 @@ Você verá algo assim:
 
 ```javascript
 const firebaseConfig = {
-  apiKey: "AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-  authDomain: "financeiro-app-xxxxx.firebaseapp.com",
-  projectId: "financeiro-app-xxxxx",
-  storageBucket: "financeiro-app-xxxxx.appspot.com",
-  messagingSenderId: "123456789012",
-  appId: "1:123456789012:web:abcdef1234567890"
+  apiKey: 'AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+  authDomain: 'financeiro-app-xxxxx.firebaseapp.com',
+  projectId: 'financeiro-app-xxxxx',
+  storageBucket: 'financeiro-app-xxxxx.appspot.com',
+  messagingSenderId: '123456789012',
+  appId: '1:123456789012:web:abcdef1234567890',
 };
 ```
 
@@ -190,6 +190,7 @@ Abra o console do navegador (F12) e verifique se não há erros de conexão com 
 ### Erro: "Firebase: Error (auth/...)"
 
 Verifique se:
+
 - As credenciais no `.env.local` estão corretas
 - O Authentication está habilitado no Firebase Console
 - O servidor de desenvolvimento foi reiniciado após criar `.env.local`

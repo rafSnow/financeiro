@@ -1,11 +1,11 @@
 import {
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
-  sendPasswordResetEmail,
   updateProfile,
 } from 'firebase/auth';
-import { doc, setDoc, getDoc, Timestamp } from 'firebase/firestore';
+import { doc, getDoc, setDoc, Timestamp } from 'firebase/firestore';
 import { auth, db } from './firebase';
 
 /**
@@ -94,7 +94,7 @@ export const logout = async () => {
  * @param {string} email - Email do usuário
  * @returns {Promise<void>}
  */
-export const resetPassword = async (email) => {
+export const resetPassword = async email => {
   try {
     await sendPasswordResetEmail(auth, email);
   } catch (error) {
@@ -108,7 +108,7 @@ export const resetPassword = async (email) => {
  * @param {string} errorCode - Código de erro do Firebase
  * @returns {string} Mensagem de erro amigável
  */
-export const getAuthErrorMessage = (errorCode) => {
+export const getAuthErrorMessage = errorCode => {
   const errorMessages = {
     'auth/email-already-in-use': 'Este email já está cadastrado.',
     'auth/invalid-email': 'Email inválido.',
