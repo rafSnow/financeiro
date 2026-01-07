@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import Dashboard from './pages/Dashboard';
+import Debts from './pages/Debts';
 import Expenses from './pages/Expenses';
 import Income from './pages/Income';
 import Login from './pages/Login';
@@ -43,10 +44,7 @@ function App() {
           path="/debts"
           element={
             <PrivateRoute>
-              <div className="p-8 text-center">
-                <h1 className="text-2xl font-bold">Dívidas</h1>
-                <p className="text-gray-600 mt-2">Em desenvolvimento...</p>
-              </div>
+              <Debts />
             </PrivateRoute>
           }
         />
