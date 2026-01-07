@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { logout } from '../services/auth.service';
 import { useAuthStore } from '../store/authStore';
 
@@ -8,6 +8,7 @@ import { useAuthStore } from '../store/authStore';
  */
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, clearUser } = useAuthStore();
 
   const handleLogout = async () => {
@@ -20,14 +21,43 @@ const Header = () => {
     }
   };
 
+  const navItems = [
+    { path: '/dashboard', label: 'Dashboard', icon: '🏠' },
+    { path: '/expenses', label: 'Despesas', icon: '💸' },
+    { path: '/debts', label: 'Dívidas', icon: '🔴' },
+    { path: '/reports', label: 'Relatórios', icon: '📊' },
+  ];
+
+  const isActive = path => location.pathname === path;
+
   return (
     <header className="bg-white shadow-sm border-b border-gray-200">
       <div style={{ maxWidth: '80rem', margin: '0 auto', padding: '0 1rem' }}>
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex items-center gap-2">
-            <span className="text-2xl">💰</span>
-            <h1 className="text-xl font-bold text-blue-600">FinanceiroApp</h1>
+          <div className="flex items-center gap-8">
+            <div className="flex items-center gap-2">
+              <span className="text-2xl">💰</span>
+              <h1 className="text-xl font-bold text-blue-600">FinanceiroApp</h1>
+            </div>
+
+            {/* Navegação Desktop */}
+            <nav className="hidden lg:flex items-center gap-1">
+              {navItems.map(item => (
+                <button
+                  key={item.path}
+                  onClick={() => navigate(item.path)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
+                    isActive(item.path)
+                      ? 'bg-blue-600 text-white'
+                      : 'text-gray-700 hover:bg-gray-100'
+                  }`}
+                >
+                  <span>{item.icon}</span>
+                  <span>{item.label}</span>
+                </button>
+              ))}
+            </nav>
           </div>
 
           {/* User info e logout */}

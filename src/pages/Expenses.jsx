@@ -118,13 +118,21 @@ const Expenses = () => {
         </div>
 
         {/* Seletor de mês */}
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-100" style={{ marginBottom: '2rem' }}>
+        <div
+          className="bg-white rounded-2xl shadow-lg border border-gray-100"
+          style={{ marginBottom: '2rem' }}
+        >
           <div className="flex items-center justify-between" style={{ padding: '1.5rem' }}>
             <button
               onClick={handlePreviousMonth}
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
-              <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="w-6 h-6 text-gray-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -145,7 +153,12 @@ const Expenses = () => {
               onClick={handleNextMonth}
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
-              <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="w-6 h-6 text-gray-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -159,7 +172,10 @@ const Expenses = () => {
 
         {/* Total por categoria */}
         {Object.keys(totalByCategory).length > 0 && (
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-4" style={{ marginBottom: '2rem' }}>
+          <div
+            className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-4"
+            style={{ marginBottom: '2rem' }}
+          >
             {Object.entries(totalByCategory).map(([categoryId, amount]) => {
               const category = getCategoryById(categoryId);
               return (
@@ -169,7 +185,7 @@ const Expenses = () => {
                   style={{ padding: '1.5rem' }}
                 >
                   <div className="flex items-center gap-2" style={{ marginBottom: '0.75rem' }}>
-                    <div 
+                    <div
                       className="w-10 h-10 rounded-xl flex items-center justify-center"
                       style={{ backgroundColor: category.color + '20' }}
                     >
@@ -186,7 +202,10 @@ const Expenses = () => {
 
         {/* Filtros */}
         <div style={{ marginBottom: '2rem' }}>
-          <div className="flex items-center gap-2 overflow-x-auto pb-2" style={{ scrollbarWidth: 'thin' }}>
+          <div
+            className="flex items-center gap-2 overflow-x-auto pb-2"
+            style={{ scrollbarWidth: 'thin' }}
+          >
             <button
               onClick={() => setSelectedCategory('all')}
               className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-all shadow-sm ${
@@ -220,7 +239,10 @@ const Expenses = () => {
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
             </div>
           ) : filteredExpenses.length === 0 ? (
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 text-center" style={{ padding: '3rem' }}>
+            <div
+              className="bg-white rounded-2xl shadow-lg border border-gray-100 text-center"
+              style={{ padding: '3rem' }}
+            >
               <svg
                 className="w-16 h-16 text-gray-400 mx-auto"
                 style={{ marginBottom: '1rem' }}
@@ -235,7 +257,10 @@ const Expenses = () => {
                   d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
                 />
               </svg>
-              <h3 className="text-lg font-semibold text-gray-900" style={{ marginBottom: '0.5rem' }}>
+              <h3
+                className="text-lg font-semibold text-gray-900"
+                style={{ marginBottom: '0.5rem' }}
+              >
                 Nenhuma despesa
               </h3>
               <p className="text-gray-600">
