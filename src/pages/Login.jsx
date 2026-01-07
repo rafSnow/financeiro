@@ -133,7 +133,7 @@ const Login = () => {
           </div>
 
           <form onSubmit={handleResetPassword} className="mt-8">
-            <div className="bg-white shadow-md rounded-lg p-6 flex flex-col gap-4">
+            <div className="bg-white shadow-lg rounded-2xl p-8 flex flex-col gap-6">
               <Input
                 label="Email"
                 type="email"
@@ -179,7 +179,7 @@ const Login = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="mt-8">
-          <div className="bg-white shadow-md rounded-lg p-6 flex flex-col gap-4">
+          <div className="bg-white shadow-lg rounded-2xl p-8 flex flex-col gap-6">
             {errors.general && (
               <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
                 {errors.general}
@@ -217,11 +217,11 @@ const Login = () => {
               required
             />
 
-            <div className="flex items-center justify-end">
+            <div className="flex items-center justify-end -mt-2">
               <button
                 type="button"
                 onClick={() => setShowResetPassword(true)}
-                className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                className="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors"
               >
                 Esqueci minha senha
               </button>
@@ -232,7 +232,7 @@ const Login = () => {
             </Button>
           </div>
 
-          <div className="text-center">
+          <div className="text-center mt-6">
             <p className="text-sm text-gray-600">
               Não tem uma conta?{' '}
               <Link to="/register" className="text-blue-600 hover:text-blue-700 font-medium">

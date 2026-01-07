@@ -147,7 +147,7 @@ const Register = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="mt-8">
-          <div className="bg-white shadow-md rounded-lg p-6 flex flex-col gap-4">
+          <div className="bg-white shadow-lg rounded-2xl p-8 flex flex-col gap-6">
             {errors.general && (
               <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
                 {errors.general}
@@ -230,7 +230,7 @@ const Register = () => {
             </Button>
           </div>
 
-          <div className="text-center">
+          <div className="text-center mt-6">
             <p className="text-sm text-gray-600">
               Já tem uma conta?{' '}
               <Link to="/login" className="text-blue-600 hover:text-blue-700 font-medium">
