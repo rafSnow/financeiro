@@ -147,7 +147,7 @@ const Register = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="mt-8">
-          <div className="bg-white shadow-lg rounded-2xl p-8 flex flex-col gap-6">
+          <div className="bg-white shadow-lg rounded-2xl flex flex-col gap-6" style={{ padding: '2rem' }}>
             {errors.general && (
               <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
                 {errors.general}
