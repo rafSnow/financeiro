@@ -9,11 +9,11 @@ const ExpenseCard = ({ expense, onEdit, onDelete }) => {
   const category = getCategoryById(expense.category);
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
-      <div className="flex items-start gap-4" style={{ padding: '1rem' }}>
+    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all">
+      <div className="flex items-start gap-4" style={{ padding: '1.5rem' }}>
         {/* Ícone da categoria */}
         <div
-          className="flex items-center justify-center w-12 h-12 rounded-xl shrink-0"
+          className="flex items-center justify-center w-14 h-14 rounded-xl shrink-0"
           style={{ backgroundColor: category.color + '20' }}
         >
           <span className="text-2xl">{category.icon}</span>
@@ -23,26 +23,30 @@ const ExpenseCard = ({ expense, onEdit, onDelete }) => {
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-2">
             <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-gray-900 truncate">{expense.description}</h3>
-              <div className="flex items-center gap-2 mt-1">
-                <span className="text-sm text-gray-500">{category.name}</span>
+              <h3 className="font-semibold text-gray-900 truncate text-base">
+                {expense.description}
+              </h3>
+              <div className="flex items-center gap-2" style={{ marginTop: '0.25rem' }}>
+                <span className="text-sm text-gray-600">{category.name}</span>
                 {expense.isFixed && (
-                  <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-blue-100 text-blue-800">
                     Fixa
                   </span>
                 )}
               </div>
             </div>
             <div className="text-right shrink-0">
-              <p className="text-lg font-bold text-gray-900">{formatCurrency(expense.amount)}</p>
-              <p className="text-xs text-gray-500 mt-1">{formatDate(expense.date)}</p>
+              <p className="text-xl font-bold text-gray-900">{formatCurrency(expense.amount)}</p>
+              <p className="text-xs text-gray-500" style={{ marginTop: '0.25rem' }}>
+                {formatDate(expense.date)}
+              </p>
             </div>
           </div>
 
           {/* Forma de pagamento */}
           {expense.paymentMethod && (
-            <div className="mt-2">
-              <span className="text-xs text-gray-500">
+            <div style={{ marginTop: '0.75rem' }}>
+              <span className="text-sm text-gray-600">
                 {expense.paymentMethod === 'dinheiro' && '💵 Dinheiro'}
                 {expense.paymentMethod === 'debito' && '💳 Débito'}
                 {expense.paymentMethod === 'credito' && '💳 Crédito'}
@@ -54,10 +58,10 @@ const ExpenseCard = ({ expense, onEdit, onDelete }) => {
           )}
 
           {/* Ações */}
-          <div className="flex items-center gap-2 mt-3">
+          <div className="flex items-center gap-2" style={{ marginTop: '1rem' }}>
             <button
               onClick={() => onEdit(expense)}
-              className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+              className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
@@ -71,7 +75,7 @@ const ExpenseCard = ({ expense, onEdit, onDelete }) => {
             </button>
             <button
               onClick={() => onDelete(expense)}
-              className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+              className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
