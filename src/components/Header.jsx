@@ -24,6 +24,7 @@ const Header = () => {
   const navItems = [
     { path: '/dashboard', label: 'Dashboard', icon: '🏠' },
     { path: '/expenses', label: 'Despesas', icon: '💸' },
+    { path: '/income', label: 'Rendas', icon: '💰' },
     { path: '/debts', label: 'Dívidas', icon: '🔴' },
     { path: '/reports', label: 'Relatórios', icon: '📊' },
   ];

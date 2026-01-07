@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import Dashboard from './pages/Dashboard';
 import Expenses from './pages/Expenses';
+import Income from './pages/Income';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
@@ -27,6 +28,14 @@ function App() {
           element={
             <PrivateRoute>
               <Expenses />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/income"
+          element={
+            <PrivateRoute>
+              <Income />
             </PrivateRoute>
           }
         />
