@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 
 /**
  * Componente de Confetti
@@ -22,7 +22,7 @@ const Confetti = ({ show, onComplete }) => {
     for (let i = 0; i < 50; i++) {
       const translateX = Math.random() * 100;
       const direction = Math.random() > 0.5 ? 1 : -1;
-      
+
       newParticles.push({
         id: i,
         left: Math.random() * 100,

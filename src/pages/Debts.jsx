@@ -28,6 +28,7 @@ import {
   sortDebtsByAvalanche,
   sortDebtsBySnowball,
 } from '../utils/debtCalculations';
+import { syncDebtGoalProgress } from '../utils/goalSync';
 
 /**
  * Página de Dívidas
@@ -209,6 +210,9 @@ const Debts = () => {
     setFormLoading(true);
     try {
       const result = await processPayment(user.uid, selectedDebt, amount, isExtra, notes);
+
+      // Sincroniza com meta de dívida (se existir)
+      await syncDebtGoalProgress(user.uid, amount);
 
       // Recarregar lista
       const updatedDebts = await getDebts(user.uid);

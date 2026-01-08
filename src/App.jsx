@@ -4,6 +4,7 @@ import ToastContainer from './components/ToastContainer';
 import Dashboard from './pages/Dashboard';
 import Debts from './pages/Debts';
 import Expenses from './pages/Expenses';
+import Goals from './pages/Goals';
 import Income from './pages/Income';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -47,6 +48,14 @@ function App() {
           element={
             <PrivateRoute>
               <Debts />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/goals"
+          element={
+            <PrivateRoute>
+              <Goals />
             </PrivateRoute>
           }
         />
