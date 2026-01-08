@@ -6,14 +6,15 @@ import DebtForm from '../components/DebtForm';
 import DebtMethodSelector from '../components/DebtMethodSelector';
 import Header from '../components/Header';
 import Modal from '../components/Modal';
+import PaymentModal from '../components/PaymentModal';
 import {
   createDebt,
   deleteDebt,
   getDebts,
-  registerPayment,
   updateDebt,
   updateDebtPriorities,
 } from '../services/debts.service';
+import { processPayment } from '../services/debtPayments.service';
 import { useAuthStore } from '../store/authStore';
 import { useDebtsStore } from '../store/debtsStore';
 import { formatCurrency } from '../utils/constants';
@@ -181,12 +182,17 @@ const Debts = () => {
     }
   };
 
-  const handleConfirmPayment = async () => {
+  const handleConfirmPayment = async ({ amount, isExtra, notes }) => {
     if (!selectedDebt || !user?.uid) return;
 
     setFormLoading(true);
     try {
-      await registerPayment(selectedDebt.id, selectedDebt.installmentValue);
+      const result = await processPayment(user.uid, selectedDebt, amount, isExtra, notes);
+
+      // Mostrar mensagem de sucesso se quitou a dívida
+      if (result.wasPaidOff) {
+        alert('🎉 Parabéns! Você quitou esta dívida!');
+      }
 
       // Recarregar lista
       const updatedDebts = await getDebts(user.uid);
@@ -195,8 +201,8 @@ const Debts = () => {
       // Fechar modal
       handleClosePaymentModal();
     } catch (error) {
-      console.error('Erro ao registrar pagamento:', error);
-      alert('Erro ao registrar pagamento. Tente novamente.');
+      console.error('Erro ao processar pagamento:', error);
+      alert('Erro ao processar pagamento. Tente novamente.');
     } finally {
       setFormLoading(false);
     }
@@ -467,66 +473,12 @@ const Debts = () => {
       </Modal>
 
       {/* Modal de pagamento */}
-      <Modal
+      <PaymentModal
         isOpen={isPaymentModalOpen}
         onClose={handleClosePaymentModal}
-        title="Registrar Pagamento"
-        size="sm"
-      >
-        <div className="text-center">
-          <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg
-              className="w-6 h-6 text-green-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-          </div>
-          {selectedDebt && (
-            <>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">{selectedDebt.name}</h3>
-              <p className="text-gray-700 mb-4">
-                Confirmar pagamento de{' '}
-                <span className="font-bold">{formatCurrency(selectedDebt.installmentValue)}</span>?
-              </p>
-              <div className="bg-gray-50 rounded-lg p-4 mb-6">
-                <div className="text-sm text-gray-600 space-y-2">
-                  <p>
-                    Restante atual:{' '}
-                    <span className="font-semibold">
-                      {formatCurrency(selectedDebt.remainingAmount)}
-                    </span>
-                  </p>
-                  <p>
-                    Após pagamento:{' '}
-                    <span className="font-semibold">
-                      {formatCurrency(selectedDebt.remainingAmount - selectedDebt.installmentValue)}
-                    </span>
-                  </p>
-                  <p>
-                    Parcela: {selectedDebt.paidInstallments + 1} de {selectedDebt.totalInstallments}
-                  </p>
-                </div>
-              </div>
-            </>
-          )}
-          <div className="flex gap-3">
-            <Button onClick={handleClosePaymentModal} variant="secondary" disabled={formLoading}>
-              Cancelar
-            </Button>
-            <Button onClick={handleConfirmPayment} variant="primary" loading={formLoading}>
-              Confirmar Pagamento
-            </Button>
-          </div>
-        </div>
-      </Modal>
+        debt={selectedDebt}
+        onConfirm={handleConfirmPayment}
+      />
     </div>
   );
 };
