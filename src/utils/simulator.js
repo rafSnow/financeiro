@@ -14,7 +14,7 @@ export const simulateDebtPayoff = (debt, extraPayment = 0) => {
   let months = 0;
   let totalInterest = 0;
   const monthlyPayment = debt.installmentValue + extraPayment;
-  
+
   // Taxa de juros mensal (convertendo taxa anual para mensal)
   const monthlyInterestRate = debt.interestRate / 12 / 100;
 
@@ -23,14 +23,14 @@ export const simulateDebtPayoff = (debt, extraPayment = 0) => {
   // Simular até quitar ou atingir 360 meses (30 anos)
   while (remaining > 0 && months < 360) {
     months++;
-    
+
     // Calcular juros do mês sobre o saldo restante
     const monthlyInterestAmount = remaining * monthlyInterestRate;
     totalInterest += monthlyInterestAmount;
 
     // Calcular quanto vai para o principal (amortização)
     const principalPayment = monthlyPayment - monthlyInterestAmount;
-    
+
     // Atualizar saldo restante
     remaining -= principalPayment;
 
@@ -49,7 +49,7 @@ export const simulateDebtPayoff = (debt, extraPayment = 0) => {
       months++;
       const lastInterest = remaining * monthlyInterestRate;
       totalInterest += lastInterest;
-      
+
       history.push({
         month: months,
         payment: remaining + lastInterest,
@@ -57,7 +57,7 @@ export const simulateDebtPayoff = (debt, extraPayment = 0) => {
         principal: remaining,
         remaining: 0,
       });
-      
+
       remaining = 0;
     }
   }
@@ -85,8 +85,12 @@ export const compareScenarios = (debt, scenarios = [0, 100, 200, 500]) => {
       months: result.months,
       totalInterest: result.totalInterest,
       totalPaid: result.totalPaid,
-      savings: scenarios[0] === extra ? 0 : simulateDebtPayoff(debt, scenarios[0]).totalInterest - result.totalInterest,
-      monthsSaved: scenarios[0] === extra ? 0 : simulateDebtPayoff(debt, scenarios[0]).months - result.months,
+      savings:
+        scenarios[0] === extra
+          ? 0
+          : simulateDebtPayoff(debt, scenarios[0]).totalInterest - result.totalInterest,
+      monthsSaved:
+        scenarios[0] === extra ? 0 : simulateDebtPayoff(debt, scenarios[0]).months - result.months,
     };
   });
 };

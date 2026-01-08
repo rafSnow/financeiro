@@ -1,7 +1,20 @@
 import PropTypes from 'prop-types';
 import { useMemo, useState } from 'react';
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
 import { formatCurrency } from '../utils/constants';
 import { calculatePayoffDate, simulateDebtPayoff } from '../utils/simulator';
+import AmortizationTable from './AmortizationTable';
 
 /**
  * Componente simulador de quitação de dívidas
@@ -14,10 +27,7 @@ const DebtSimulator = ({ debt, onClose }) => {
   const [extraPayment, setExtraPayment] = useState(0);
 
   // Calcular simulações usando useMemo para evitar recálculos desnecessários
-  const currentScenario = useMemo(
-    () => simulateDebtPayoff(debt, 0),
-    [debt]
-  );
+  const currentScenario = useMemo(() => simulateDebtPayoff(debt, 0), [debt]);
 
   const simulatedScenario = useMemo(
     () => simulateDebtPayoff(debt, extraPayment),
@@ -93,12 +103,8 @@ const DebtSimulator = ({ debt, onClose }) => {
         {/* Slider de pagamento extra */}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <label className="text-sm font-semibold text-gray-700">
-              💰 Pagamento Extra Mensal
-            </label>
-            <span className="text-lg font-bold text-blue-600">
-              {formatCurrency(extraPayment)}
-            </span>
+            <label className="text-sm font-semibold text-gray-700">💰 Pagamento Extra Mensal</label>
+            <span className="text-lg font-bold text-blue-600">{formatCurrency(extraPayment)}</span>
           </div>
 
           <input
@@ -148,9 +154,7 @@ const DebtSimulator = ({ debt, onClose }) => {
             <div className="space-y-3">
               <div>
                 <p className="text-xs text-gray-600 mb-1">Tempo de quitação</p>
-                <p className="text-xl font-bold text-gray-900">
-                  {currentScenario.months} meses
-                </p>
+                <p className="text-xl font-bold text-gray-900">{currentScenario.months} meses</p>
                 <p className="text-xs text-gray-500">{formatDate(currentPayoffDate)}</p>
               </div>
 
@@ -173,17 +177,13 @@ const DebtSimulator = ({ debt, onClose }) => {
           {/* Cenário com extra */}
           <div
             className={`border-2 rounded-xl p-4 ${
-              extraPayment > 0
-                ? 'border-green-400 bg-green-50'
-                : 'border-gray-200 bg-gray-50'
+              extraPayment > 0 ? 'border-green-400 bg-green-50' : 'border-gray-200 bg-gray-50'
             }`}
           >
             <div className="text-center mb-3">
               <span
                 className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
-                  extraPayment > 0
-                    ? 'bg-green-600 text-white'
-                    : 'bg-gray-200 text-gray-600'
+                  extraPayment > 0 ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-600'
                 }`}
               >
                 Com {formatCurrency(extraPayment)}/mês
@@ -193,9 +193,7 @@ const DebtSimulator = ({ debt, onClose }) => {
             <div className="space-y-3">
               <div>
                 <p className="text-xs text-gray-600 mb-1">Tempo de quitação</p>
-                <p className="text-xl font-bold text-gray-900">
-                  {simulatedScenario.months} meses
-                </p>
+                <p className="text-xl font-bold text-gray-900">{simulatedScenario.months} meses</p>
                 <p className="text-xs text-gray-500">{formatDate(simulatedPayoffDate)}</p>
                 {extraPayment > 0 && savings.months > 0 && (
                   <p className="text-xs font-semibold text-green-600 mt-1">
@@ -255,9 +253,7 @@ const DebtSimulator = ({ debt, onClose }) => {
 
               <div>
                 <p className="text-xs text-gray-600 mb-1">Economia Total</p>
-                <p className="text-lg font-bold text-purple-600">
-                  {formatCurrency(savings.total)}
-                </p>
+                <p className="text-lg font-bold text-purple-600">{formatCurrency(savings.total)}</p>
                 <p className="text-xs text-gray-500 mt-1">Valor total</p>
               </div>
             </div>
@@ -275,6 +271,134 @@ const DebtSimulator = ({ debt, onClose }) => {
             </div>
           </div>
         )}
+
+        {/* Gráfico de Evolução da Dívida */}
+        <div className="bg-white rounded-xl border border-gray-200 p-6">
+          <h4 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <span>📈</span>
+            <span>Evolução do Saldo Devedor</span>
+          </h4>
+          
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart
+              data={simulatedScenario.history}
+              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis
+                dataKey="month"
+                label={{ value: 'Mês', position: 'insideBottom', offset: -5 }}
+                stroke="#666"
+              />
+              <YAxis
+                tickFormatter={value => `R$ ${(value / 1000).toFixed(0)}k`}
+                stroke="#666"
+              />
+              <Tooltip
+                formatter={(value, name) => {
+                  const names = {
+                    remaining: 'Saldo Restante',
+                  };
+                  return [formatCurrency(value), names[name] || name];
+                }}
+                labelFormatter={label => `Mês ${label}`}
+              />
+              <Legend
+                formatter={value => {
+                  const names = {
+                    remaining: 'Saldo Restante',
+                  };
+                  return names[value] || value;
+                }}
+              />
+              <Line
+                type="monotone"
+                dataKey="remaining"
+                stroke="#3b82f6"
+                strokeWidth={2}
+                dot={false}
+                name="remaining"
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* Gráfico de Juros vs Principal */}
+        <div className="bg-white rounded-xl border border-gray-200 p-6">
+          <h4 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <span>💰</span>
+            <span>Composição dos Pagamentos (Juros vs Principal)</span>
+          </h4>
+          
+          <ResponsiveContainer width="100%" height={300}>
+            <AreaChart
+              data={simulatedScenario.history}
+              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis
+                dataKey="month"
+                label={{ value: 'Mês', position: 'insideBottom', offset: -5 }}
+                stroke="#666"
+              />
+              <YAxis
+                tickFormatter={value => `R$ ${value.toFixed(0)}`}
+                stroke="#666"
+              />
+              <Tooltip
+                formatter={(value, name) => {
+                  const names = {
+                    interest: 'Juros',
+                    principal: 'Principal (Amortização)',
+                  };
+                  return [formatCurrency(value), names[name] || name];
+                }}
+                labelFormatter={label => `Mês ${label}`}
+              />
+              <Legend
+                formatter={value => {
+                  const names = {
+                    interest: 'Juros',
+                    principal: 'Principal (Amortização)',
+                  };
+                  return names[value] || value;
+                }}
+              />
+              <Area
+                type="monotone"
+                dataKey="interest"
+                stackId="1"
+                stroke="#ef4444"
+                fill="#ef4444"
+                fillOpacity={0.6}
+                name="interest"
+              />
+              <Area
+                type="monotone"
+                dataKey="principal"
+                stackId="1"
+                stroke="#10b981"
+                fill="#10b981"
+                fillOpacity={0.6}
+                name="principal"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+
+          <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-red-500 rounded"></div>
+              <span className="text-gray-600">Juros: vai para o banco</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-green-500 rounded"></div>
+              <span className="text-gray-600">Principal: reduz sua dívida</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Tabela de Amortização */}
+        <AmortizationTable history={simulatedScenario.history} maxRows={12} />
       </div>
     </div>
   );
