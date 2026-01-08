@@ -9,7 +9,9 @@ import {
   Timestamp,
   updateDoc,
   where,
+  writeBatch,
 } from 'firebase/firestore';
+import { sortDebtsByAvalanche, sortDebtsBySnowball } from '../utils/debtCalculations';
 import { db } from './firebase';
 
 /**
@@ -154,6 +156,35 @@ export const registerPayment = async (debtId, amount) => {
     });
   } catch (error) {
     console.error('Erro ao registrar pagamento:', error);
+    throw error;
+  }
+};
+
+/**
+ * Atualiza as prioridades das dívidas baseado no método escolhido
+ * @param {string} userId - ID do usuário
+ * @param {string} method - Método de priorização ('snowball' ou 'avalanche')
+ * @returns {Promise<void>}
+ */
+export const updateDebtPriorities = async (userId, method = 'snowball') => {
+  try {
+    // Buscar todas as dívidas do usuário
+    const debts = await getDebts(userId);
+
+    // Ordenar dívidas de acordo com o método
+    const sorted = method === 'snowball' ? sortDebtsBySnowball(debts) : sortDebtsByAvalanche(debts);
+
+    // Atualizar prioridades no Firebase usando batch
+    const batch = writeBatch(db);
+
+    sorted.forEach(debt => {
+      const debtRef = doc(db, 'debts', debt.id);
+      batch.update(debtRef, { priority: debt.priority });
+    });
+
+    await batch.commit();
+  } catch (error) {
+    console.error('Erro ao atualizar prioridades:', error);
     throw error;
   }
 };

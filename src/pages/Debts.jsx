@@ -3,6 +3,7 @@ import BottomNav from '../components/BottomNav';
 import Button from '../components/Button';
 import DebtCard from '../components/DebtCard';
 import DebtForm from '../components/DebtForm';
+import DebtMethodSelector from '../components/DebtMethodSelector';
 import Header from '../components/Header';
 import Modal from '../components/Modal';
 import {
@@ -11,10 +12,17 @@ import {
   getDebts,
   registerPayment,
   updateDebt,
+  updateDebtPriorities,
 } from '../services/debts.service';
 import { useAuthStore } from '../store/authStore';
 import { useDebtsStore } from '../store/debtsStore';
 import { formatCurrency } from '../utils/constants';
+import {
+  getPriorityColor,
+  getPriorityIcon,
+  sortDebtsByAvalanche,
+  sortDebtsBySnowball,
+} from '../utils/debtCalculations';
 
 /**
  * Página de Dívidas
@@ -39,6 +47,8 @@ const Debts = () => {
   const [selectedDebt, setSelectedDebt] = useState(null);
   const [formLoading, setFormLoading] = useState(false);
   const [filterStatus, setFilterStatus] = useState('active');
+  const [debtMethod, setDebtMethod] = useState('snowball');
+  const [sortedDebts, setSortedDebts] = useState([]);
 
   // Carregar dívidas ao montar o componente
   useEffect(() => {
@@ -58,6 +68,35 @@ const Debts = () => {
 
     loadDebts();
   }, [user, setDebts, setLoading]);
+
+  // Ordenar dívidas quando mudar o método ou as dívidas
+  useEffect(() => {
+    if (debts.length === 0) {
+      setSortedDebts([]);
+      return;
+    }
+
+    const sorted =
+      debtMethod === 'snowball' ? sortDebtsBySnowball(debts) : sortDebtsByAvalanche(debts);
+
+    setSortedDebts(sorted);
+  }, [debts, debtMethod]);
+
+  // Atualizar prioridades no Firebase quando mudar o método
+  const handleMethodChange = async newMethod => {
+    setDebtMethod(newMethod);
+
+    if (user?.uid && debts.length > 0) {
+      try {
+        await updateDebtPriorities(user.uid, newMethod);
+        // Recarregar dívidas para pegar as novas prioridades
+        const updatedDebts = await getDebts(user.uid);
+        setDebts(updatedDebts);
+      } catch (error) {
+        console.error('Erro ao atualizar prioridades:', error);
+      }
+    }
+  };
 
   const handleEdit = debt => {
     setSelectedDebt(debt);
@@ -282,6 +321,11 @@ const Debts = () => {
           </div>
         </div>
 
+        {/* Seletor de Método (apenas para dívidas ativas) */}
+        {filterStatus === 'active' && activeDebts.length > 0 && (
+          <DebtMethodSelector selectedMethod={debtMethod} onMethodChange={handleMethodChange} />
+        )}
+
         {/* Lista de dívidas */}
         <div>
           {loading ? (
@@ -323,15 +367,33 @@ const Debts = () => {
             </div>
           ) : (
             <div className="flex flex-col gap-4">
-              {filteredDebts.map(debt => (
-                <DebtCard
-                  key={debt.id}
-                  debt={debt}
-                  onPay={handlePay}
-                  onEdit={handleEdit}
-                  onDelete={handleDelete}
-                />
-              ))}
+              {(filterStatus === 'active' ? sortedDebts : filteredDebts).map((debt, index) => {
+                const isActive = debt.status === 'active';
+                const showPriority = filterStatus === 'active' && isActive;
+
+                return (
+                  <div key={debt.id} className="relative">
+                    {showPriority && debt.priority && (
+                      <div className="absolute -top-2 -left-2 z-10">
+                        <div
+                          className={`flex items-center gap-1 px-3 py-1 rounded-full text-sm font-bold border-2 shadow-md ${getPriorityColor(
+                            debt.priority
+                          )}`}
+                        >
+                          <span>{getPriorityIcon(debt.priority)}</span>
+                          {debt.priority === 1 && <span>PRIORIDADE</span>}
+                        </div>
+                      </div>
+                    )}
+                    <DebtCard
+                      debt={debt}
+                      onPay={handlePay}
+                      onEdit={handleEdit}
+                      onDelete={handleDelete}
+                    />
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>
