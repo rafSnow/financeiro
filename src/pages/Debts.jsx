@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import BottomNav from '../components/BottomNav';
 import DebtCard from '../components/DebtCard';
 import DebtForm from '../components/DebtForm';
+import DebtInsights from '../components/DebtInsights';
 import DebtMethodSelector from '../components/DebtMethodSelector';
+import DebtProjection from '../components/DebtProjection';
 import DebtSimulator from '../components/DebtSimulator';
 import Header from '../components/Header';
 import Modal from '../components/Modal';
@@ -264,16 +266,43 @@ const Debts = () => {
           style={{ marginBottom: '2rem' }}
         >
           {/* Total Devendo */}
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 relative overflow-hidden">
+            {/* Barra de severidade */}
+            <div
+              className={`absolute top-0 left-0 right-0 h-1 ${
+                totalDebt > 10000
+                  ? 'bg-red-500'
+                  : totalDebt > 5000
+                  ? 'bg-orange-500'
+                  : 'bg-green-500'
+              }`}
+            />
             <div className="flex items-center gap-2 mb-2">
               <span className="text-2xl">💰</span>
               <h3 className="text-sm font-medium text-gray-600">Total Devendo</h3>
             </div>
             <p className="text-2xl font-bold text-red-600">{formatCurrency(totalDebt)}</p>
+            {totalDebt > 0 && (
+              <div className="mt-2 w-full bg-gray-200 rounded-full h-1.5">
+                <div
+                  className="bg-red-500 h-1.5 rounded-full transition-all"
+                  style={{ width: `${Math.min((totalDebt / 20000) * 100, 100)}%` }}
+                />
+              </div>
+            )}
           </div>
 
           {/* Pagamento Mensal */}
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 relative overflow-hidden">
+            <div
+              className={`absolute top-0 left-0 right-0 h-1 ${
+                totalMonthlyPayment > 2000
+                  ? 'bg-red-500'
+                  : totalMonthlyPayment > 1000
+                  ? 'bg-orange-500'
+                  : 'bg-blue-500'
+              }`}
+            />
             <div className="flex items-center gap-2 mb-2">
               <span className="text-2xl">📅</span>
               <h3 className="text-sm font-medium text-gray-600">Pagamento/Mês</h3>
@@ -284,23 +313,58 @@ const Debts = () => {
           </div>
 
           {/* Juros/Mês */}
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 relative overflow-hidden">
+            <div
+              className={`absolute top-0 left-0 right-0 h-1 ${
+                totalInterest > 500
+                  ? 'bg-red-500'
+                  : totalInterest > 200
+                  ? 'bg-yellow-500'
+                  : 'bg-green-500'
+              }`}
+            />
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-2xl">📈</span>
+              <span className="text-2xl">
+                {totalInterest > 500 ? '😱' : totalInterest > 200 ? '😰' : '📈'}
+              </span>
               <h3 className="text-sm font-medium text-gray-600">Juros/Mês</h3>
             </div>
             <p className="text-2xl font-bold text-yellow-600">{formatCurrency(totalInterest)}</p>
+            {totalInterest > 0 && (
+              <p className="text-xs text-gray-500 mt-1">{formatCurrency(totalInterest * 12)}/ano</p>
+            )}
           </div>
 
           {/* Dívidas Ativas */}
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 relative overflow-hidden">
+            <div className={`absolute top-0 left-0 right-0 h-1 bg-blue-500`} />
             <div className="flex items-center gap-2 mb-2">
               <span className="text-2xl">📊</span>
               <h3 className="text-sm font-medium text-gray-600">Dívidas Ativas</h3>
             </div>
             <p className="text-2xl font-bold text-gray-900">{activeDebts.length}</p>
+            {debts.filter(d => d.status === 'paid').length > 0 && (
+              <p className="text-xs text-green-600 mt-1">
+                ✓ {debts.filter(d => d.status === 'paid').length} quitada
+                {debts.filter(d => d.status === 'paid').length > 1 ? 's' : ''}
+              </p>
+            )}
           </div>
         </div>
+
+        {/* Insights (apenas para dívidas ativas) */}
+        {filterStatus === 'active' && activeDebts.length > 0 && (
+          <div style={{ marginBottom: '2rem' }}>
+            <DebtInsights debts={debts} />
+          </div>
+        )}
+
+        {/* Projeção de Quitação (apenas para dívidas ativas) */}
+        {filterStatus === 'active' && activeDebts.length > 0 && (
+          <div style={{ marginBottom: '2rem' }}>
+            <DebtProjection debts={debts} extraPayment={0} />
+          </div>
+        )}
 
         {/* Filtros */}
         <div style={{ marginBottom: '2rem' }}>

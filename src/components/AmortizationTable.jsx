@@ -11,7 +11,7 @@ import { formatCurrency } from '../utils/constants';
  */
 const AmortizationTable = ({ history, maxRows = 12 }) => {
   const [showAll, setShowAll] = useState(false);
-  
+
   if (!history || history.length === 0) {
     return null;
   }
@@ -46,7 +46,7 @@ const AmortizationTable = ({ history, maxRows = 12 }) => {
             {displayedHistory.map((row, index) => {
               const isLastRow = row.remaining === 0;
               const isFirstRow = index === 0;
-              
+
               return (
                 <tr
                   key={row.month}

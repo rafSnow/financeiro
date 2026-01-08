@@ -278,7 +278,7 @@ const DebtSimulator = ({ debt, onClose }) => {
             <span>📈</span>
             <span>Evolução do Saldo Devedor</span>
           </h4>
-          
+
           <ResponsiveContainer width="100%" height={300}>
             <LineChart
               data={simulatedScenario.history}
@@ -290,10 +290,7 @@ const DebtSimulator = ({ debt, onClose }) => {
                 label={{ value: 'Mês', position: 'insideBottom', offset: -5 }}
                 stroke="#666"
               />
-              <YAxis
-                tickFormatter={value => `R$ ${(value / 1000).toFixed(0)}k`}
-                stroke="#666"
-              />
+              <YAxis tickFormatter={value => `R$ ${(value / 1000).toFixed(0)}k`} stroke="#666" />
               <Tooltip
                 formatter={(value, name) => {
                   const names = {
@@ -329,7 +326,7 @@ const DebtSimulator = ({ debt, onClose }) => {
             <span>💰</span>
             <span>Composição dos Pagamentos (Juros vs Principal)</span>
           </h4>
-          
+
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart
               data={simulatedScenario.history}
@@ -341,10 +338,7 @@ const DebtSimulator = ({ debt, onClose }) => {
                 label={{ value: 'Mês', position: 'insideBottom', offset: -5 }}
                 stroke="#666"
               />
-              <YAxis
-                tickFormatter={value => `R$ ${value.toFixed(0)}`}
-                stroke="#666"
-              />
+              <YAxis tickFormatter={value => `R$ ${value.toFixed(0)}`} stroke="#666" />
               <Tooltip
                 formatter={(value, name) => {
                   const names = {
