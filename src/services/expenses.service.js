@@ -14,12 +14,14 @@ import { db } from './firebase';
 
 /**
  * Cria uma nova despesa
+ * @param {string} userId - ID do usuário
  * @param {object} data - Dados da despesa
  * @returns {Promise<object>} Despesa criada com ID
  */
-export const createExpense = async data => {
+export const createExpense = async (userId, data) => {
   try {
     const expenseData = {
+      userId,
       ...data,
       amount: Number(data.amount),
       date: data.date instanceof Date ? Timestamp.fromDate(data.date) : Timestamp.now(),

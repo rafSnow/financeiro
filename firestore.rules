@@ -6,7 +6,7 @@ service cloud.firestore {
     function isAuthenticated() {
       return request.auth != null;
     }
-    
+
     // Função auxiliar para verificar se o usuário é o dono do documento
     function isOwner(userId) {
       return isAuthenticated() && request.auth.uid == userId;
@@ -16,13 +16,13 @@ service cloud.firestore {
     match /expenses/{expenseId} {
       // Permitir leitura apenas dos próprios documentos
       allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
-      
+
       // Permitir criação apenas se userId corresponde ao usuário autenticado
       allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
-      
+
       // Permitir atualização apenas dos próprios documentos
       allow update: if isAuthenticated() && resource.data.userId == request.auth.uid;
-      
+
       // Permitir exclusão apenas dos próprios documentos
       allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
     }
@@ -31,13 +31,13 @@ service cloud.firestore {
     match /incomes/{incomeId} {
       // Permitir leitura apenas dos próprios documentos
       allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
-      
+
       // Permitir criação apenas se userId corresponde ao usuário autenticado
       allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
-      
+
       // Permitir atualização apenas dos próprios documentos
       allow update: if isAuthenticated() && resource.data.userId == request.auth.uid;
-      
+
       // Permitir exclusão apenas dos próprios documentos
       allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
     }
@@ -46,13 +46,13 @@ service cloud.firestore {
     match /debts/{debtId} {
       // Permitir leitura apenas dos próprios documentos
       allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
-      
+
       // Permitir criação apenas se userId corresponde ao usuário autenticado
       allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
-      
+
       // Permitir atualização apenas dos próprios documentos
       allow update: if isAuthenticated() && resource.data.userId == request.auth.uid;
-      
+
       // Permitir exclusão apenas dos próprios documentos
       allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
     }
@@ -61,13 +61,13 @@ service cloud.firestore {
     match /users/{userId} {
       // Permitir leitura apenas do próprio documento
       allow read: if isOwner(userId);
-      
+
       // Permitir criação apenas do próprio documento
       allow create: if isOwner(userId);
-      
+
       // Permitir atualização apenas do próprio documento
       allow update: if isOwner(userId);
-      
+
       // Permitir exclusão apenas do próprio documento
       allow delete: if isOwner(userId);
     }
