@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import BottomNav from '../components/BottomNav';
-import Button from '../components/Button';
 import DebtCard from '../components/DebtCard';
 import DebtForm from '../components/DebtForm';
 import DebtMethodSelector from '../components/DebtMethodSelector';
+import DebtSimulator from '../components/DebtSimulator';
 import Header from '../components/Header';
 import Modal from '../components/Modal';
 import PaymentModal from '../components/PaymentModal';
+import { processPayment } from '../services/debtPayments.service';
 import {
   createDebt,
   deleteDebt,
@@ -14,7 +15,6 @@ import {
   updateDebt,
   updateDebtPriorities,
 } from '../services/debts.service';
-import { processPayment } from '../services/debtPayments.service';
 import { useAuthStore } from '../store/authStore';
 import { useDebtsStore } from '../store/debtsStore';
 import { formatCurrency } from '../utils/constants';
@@ -45,6 +45,7 @@ const Debts = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [isSimulatorOpen, setIsSimulatorOpen] = useState(false);
   const [selectedDebt, setSelectedDebt] = useState(null);
   const [formLoading, setFormLoading] = useState(false);
   const [filterStatus, setFilterStatus] = useState('active');
@@ -131,6 +132,16 @@ const Debts = () => {
 
   const handleClosePaymentModal = () => {
     setIsPaymentModalOpen(false);
+    setSelectedDebt(null);
+  };
+
+  const handleSimulate = debt => {
+    setSelectedDebt(debt);
+    setIsSimulatorOpen(true);
+  };
+
+  const handleCloseSimulator = () => {
+    setIsSimulatorOpen(false);
     setSelectedDebt(null);
   };
 
@@ -396,6 +407,7 @@ const Debts = () => {
                       onPay={handlePay}
                       onEdit={handleEdit}
                       onDelete={handleDelete}
+                      onSimulate={handleSimulate}
                     />
                   </div>
                 );
@@ -479,6 +491,13 @@ const Debts = () => {
         debt={selectedDebt}
         onConfirm={handleConfirmPayment}
       />
+
+      {/* Modal de simulador */}
+      {isSimulatorOpen && selectedDebt && (
+        <Modal isOpen={isSimulatorOpen} onClose={handleCloseSimulator} title="" size="xl">
+          <DebtSimulator debt={selectedDebt} onClose={handleCloseSimulator} />
+        </Modal>
+      )}
     </div>
   );
 };
