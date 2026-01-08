@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import BottomNav from '../components/BottomNav';
+import Confetti from '../components/Confetti';
 import DebtCard from '../components/DebtCard';
 import DebtForm from '../components/DebtForm';
 import DebtInsights from '../components/DebtInsights';
@@ -19,6 +20,7 @@ import {
 } from '../services/debts.service';
 import { useAuthStore } from '../store/authStore';
 import { useDebtsStore } from '../store/debtsStore';
+import { useToastStore } from '../store/toastStore';
 import { formatCurrency } from '../utils/constants';
 import {
   getPriorityColor,
@@ -33,6 +35,7 @@ import {
  */
 const Debts = () => {
   const { user } = useAuthStore();
+  const { addToast } = useToastStore();
   const {
     debts,
     loading,
@@ -48,6 +51,7 @@ const Debts = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isSimulatorOpen, setIsSimulatorOpen] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
   const [selectedDebt, setSelectedDebt] = useState(null);
   const [formLoading, setFormLoading] = useState(false);
   const [filterStatus, setFilterStatus] = useState('active');
@@ -155,9 +159,11 @@ const Debts = () => {
       if (selectedDebt) {
         // Editar dívida existente
         await updateDebt(selectedDebt.id, data);
+        addToast('✅ Dívida atualizada com sucesso!', 'success');
       } else {
         // Criar nova dívida
         await createDebt(user.uid, data);
+        addToast('✅ Dívida criada com sucesso!', 'success');
       }
 
       // Recarregar lista
@@ -168,7 +174,7 @@ const Debts = () => {
       handleCloseForm();
     } catch (error) {
       console.error('Erro ao salvar dívida:', error);
-      alert('Erro ao salvar dívida. Tente novamente.');
+      addToast('❌ Erro ao salvar dívida. Tente novamente.', 'error');
     } finally {
       setFormLoading(false);
     }
@@ -181,6 +187,8 @@ const Debts = () => {
     try {
       await deleteDebt(selectedDebt.id);
 
+      addToast('✅ Dívida excluída com sucesso!', 'success');
+
       // Recarregar lista
       const updatedDebts = await getDebts(user.uid);
       setDebts(updatedDebts);
@@ -189,7 +197,7 @@ const Debts = () => {
       handleCloseDeleteModal();
     } catch (error) {
       console.error('Erro ao excluir dívida:', error);
-      alert('Erro ao excluir dívida. Tente novamente.');
+      addToast('❌ Erro ao excluir dívida. Tente novamente.', 'error');
     } finally {
       setFormLoading(false);
     }
@@ -202,20 +210,27 @@ const Debts = () => {
     try {
       const result = await processPayment(user.uid, selectedDebt, amount, isExtra, notes);
 
-      // Mostrar mensagem de sucesso se quitou a dívida
-      if (result.wasPaidOff) {
-        alert('🎉 Parabéns! Você quitou esta dívida!');
-      }
-
       // Recarregar lista
       const updatedDebts = await getDebts(user.uid);
       setDebts(updatedDebts);
 
       // Fechar modal
       handleClosePaymentModal();
+
+      // Mostrar mensagem de sucesso
+      if (result.wasPaidOff) {
+        setShowConfetti(true);
+        addToast(`🎉 Parabéns! Você quitou: ${selectedDebt.name}`, 'success', 5000);
+      } else {
+        addToast(
+          `✅ Pagamento de ${formatCurrency(amount)} registrado com sucesso!`,
+          'success',
+          3000
+        );
+      }
     } catch (error) {
       console.error('Erro ao processar pagamento:', error);
-      alert('Erro ao processar pagamento. Tente novamente.');
+      addToast('❌ Erro ao processar pagamento. Tente novamente.', 'error');
     } finally {
       setFormLoading(false);
     }
@@ -562,6 +577,9 @@ const Debts = () => {
           <DebtSimulator debt={selectedDebt} onClose={handleCloseSimulator} />
         </Modal>
       )}
+
+      {/* Confetti ao quitar dívida */}
+      <Confetti show={showConfetti} onComplete={() => setShowConfetti(false)} />
     </div>
   );
 };
