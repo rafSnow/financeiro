@@ -1,6 +1,18 @@
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import {
+  deleteAlert,
+  deleteReadAlerts,
+  getAlerts,
+  markAllAsRead,
+  markAsRead,
+} from '../services/alerts.service';
 import { logout } from '../services/auth.service';
 import { useAuthStore } from '../store/authStore';
+import { useToastStore } from '../store/toastStore';
+import { runAllChecks } from '../utils/alertRules';
+import AlertBadge from './AlertBadge';
+import AlertList from './AlertList';
 
 /**
  * Componente de header da aplicação
@@ -10,6 +22,84 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, clearUser } = useAuthStore();
+  const { addToast } = useToastStore();
+
+  const [alerts, setAlerts] = useState([]);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [showAlertList, setShowAlertList] = useState(false);
+
+  // Carrega alertas ao montar e verifica novos alertas
+  useEffect(() => {
+    if (!user?.uid) return;
+
+    loadAlerts();
+    checkNewAlerts();
+
+    // Recarregar alertas a cada 5 minutos
+    const interval = setInterval(loadAlerts, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  const loadAlerts = async () => {
+    if (!user?.uid) return;
+    try {
+      const data = await getAlerts(user.uid);
+      setAlerts(data);
+      setUnreadCount(data.filter(a => !a.isRead).length);
+    } catch {
+      // Silencioso
+    }
+  };
+
+  const checkNewAlerts = async () => {
+    if (!user?.uid) return;
+    try {
+      await runAllChecks(user.uid);
+      await loadAlerts();
+    } catch {
+      // Silencioso
+    }
+  };
+
+  const handleMarkAsRead = async alertId => {
+    try {
+      await markAsRead(alertId);
+      await loadAlerts();
+    } catch {
+      addToast('Erro ao marcar alerta como lido', 'error');
+    }
+  };
+
+  const handleDelete = async alertId => {
+    try {
+      await deleteAlert(alertId);
+      await loadAlerts();
+      addToast('Alerta excluído', 'success');
+    } catch {
+      addToast('Erro ao excluir alerta', 'error');
+    }
+  };
+
+  const handleMarkAllAsRead = async () => {
+    try {
+      await markAllAsRead(user.uid);
+      await loadAlerts();
+      addToast('Todos os alertas marcados como lidos', 'success');
+    } catch {
+      addToast('Erro ao marcar todos como lidos', 'error');
+    }
+  };
+
+  const handleDeleteRead = async () => {
+    try {
+      await deleteReadAlerts(user.uid);
+      await loadAlerts();
+      addToast('Alertas lidos excluídos', 'success');
+    } catch {
+      addToast('Erro ao excluir alertas lidos', 'error');
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -63,6 +153,9 @@ const Header = () => {
 
           {/* User info e logout */}
           <div className="flex items-center gap-4">
+            {/* Badge de Alertas */}
+            <AlertBadge count={unreadCount} onClick={() => setShowAlertList(true)} />
+
             <div className="text-right hidden sm:block">
               <p className="text-sm font-medium text-gray-900">{user?.displayName || user?.name}</p>
               <p className="text-xs text-gray-500">{user?.email}</p>
@@ -84,6 +177,18 @@ const Header = () => {
           </div>
         </div>
       </div>
+
+      {/* Modal de Alertas */}
+      {showAlertList && (
+        <AlertList
+          alerts={alerts}
+          onMarkAsRead={handleMarkAsRead}
+          onDelete={handleDelete}
+          onMarkAllAsRead={handleMarkAllAsRead}
+          onDeleteRead={handleDeleteRead}
+          onClose={() => setShowAlertList(false)}
+        />
+      )}
     </header>
   );
 };
