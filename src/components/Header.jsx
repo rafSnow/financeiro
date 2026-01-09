@@ -27,6 +27,7 @@ const Header = () => {
   const [alerts, setAlerts] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [showAlertList, setShowAlertList] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(null);
 
   // Carrega alertas ao montar e verifica novos alertas
   useEffect(() => {
@@ -111,6 +112,46 @@ const Header = () => {
     }
   };
 
+  const toggleDropdown = menu => {
+    setOpenDropdown(openDropdown === menu ? null : menu);
+  };
+
+  const handleNavigate = path => {
+    navigate(path);
+    setOpenDropdown(null);
+  };
+
+  // Estrutura de menus com submenus
+  const menuStructure = [
+    {
+      label: 'Dashboard',
+      icon: '🏠',
+      path: '/dashboard',
+    },
+    {
+      label: 'Transações',
+      icon: '💸',
+      submenu: [
+        { label: 'Despesas', icon: '💸', path: '/expenses' },
+        { label: 'Rendas', icon: '💰', path: '/income' },
+        { label: 'Categorias', icon: '🏷️', path: '/categories' },
+      ],
+    },
+    {
+      label: 'Dívidas',
+      icon: '🔴',
+      path: '/debts',
+    },
+    {
+      label: 'Planejamento',
+      icon: '🎯',
+      submenu: [
+        { label: 'Metas', icon: '🎯', path: '/goals' },
+        { label: 'Relatórios', icon: '📊', path: '/reports' },
+      ],
+    },
+  ];
+
   const navItems = [
     { path: '/dashboard', label: 'Dashboard', icon: '🏠' },
     { path: '/expenses', label: 'Despesas', icon: '💸' },
@@ -134,20 +175,84 @@ const Header = () => {
 
             {/* Navegação Desktop */}
             <nav className="hidden lg:flex items-center gap-1">
-              {navItems.map(item => (
-                <button
-                  key={item.path}
-                  onClick={() => navigate(item.path)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
-                    isActive(item.path)
-                      ? 'bg-blue-600 text-white'
-                      : 'text-gray-700 hover:bg-gray-100'
-                  }`}
-                >
-                  <span>{item.icon}</span>
-                  <span>{item.label}</span>
-                </button>
-              ))}
+              {menuStructure.map(menu => {
+                if (menu.submenu) {
+                  // Menu com submenu (dropdown)
+                  return (
+                    <div key={menu.label} className="relative">
+                      <button
+                        onClick={() => toggleDropdown(menu.label)}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
+                          menu.submenu.some(item => isActive(item.path))
+                            ? 'bg-blue-600 text-white'
+                            : 'text-gray-700 hover:bg-gray-100'
+                        }`}
+                      >
+                        <span>{menu.icon}</span>
+                        <span>{menu.label}</span>
+                        <svg
+                          className={`w-4 h-4 transition-transform ${
+                            openDropdown === menu.label ? 'rotate-180' : ''
+                          }`}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 9l-7 7-7-7"
+                          />
+                        </svg>
+                      </button>
+
+                      {/* Dropdown */}
+                      {openDropdown === menu.label && (
+                        <>
+                          {/* Overlay para fechar ao clicar fora */}
+                          <div
+                            className="fixed inset-0 z-10"
+                            onClick={() => setOpenDropdown(null)}
+                          />
+                          <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-20">
+                            {menu.submenu.map(item => (
+                              <button
+                                key={item.path}
+                                onClick={() => handleNavigate(item.path)}
+                                className={`w-full flex items-center gap-3 px-4 py-2 text-left transition-colors ${
+                                  isActive(item.path)
+                                    ? 'bg-blue-50 text-blue-600 font-medium'
+                                    : 'text-gray-700 hover:bg-gray-50'
+                                }`}
+                              >
+                                <span>{item.icon}</span>
+                                <span>{item.label}</span>
+                              </button>
+                            ))}
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  );
+                } else {
+                  // Menu simples (sem submenu)
+                  return (
+                    <button
+                      key={menu.path}
+                      onClick={() => handleNavigate(menu.path)}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
+                        isActive(menu.path)
+                          ? 'bg-blue-600 text-white'
+                          : 'text-gray-700 hover:bg-gray-100'
+                      }`}
+                    >
+                      <span>{menu.icon}</span>
+                      <span>{menu.label}</span>
+                    </button>
+                  );
+                }
+              })}
             </nav>
           </div>
 
