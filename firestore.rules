@@ -57,6 +57,51 @@ service cloud.firestore {
       allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
     }
 
+    // Regras para coleção de pagamentos de dívidas (debt_payments)
+    match /debt_payments/{paymentId} {
+      // Permitir leitura apenas dos próprios documentos
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+
+      // Permitir criação apenas se userId corresponde ao usuário autenticado
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+
+      // Permitir atualização apenas dos próprios documentos
+      allow update: if isAuthenticated() && resource.data.userId == request.auth.uid;
+
+      // Permitir exclusão apenas dos próprios documentos
+      allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+
+    // Regras para coleção de metas (goals)
+    match /goals/{goalId} {
+      // Permitir leitura apenas dos próprios documentos
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+
+      // Permitir criação apenas se userId corresponde ao usuário autenticado
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+
+      // Permitir atualização apenas dos próprios documentos
+      allow update: if isAuthenticated() && resource.data.userId == request.auth.uid;
+
+      // Permitir exclusão apenas dos próprios documentos
+      allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+
+    // Regras para coleção de alertas (alerts)
+    match /alerts/{alertId} {
+      // Permitir leitura apenas dos próprios documentos
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+
+      // Permitir criação apenas se userId corresponde ao usuário autenticado
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+
+      // Permitir atualização apenas dos próprios documentos
+      allow update: if isAuthenticated() && resource.data.userId == request.auth.uid;
+
+      // Permitir exclusão apenas dos próprios documentos
+      allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+
     // Regras para coleção de usuários (users) - caso precise no futuro
     match /users/{userId} {
       // Permitir leitura apenas do próprio documento

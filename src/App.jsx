@@ -8,6 +8,7 @@ import Goals from './pages/Goals';
 import Income from './pages/Income';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Reports from './pages/Reports';
 
 function App() {
   return (
@@ -63,10 +64,7 @@ function App() {
           path="/reports"
           element={
             <PrivateRoute>
-              <div className="p-8 text-center">
-                <h1 className="text-2xl font-bold">Relatórios</h1>
-                <p className="text-gray-600 mt-2">Em desenvolvimento...</p>
-              </div>
+              <Reports />
             </PrivateRoute>
           }
         />

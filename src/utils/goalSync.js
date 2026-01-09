@@ -1,4 +1,4 @@
-import { getGoalByCategory, updateGoalProgress } from './goals.service';
+import { getGoalByCategory, updateGoalProgress } from '../services/goals.service';
 
 /**
  * Sincroniza progresso de meta quando um pagamento de dívida é realizado

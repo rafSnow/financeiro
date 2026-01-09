@@ -3,7 +3,6 @@ import { FiFilter, FiPlus } from 'react-icons/fi';
 import Confetti from '../components/Confetti';
 import GoalCard from '../components/GoalCard';
 import GoalForm from '../components/GoalForm';
-import { useAuth } from '../contexts/AuthContext';
 import {
   completeGoal,
   createGoal,
@@ -14,6 +13,7 @@ import {
   updateGoal,
   updateGoalProgress,
 } from '../services/goals.service';
+import { useAuthStore } from '../store/authStore';
 import { useGoalsStore } from '../store/goalsStore';
 import { useToastStore } from '../store/toastStore';
 
@@ -21,7 +21,7 @@ import { useToastStore } from '../store/toastStore';
  * Página de Metas
  */
 export default function Goals() {
-  const { currentUser } = useAuth();
+  const { user: currentUser } = useAuthStore();
   const { goals, setGoals, setLoading } = useGoalsStore();
   const { addToast } = useToastStore();
 
