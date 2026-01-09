@@ -1,11 +1,15 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import BottomNav from '../components/BottomNav';
+import CategoryBreakdown from '../components/CategoryBreakdown';
 import ExpensesPieChart from '../components/ExpensesPieChart';
 import ExpensesTrendChart from '../components/ExpensesTrendChart';
 import Header from '../components/Header';
+import InsightsPanel from '../components/InsightsPanel';
 import MonthlyEvolutionChart from '../components/MonthlyEvolutionChart';
 import MonthSummary from '../components/MonthSummary';
+import TopExpenses from '../components/TopExpenses';
 import { getExpenses } from '../services/expenses.service';
+import { getGoals } from '../services/goals.service';
 import { getIncomes } from '../services/income.service';
 import { useAuthStore } from '../store/authStore';
 
@@ -23,6 +27,9 @@ const Reports = () => {
   const [categoryData, setCategoryData] = useState([]);
   const [evolutionData, setEvolutionData] = useState([]);
   const [trendData, setTrendData] = useState([]);
+  const [currentExpenses, setCurrentExpenses] = useState([]);
+  const [previousExpenses, setPreviousExpenses] = useState([]);
+  const [goals, setGoals] = useState([]);
 
   /**
    * Nomes dos meses
@@ -153,15 +160,27 @@ const Reports = () => {
 
       setLoading(true);
 
+      // Carregar metas do usuário
+      const userGoals = await getGoals(user.uid);
+      setGoals(userGoals);
+
       // Dados do mês atual
-      const currentData = await loadMonthData(selectedMonth, selectedYear);
+      const [currentExpensesData, currentData] = await Promise.all([
+        getExpenses(user.uid, selectedMonth, selectedYear),
+        loadMonthData(selectedMonth, selectedYear),
+      ]);
+      setCurrentExpenses(currentExpensesData);
       setCurrentMonthData(currentData);
       setCategoryData(currentData.categories);
 
       // Dados do mês anterior
       const prevMonth = selectedMonth === 1 ? 12 : selectedMonth - 1;
       const prevYear = selectedMonth === 1 ? selectedYear - 1 : selectedYear;
-      const previousData = await loadMonthData(prevMonth, prevYear);
+      const [previousExpensesData, previousData] = await Promise.all([
+        getExpenses(user.uid, prevMonth, prevYear),
+        loadMonthData(prevMonth, prevYear),
+      ]);
+      setPreviousExpenses(previousExpensesData);
       setPreviousMonthData(previousData);
 
       // Dados de evolução (últimos 6 meses)
@@ -273,6 +292,34 @@ const Reports = () => {
 
         {/* Gráficos */}
         <div className="space-y-6">
+          {/* Painel de Insights */}
+          <div className="bg-white p-6 rounded-lg border border-gray-200">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+              <span>💡</span>
+              <span>Insights e Recomendações</span>
+            </h3>
+            <InsightsPanel
+              currentData={currentMonthData || {}}
+              previousData={previousMonthData}
+              goals={goals}
+            />
+          </div>
+
+          {/* Top Despesas */}
+          <div className="bg-white p-6 rounded-lg border border-gray-200">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">Análise de Gastos</h3>
+            <TopExpenses expenses={currentExpenses} previousExpenses={previousExpenses} />
+          </div>
+
+          {/* Breakdown por Categoria */}
+          <div className="bg-white p-6 rounded-lg border border-gray-200">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">Detalhamento por Categoria</h3>
+            <CategoryBreakdown
+              expenses={currentExpenses}
+              totalExpenses={currentMonthData?.expenses || 0}
+            />
+          </div>
+
           {/* Gráfico de Pizza - Gastos por Categoria */}
           <div className="bg-white p-6 rounded-lg border border-gray-200">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Gastos por Categoria</h3>
