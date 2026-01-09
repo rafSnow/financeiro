@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import ToastContainer from './components/ToastContainer';
+import Categories from './pages/Categories';
 import Dashboard from './pages/Dashboard';
 import Debts from './pages/Debts';
 import Expenses from './pages/Expenses';
@@ -65,6 +66,14 @@ function App() {
           element={
             <PrivateRoute>
               <Reports />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/categories"
+          element={
+            <PrivateRoute>
+              <Categories />
             </PrivateRoute>
           }
         />
