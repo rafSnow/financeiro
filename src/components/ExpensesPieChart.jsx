@@ -60,7 +60,7 @@ const ExpensesPieChart = ({ data }) => {
   }
 
   return (
-    <div className="w-full h-64">
+    <div className="w-full h-64 min-h-64">
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie

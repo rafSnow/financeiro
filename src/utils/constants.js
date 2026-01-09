@@ -52,7 +52,13 @@ export const formatDate = date => {
     date = date.toDate();
   }
 
-  return new Intl.DateTimeFormat('pt-BR').format(date);
+  // Validar se a data é válida
+  const dateObj = new Date(date);
+  if (isNaN(dateObj.getTime())) {
+    return 'Data inválida';
+  }
+
+  return new Intl.DateTimeFormat('pt-BR').format(dateObj);
 };
 
 /**

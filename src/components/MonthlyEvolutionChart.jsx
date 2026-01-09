@@ -56,7 +56,7 @@ const MonthlyEvolutionChart = ({ data }) => {
   }
 
   return (
-    <div className="w-full h-64">
+    <div className="w-full h-64 min-h-64">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data}>
           <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
