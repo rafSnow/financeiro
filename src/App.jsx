@@ -1,4 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import InstallPWA from './components/InstallPWA';
+import OfflineBanner from './components/OfflineBanner';
 import PrivateRoute from './components/PrivateRoute';
 import ToastContainer from './components/ToastContainer';
 import Categories from './pages/Categories';
@@ -14,7 +16,9 @@ import Reports from './pages/Reports';
 function App() {
   return (
     <BrowserRouter>
+      <OfflineBanner />
       <ToastContainer />
+      <InstallPWA />
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="/login" element={<Login />} />
