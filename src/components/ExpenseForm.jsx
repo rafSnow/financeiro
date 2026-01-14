@@ -1,7 +1,12 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { DEFAULT_CATEGORIES, PAYMENT_METHODS } from '../utils/constants';
+import { DEFAULT_CATEGORIES } from '../services/categories.service';
+import { PAYMENT_METHODS } from '../utils/constants';
+import { suggestCategories } from '../services/autoCategorization.service';
+import { saveCategorizationHistory } from '../services/categorizationHistory.service';
+import { useAuthStore } from '../store/authStore';
 import Button from './Button';
+import CategorySuggestionChip from './CategorySuggestionChip';
 import Input from './Input';
 
 /**
@@ -44,13 +49,52 @@ const ExpenseForm = ({ expense, onSubmit, onCancel, loading = false }) => {
 
   const [formData, setFormData] = useState(getInitialFormData);
   const [errors, setErrors] = useState({});
+  const [suggestions, setSuggestions] = useState([]);
+  const [isLoadingSuggestions, setIsLoadingSuggestions] = useState(false);
+  const user = useAuthStore(state => state.user);
 
   // Atualizar formulário quando expense mudar
   useEffect(() => {
     setFormData(getInitialFormData());
     setErrors({});
+    setSuggestions([]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [expense?.id]);
+
+  // Auto-sugerir categorias ao digitar descrição
+  useEffect(() => {
+    const getSuggestions = async () => {
+      if (!formData.description || formData.description.length < 3 || !user?.uid) {
+        setSuggestions([]);
+        return;
+      }
+
+      setIsLoadingSuggestions(true);
+
+      try {
+        const suggested = await suggestCategories(formData.description, user.uid);
+        setSuggestions(suggested || []);
+
+        // Auto-selecionar se confiança > 90% e categoria não estiver selecionada
+        if (suggested?.length > 0 && suggested[0].confidence > 0.9 && !formData.category) {
+          setFormData(prev => ({
+            ...prev,
+            category: suggested[0].category,
+          }));
+        }
+      } catch (error) {
+        console.error('Erro ao buscar sugestões:', error);
+        setSuggestions([]);
+      } finally {
+        setIsLoadingSuggestions(false);
+      }
+    };
+
+    // Debounce: aguardar 500ms após parar de digitar
+    const debounceTimer = setTimeout(getSuggestions, 500);
+
+    return () => clearTimeout(debounceTimer);
+  }, [formData.description, user?.uid]);
 
   const handleChange = e => {
     const { name, value, type, checked } = e.target;
@@ -148,7 +192,35 @@ const ExpenseForm = ({ expense, onSubmit, onCancel, loading = false }) => {
       date: new Date(formData.date),
     };
 
+    // Salvar histórico de categorização se houver sugestão
+    if (user?.uid && formData.description && formData.category) {
+      const suggestedCategory = suggestions[0]?.category;
+      
+      if (suggestedCategory) {
+        saveCategorizationHistory(user.uid, {
+          description: formData.description,
+          suggestedCategory,
+          finalCategory: formData.category,
+          wasCorrected: suggestedCategory !== formData.category,
+          confidence: suggestions[0]?.confidence || 0,
+          method: suggestions[0]?.source || 'unknown',
+        }).catch(err => console.error('Erro ao salvar histórico:', err));
+      }
+    }
+
     onSubmit(dataToSubmit);
+  };
+
+  const handleSuggestionClick = category => {
+    setFormData(prev => ({
+      ...prev,
+      category,
+    }));
+
+    // Limpar erro de categoria
+    if (errors.category) {
+      setErrors(prev => ({ ...prev, category: '' }));
+    }
   };
 
   return (
@@ -165,6 +237,29 @@ const ExpenseForm = ({ expense, onSubmit, onCancel, loading = false }) => {
         required
         autoFocus
       />
+
+      {/* Sugestões de Categoria */}
+      {suggestions.length > 0 && (
+        <div className="w-full">
+          <p className="text-sm font-medium text-gray-700 mb-2">
+            Sugestões de Categoria
+            {isLoadingSuggestions && (
+              <span className="ml-2 text-blue-500 text-xs">Carregando...</span>
+            )}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {suggestions.map(suggestion => (
+              <CategorySuggestionChip
+                key={suggestion.category}
+                category={suggestion.category}
+                confidence={suggestion.confidence}
+                isSelected={formData.category === suggestion.category}
+                onClick={() => handleSuggestionClick(suggestion.category)}
+              />
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Valor */}
       <div className="w-full">
@@ -216,7 +311,7 @@ const ExpenseForm = ({ expense, onSubmit, onCancel, loading = false }) => {
         >
           <option value="">Selecione uma categoria</option>
           {DEFAULT_CATEGORIES.map(cat => (
-            <option key={cat.id} value={cat.id}>
+            <option key={cat.name} value={cat.name}>
               {cat.icon} {cat.name}
             </option>
           ))}
@@ -245,7 +340,7 @@ const ExpenseForm = ({ expense, onSubmit, onCancel, loading = false }) => {
         >
           <option value="">Selecione a forma de pagamento</option>
           {PAYMENT_METHODS.map(method => (
-            <option key={method.id} value={method.id}>
+            <option key={method.name} value={method.name}>
               {method.name}
             </option>
           ))}
