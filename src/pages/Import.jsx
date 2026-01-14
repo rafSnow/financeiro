@@ -1,14 +1,14 @@
+import { collection, doc, Timestamp, writeBatch } from 'firebase/firestore';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Timestamp, writeBatch, collection, doc } from 'firebase/firestore';
 import ColumnMapper from '../components/ColumnMapper';
 import FileDropZone from '../components/FileDropZone';
 import Header from '../components/Header';
 import ImportPreview from '../components/ImportPreview';
 import Modal from '../components/Modal';
 import { mapCSVToTransactions, parseFile } from '../services/fileParser.service';
-import { saveMapping } from '../services/mappings.service';
 import { db } from '../services/firebase';
+import { saveMapping } from '../services/mappings.service';
 import { useAuthStore } from '../store/authStore';
 import { useToastStore } from '../store/toastStore';
 import { findDuplicates } from '../utils/duplicateDetection';
@@ -196,10 +196,7 @@ const Import = () => {
       }
 
       // Mensagem de sucesso
-      addToast(
-        `${importedCount} transação(ões) importada(s) com sucesso!`,
-        'success'
-      );
+      addToast(`${importedCount} transação(ões) importada(s) com sucesso!`, 'success');
 
       // Limpar estado e redirecionar
       setParsedData(null);

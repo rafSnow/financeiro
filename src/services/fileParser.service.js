@@ -3,7 +3,7 @@
  * Serviço para parsear arquivos OFX e CSV de extratos bancários
  */
 
-import { Banking } from 'ofx-js';
+import ofx from 'ofx-js';
 import Papa from 'papaparse';
 
 /**
@@ -114,37 +114,44 @@ function parseDate(value) {
 export async function parseOFX(fileContent) {
   try {
     // Parseia o conteúdo OFX
-    const ofxData = Banking.parse(fileContent);
+    const ofxData = await ofx.parse(fileContent);
 
     // Array para armazenar transações
     const transactions = [];
 
     // Verifica se há dados bancários
-    if (!ofxData || !ofxData.BANKMSGSRSV1) {
-      throw new Error('Arquivo OFX inválido: estrutura BANKMSGSRSV1 não encontrada');
+    if (!ofxData || !ofxData.OFX || !ofxData.OFX.BANKMSGSRSV1) {
+      throw new Error('Arquivo OFX inválido: estrutura não reconhecida');
     }
 
     // Obtém as respostas de extrato
-    const stmtResponses = ofxData.BANKMSGSRSV1.STMTTRNRS;
+    const bankMsgs = ofxData.OFX.BANKMSGSRSV1;
+    const stmtResponses = bankMsgs.STMTTRNRS;
 
-    if (!stmtResponses || stmtResponses.length === 0) {
+    if (!stmtResponses) {
       throw new Error('Nenhuma transação encontrada no arquivo OFX');
     }
 
+    // Converte para array se for objeto único
+    const stmtArray = Array.isArray(stmtResponses) ? stmtResponses : [stmtResponses];
+
     // Itera sobre cada resposta de extrato
-    stmtResponses.forEach(response => {
+    stmtArray.forEach(response => {
       if (!response.STMTRS || !response.STMTRS.BANKTRANLIST) {
         return;
       }
 
       const tranList = response.STMTRS.BANKTRANLIST.STMTTRN;
 
-      if (!tranList || tranList.length === 0) {
+      if (!tranList) {
         return;
       }
 
+      // Converte para array se for objeto único
+      const tranArray = Array.isArray(tranList) ? tranList : [tranList];
+
       // Processa cada transação
-      tranList.forEach(tran => {
+      tranArray.forEach(tran => {
         const amount = parseFloat(tran.TRNAMT) || 0;
 
         // Cria objeto de transação padronizado
