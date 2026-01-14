@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import BottomNav from '../components/BottomNav';
+import CategorizationMetrics from '../components/CategorizationMetrics';
 import CategoryBreakdown from '../components/CategoryBreakdown';
 import ExpensesPieChart from '../components/ExpensesPieChart';
 import ExpensesTrendChart from '../components/ExpensesTrendChart';
@@ -338,6 +339,11 @@ const Reports = () => {
           <div className="bg-white p-6 rounded-lg border border-gray-200">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Tendência de Gastos</h3>
             <ExpensesTrendChart data={trendData} />
+          </div>
+
+          {/* Métricas de Categorização Automática */}
+          <div className="bg-white p-6 rounded-lg border border-gray-200">
+            <CategorizationMetrics />
           </div>
         </div>
       </main>
