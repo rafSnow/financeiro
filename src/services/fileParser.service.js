@@ -3,7 +3,6 @@
  * Serviço para parsear arquivos OFX e CSV de extratos bancários
  */
 
-import ofx from 'ofx-js';
 import Papa from 'papaparse';
 
 /**
@@ -106,68 +105,103 @@ function parseDate(value) {
 }
 
 /**
- * Parseia arquivo OFX e extrai transações
+ * Converte SGML OFX para XML válido
+ * @param {string} sgml - Conteúdo SGML
+ * @returns {string} XML válido
+ */
+function sgml2xml(sgml) {
+  return sgml
+    .replace(/>\s+</g, '><') // Remove whitespace entre tags
+    .replace(/\s+</g, '<') // Remove whitespace antes de close tag
+    .replace(/>\s+/g, '>') // Remove whitespace depois de close tag
+    .replace(/<([A-Za-z0-9_]+)>([^<]+)<\/\1>/g, '<$1>$2') // Remove closing tags duplicadas
+    .replace(/<([A-Z0-9_]*)+\.+([A-Z0-9_]*)>([^<]+)/g, '<$1$2>$3') // Remove pontos em tags
+    .replace(/<(\w+?)>([^<]+)/g, '<$1>$2</$1>'); // Adiciona closing tags
+}
+
+/**
+ * Extrai valor de tag XML
+ * @param {Element} element - Elemento DOM
+ * @param {string} tagName - Nome da tag
+ * @returns {string|null} Valor da tag ou null
+ */
+function getTagValue(element, tagName) {
+  const tag = element.querySelector(tagName);
+  return tag ? tag.textContent.trim() : null;
+}
+
+/**
+ * Parseia arquivo OFX e extrai transações (implementação browser-native)
  * @param {string} fileContent - Conteúdo do arquivo OFX
- * @returns {Array} Array de transações
+ * @returns {Object} Objeto com transações parseadas
  * @throws {Error} Se houver erro ao parsear o arquivo
  */
 export async function parseOFX(fileContent) {
   try {
-    // Parseia o conteúdo OFX
-    const ofxData = await ofx.parse(fileContent);
+    // Separa header e corpo do OFX
+    const parts = fileContent.split('<OFX>', 2);
+    
+    if (parts.length < 2) {
+      throw new Error('Arquivo OFX inválido: tag OFX não encontrada');
+    }
+
+    // Corpo SGML
+    const sgmlContent = '<OFX>' + parts[1];
+    
+    // Converte SGML para XML
+    const xmlContent = sgml2xml(sgmlContent);
+
+    // Parse XML usando DOMParser (nativo do browser)
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlContent, 'text/xml');
+
+    // Verifica erros de parsing
+    const parserError = xmlDoc.querySelector('parsererror');
+    if (parserError) {
+      throw new Error('Erro ao parsear XML: ' + parserError.textContent);
+    }
 
     // Array para armazenar transações
     const transactions = [];
 
-    // Verifica se há dados bancários
-    if (!ofxData || !ofxData.OFX || !ofxData.OFX.BANKMSGSRSV1) {
-      throw new Error('Arquivo OFX inválido: estrutura não reconhecida');
-    }
+    // Busca transações bancárias
+    const stmtTransactions = xmlDoc.querySelectorAll('STMTTRN');
 
-    // Obtém as respostas de extrato
-    const bankMsgs = ofxData.OFX.BANKMSGSRSV1;
-    const stmtResponses = bankMsgs.STMTTRNRS;
-
-    if (!stmtResponses) {
+    if (stmtTransactions.length === 0) {
       throw new Error('Nenhuma transação encontrada no arquivo OFX');
     }
 
-    // Converte para array se for objeto único
-    const stmtArray = Array.isArray(stmtResponses) ? stmtResponses : [stmtResponses];
+    // Processa cada transação
+    stmtTransactions.forEach(tran => {
+      const trnType = getTagValue(tran, 'TRNTYPE');
+      const dtPosted = getTagValue(tran, 'DTPOSTED');
+      const trnAmt = getTagValue(tran, 'TRNAMT');
+      const fitId = getTagValue(tran, 'FITID');
+      const memo = getTagValue(tran, 'MEMO');
+      const name = getTagValue(tran, 'NAME');
 
-    // Itera sobre cada resposta de extrato
-    stmtArray.forEach(response => {
-      if (!response.STMTRS || !response.STMTRS.BANKTRANLIST) {
-        return;
-      }
+      const amount = parseFloat(trnAmt) || 0;
 
-      const tranList = response.STMTRS.BANKTRANLIST.STMTTRN;
+      // Cria objeto de transação padronizado
+      const transaction = {
+        id: fitId || `${Date.now()}-${Math.random()}`,
+        date: parseOFXDate(dtPosted),
+        description: memo || name || 'Sem descrição',
+        amount: Math.abs(amount),
+        type: getTransactionType(amount),
+        originalType: trnType,
+        category: '',
+        rawData: {
+          TRNTYPE: trnType,
+          DTPOSTED: dtPosted,
+          TRNAMT: trnAmt,
+          FITID: fitId,
+          MEMO: memo,
+          NAME: name,
+        },
+      };
 
-      if (!tranList) {
-        return;
-      }
-
-      // Converte para array se for objeto único
-      const tranArray = Array.isArray(tranList) ? tranList : [tranList];
-
-      // Processa cada transação
-      tranArray.forEach(tran => {
-        const amount = parseFloat(tran.TRNAMT) || 0;
-
-        // Cria objeto de transação padronizado
-        const transaction = {
-          id: tran.FITID || `${Date.now()}-${Math.random()}`, // ID único da transação
-          date: parseOFXDate(tran.DTPOSTED), // Data da transação
-          description: tran.MEMO || tran.NAME || 'Sem descrição', // Descrição
-          amount: Math.abs(amount), // Valor absoluto
-          type: getTransactionType(amount), // Tipo: income ou expense
-          originalType: tran.TRNTYPE, // Tipo original do OFX (DEBIT, CREDIT, etc.)
-          category: '', // Categoria vazia - usuário vai mapear depois
-          rawData: tran, // Dados originais para referência
-        };
-
-        transactions.push(transaction);
-      });
+      transactions.push(transaction);
     });
 
     // Ordena transações por data (mais recente primeiro)
