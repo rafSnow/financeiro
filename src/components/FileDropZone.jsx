@@ -59,10 +59,7 @@ const FileDropZone = ({ onFileSelect, accept = '.ofx,.csv' }) => {
         className="hidden"
       />
 
-      <label
-        htmlFor="file-input"
-        className="cursor-pointer flex flex-col items-center gap-4"
-      >
+      <label htmlFor="file-input" className="cursor-pointer flex flex-col items-center gap-4">
         {isDragging ? (
           <>
             <div className="text-6xl">📂</div>

@@ -6,9 +6,7 @@ import { formatCurrency, formatDate } from '../utils/constants';
  * Permite selecionar quais transações importar
  */
 const ImportPreview = ({ transactions, onConfirm, onCancel }) => {
-  const [selectedIds, setSelectedIds] = useState(
-    transactions.map(t => t.id)
-  );
+  const [selectedIds, setSelectedIds] = useState(transactions.map(t => t.id));
 
   const handleToggleAll = () => {
     if (selectedIds.length === transactions.length) {
@@ -31,9 +29,7 @@ const ImportPreview = ({ transactions, onConfirm, onCancel }) => {
     onConfirm(selected);
   };
 
-  const selectedTransactions = transactions.filter(t =>
-    selectedIds.includes(t.id)
-  );
+  const selectedTransactions = transactions.filter(t => selectedIds.includes(t.id));
   const totalExpenses = selectedTransactions
     .filter(t => t.type === 'expense')
     .reduce((sum, t) => sum + t.amount, 0);
@@ -44,9 +40,7 @@ const ImportPreview = ({ transactions, onConfirm, onCancel }) => {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
-          Preview de Importação
-        </h2>
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Preview de Importação</h2>
         <button
           onClick={onCancel}
           className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"

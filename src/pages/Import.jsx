@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ColumnMapper from '../components/ColumnMapper';
 import FileDropZone from '../components/FileDropZone';
 import Header from '../components/Header';
 import ImportPreview from '../components/ImportPreview';
 import Modal from '../components/Modal';
 import { createExpense } from '../services/expenses.service';
-import { parseFile } from '../services/fileParser.service';
+import { mapCSVToTransactions, parseFile } from '../services/fileParser.service';
 import { createIncome } from '../services/income.service';
+import { saveMapping } from '../services/mappings.service';
 import { useAuthStore } from '../store/authStore';
 import { useToastStore } from '../store/toastStore';
 
@@ -22,6 +24,7 @@ const Import = () => {
   const [loading, setLoading] = useState(false);
   const [parsedData, setParsedData] = useState(null);
   const [showPreview, setShowPreview] = useState(false);
+  const [showMapper, setShowMapper] = useState(false);
   const [fileName, setFileName] = useState('');
 
   const handleFileSelect = async file => {
@@ -34,11 +37,10 @@ const Import = () => {
       const result = await parseFile(file);
 
       if (result.requiresMapping) {
-        // TODO: Implementar mapeamento customizado no Dia 6-7
-        addToast(
-          'CSV genérico detectado. Mapeamento customizado será implementado em breve.',
-          'info'
-        );
+        // CSV genérico - mostrar mapeador
+        setParsedData(result);
+        setShowMapper(true);
+        addToast('CSV genérico detectado. Configure o mapeamento de colunas.', 'info');
         setLoading(false);
         return;
       }
@@ -93,17 +95,11 @@ const Import = () => {
       }
 
       if (importedCount > 0) {
-        addToast(
-          `${importedCount} transação(ões) importada(s) com sucesso!`,
-          'success'
-        );
+        addToast(`${importedCount} transação(ões) importada(s) com sucesso!`, 'success');
       }
 
       if (errorCount > 0) {
-        addToast(
-          `${errorCount} transação(ões) falharam ao importar`,
-          'error'
-        );
+        addToast(`${errorCount} transação(ões) falharam ao importar`, 'error');
       }
 
       // Limpar estado e redirecionar
@@ -126,6 +122,46 @@ const Import = () => {
   const handleCancelPreview = () => {
     setParsedData(null);
     setShowPreview(false);
+    setFileName('');
+  };
+
+  const handleMappingComplete = (mapping, mappingName) => {
+    if (!parsedData || !parsedData.data) {
+      addToast('Dados não encontrados', 'error');
+      return;
+    }
+
+    try {
+      // Aplicar mapeamento aos dados CSV
+      const transactions = mapCSVToTransactions(parsedData.data, 'generic', mapping);
+
+      // Salvar mapeamento se nome foi fornecido
+      if (mappingName && mappingName.trim()) {
+        saveMapping(user.uid, mappingName.trim(), mapping);
+        addToast(`Mapeamento "${mappingName}" salvo com sucesso!`, 'success');
+      }
+
+      // Atualizar parsedData com transações mapeadas
+      setParsedData({
+        ...parsedData,
+        transactions,
+        requiresMapping: false,
+      });
+
+      // Fechar mapeador e abrir preview
+      setShowMapper(false);
+      setShowPreview(true);
+
+      addToast(`${transactions.length} transações mapeadas com sucesso!`, 'success');
+    } catch (error) {
+      console.error('Erro ao aplicar mapeamento:', error);
+      addToast('Erro ao aplicar mapeamento', 'error');
+    }
+  };
+
+  const handleCancelMapper = () => {
+    setParsedData(null);
+    setShowMapper(false);
     setFileName('');
   };
 
@@ -161,9 +197,7 @@ const Import = () => {
           </div>
 
           {/* Upload Zone */}
-          {!loading && !showPreview && (
-            <FileDropZone onFileSelect={handleFileSelect} />
-          )}
+          {!loading && !showPreview && <FileDropZone onFileSelect={handleFileSelect} />}
 
           {/* Loading */}
           {loading && (
@@ -186,12 +220,21 @@ const Import = () => {
             </Modal>
           )}
 
+          {/* Mapper Modal */}
+          {showMapper && parsedData && (
+            <Modal isOpen={showMapper} onClose={handleCancelMapper}>
+              <ColumnMapper
+                headers={parsedData.headers}
+                onMappingComplete={handleMappingComplete}
+                onCancel={handleCancelMapper}
+              />
+            </Modal>
+          )}
+
           {/* Instruções */}
           {!loading && !showPreview && (
             <div className="mt-8 bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-              <h3 className="font-semibold text-gray-800 dark:text-white mb-3">
-                📖 Como usar:
-              </h3>
+              <h3 className="font-semibold text-gray-800 dark:text-white mb-3">📖 Como usar:</h3>
               <ol className="list-decimal list-inside text-gray-600 dark:text-gray-400 space-y-2">
                 <li>Baixe seu extrato bancário no formato OFX ou CSV</li>
                 <li>Arraste o arquivo para a área acima ou clique para selecionar</li>
