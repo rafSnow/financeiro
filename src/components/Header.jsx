@@ -135,6 +135,7 @@ const Header = () => {
         { label: 'Despesas', icon: '💸', path: '/expenses' },
         { label: 'Rendas', icon: '💰', path: '/income' },
         { label: 'Categorias', icon: '🏷️', path: '/categories' },
+        { label: 'Importar', icon: '📥', path: '/import' },
       ],
     },
     {

@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard';
 import Debts from './pages/Debts';
 import Expenses from './pages/Expenses';
 import Goals from './pages/Goals';
+import Import from './pages/Import';
 import Income from './pages/Income';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -78,6 +79,14 @@ function App() {
           element={
             <PrivateRoute>
               <Categories />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/import"
+          element={
+            <PrivateRoute>
+              <Import />
             </PrivateRoute>
           }
         />
