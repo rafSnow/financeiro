@@ -351,7 +351,7 @@ const Import = () => {
 
           {/* Preview Modal */}
           {showPreview && parsedData && (
-            <Modal isOpen={showPreview} onClose={handleCancelPreview}>
+            <Modal isOpen={showPreview} onClose={handleCancelPreview} size="xl">
               <ImportPreview
                 transactions={parsedData.transactions}
                 onConfirm={handleConfirmImport}
@@ -362,7 +362,7 @@ const Import = () => {
 
           {/* Mapper Modal */}
           {showMapper && parsedData && (
-            <Modal isOpen={showMapper} onClose={handleCancelMapper}>
+            <Modal isOpen={showMapper} onClose={handleCancelMapper} size="xl">
               <ColumnMapper
                 headers={parsedData.headers}
                 onMappingComplete={handleMappingComplete}

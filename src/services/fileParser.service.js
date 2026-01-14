@@ -140,14 +140,14 @@ export async function parseOFX(fileContent) {
   try {
     // Separa header e corpo do OFX
     const parts = fileContent.split('<OFX>', 2);
-    
+
     if (parts.length < 2) {
       throw new Error('Arquivo OFX inválido: tag OFX não encontrada');
     }
 
     // Corpo SGML
     const sgmlContent = '<OFX>' + parts[1];
-    
+
     // Converte SGML para XML
     const xmlContent = sgml2xml(sgmlContent);
 
