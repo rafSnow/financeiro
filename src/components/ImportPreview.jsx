@@ -6,7 +6,10 @@ import { formatCurrency, formatDate } from '../utils/constants';
  * Permite selecionar quais transações importar
  */
 const ImportPreview = ({ transactions, onConfirm, onCancel }) => {
-  const [selectedIds, setSelectedIds] = useState(transactions.map(t => t.id));
+  // Por padrão, seleciona apenas transações únicas (não duplicatas)
+  const [selectedIds, setSelectedIds] = useState(
+    transactions.filter(t => !t.isDuplicate).map(t => t.id)
+  );
 
   const handleToggleAll = () => {
     if (selectedIds.length === transactions.length) {
@@ -37,6 +40,10 @@ const ImportPreview = ({ transactions, onConfirm, onCancel }) => {
     .filter(t => t.type === 'income')
     .reduce((sum, t) => sum + t.amount, 0);
 
+  // Contar duplicatas e únicas
+  const duplicateCount = transactions.filter(t => t.isDuplicate).length;
+  const uniqueCount = transactions.filter(t => !t.isDuplicate).length;
+
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
       <div className="flex justify-between items-center mb-6">
@@ -50,12 +57,16 @@ const ImportPreview = ({ transactions, onConfirm, onCancel }) => {
       </div>
 
       {/* Resumo */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
           <p className="text-sm text-blue-600 dark:text-blue-400">Total de Transações</p>
           <p className="text-2xl font-bold text-blue-700 dark:text-blue-300">
             {selectedIds.length} / {transactions.length}
           </p>
+        </div>
+        <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4">
+          <p className="text-sm text-purple-600 dark:text-purple-400">Transações Únicas</p>
+          <p className="text-2xl font-bold text-purple-700 dark:text-purple-300">{uniqueCount}</p>
         </div>
         <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4">
           <p className="text-sm text-green-600 dark:text-green-400">Receitas</p>
@@ -70,6 +81,25 @@ const ImportPreview = ({ transactions, onConfirm, onCancel }) => {
           </p>
         </div>
       </div>
+
+      {/* Alerta de duplicatas */}
+      {duplicateCount > 0 && (
+        <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 mb-4">
+          <div className="flex items-start gap-3">
+            <span className="text-xl">⚠️</span>
+            <div>
+              <p className="font-semibold text-yellow-800 dark:text-yellow-300">
+                {duplicateCount} duplicata{duplicateCount !== 1 ? 's' : ''} detectada
+                {duplicateCount !== 1 ? 's' : ''}
+              </p>
+              <p className="text-sm text-yellow-700 dark:text-yellow-400 mt-1">
+                Estas transações já foram importadas anteriormente. Elas não foram selecionadas por
+                padrão, mas você pode marcá-las se desejar importá-las novamente.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Seleção */}
       <div className="flex items-center gap-4 mb-4">
@@ -115,6 +145,7 @@ const ImportPreview = ({ transactions, onConfirm, onCancel }) => {
                 className={`
                   hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors
                   ${selectedIds.includes(transaction.id) ? 'bg-blue-50 dark:bg-blue-900/10' : ''}
+                  ${transaction.isDuplicate ? 'bg-red-50 dark:bg-red-900/10' : ''}
                 `}
               >
                 <td className="px-4 py-3">
@@ -129,7 +160,17 @@ const ImportPreview = ({ transactions, onConfirm, onCancel }) => {
                   {formatDate(transaction.date)}
                 </td>
                 <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                  {transaction.description}
+                  <div className="flex items-center gap-2">
+                    {transaction.description}
+                    {transaction.isDuplicate && (
+                      <span
+                        className="px-2 py-0.5 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 text-xs rounded-full font-medium"
+                        title="Esta transação já foi importada anteriormente"
+                      >
+                        Duplicata
+                      </span>
+                    )}
+                  </div>
                 </td>
                 <td className="px-4 py-3 text-sm">
                   <span

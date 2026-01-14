@@ -11,6 +11,7 @@ import { createIncome } from '../services/income.service';
 import { saveMapping } from '../services/mappings.service';
 import { useAuthStore } from '../store/authStore';
 import { useToastStore } from '../store/toastStore';
+import { findDuplicates } from '../utils/duplicateDetection';
 
 /**
  * Página de importação de extratos
@@ -45,12 +46,39 @@ const Import = () => {
         return;
       }
 
-      setParsedData(result);
+      // Detectar duplicatas
+      const { duplicates, unique } = await findDuplicates(result.transactions, user.uid);
+
+      // Marcar transações com flag isDuplicate
+      const markedTransactions = result.transactions.map(transaction => {
+        const isDuplicate = duplicates.some(
+          dup =>
+            dup.description === transaction.description &&
+            dup.amount === transaction.amount &&
+            new Date(dup.date).toISOString() === new Date(transaction.date).toISOString()
+        );
+        return { ...transaction, isDuplicate };
+      });
+
+      setParsedData({
+        ...result,
+        transactions: markedTransactions,
+        duplicateCount: duplicates.length,
+        uniqueCount: unique.length,
+      });
       setShowPreview(true);
-      addToast(
-        `${result.transactions.length} transações encontradas em ${result.fileType}`,
-        'success'
-      );
+
+      if (duplicates.length > 0) {
+        addToast(
+          `${result.transactions.length} transações encontradas (${duplicates.length} duplicatas detectadas)`,
+          'warning'
+        );
+      } else {
+        addToast(
+          `${result.transactions.length} transações encontradas em ${result.fileType}`,
+          'success'
+        );
+      }
     } catch (error) {
       console.error('Erro ao parsear arquivo:', error);
       addToast(error.message || 'Erro ao processar arquivo', 'error');
@@ -125,7 +153,7 @@ const Import = () => {
     setFileName('');
   };
 
-  const handleMappingComplete = (mapping, mappingName) => {
+  const handleMappingComplete = async (mapping, mappingName) => {
     if (!parsedData || !parsedData.data) {
       addToast('Dados não encontrados', 'error');
       return;
@@ -141,18 +169,41 @@ const Import = () => {
         addToast(`Mapeamento "${mappingName}" salvo com sucesso!`, 'success');
       }
 
+      // Detectar duplicatas
+      const { duplicates, unique } = await findDuplicates(transactions, user.uid);
+
+      // Marcar transações com flag isDuplicate
+      const markedTransactions = transactions.map(transaction => {
+        const isDuplicate = duplicates.some(
+          dup =>
+            dup.description === transaction.description &&
+            dup.amount === transaction.amount &&
+            new Date(dup.date).toISOString() === new Date(transaction.date).toISOString()
+        );
+        return { ...transaction, isDuplicate };
+      });
+
       // Atualizar parsedData com transações mapeadas
       setParsedData({
         ...parsedData,
-        transactions,
+        transactions: markedTransactions,
         requiresMapping: false,
+        duplicateCount: duplicates.length,
+        uniqueCount: unique.length,
       });
 
       // Fechar mapeador e abrir preview
       setShowMapper(false);
       setShowPreview(true);
 
-      addToast(`${transactions.length} transações mapeadas com sucesso!`, 'success');
+      if (duplicates.length > 0) {
+        addToast(
+          `${transactions.length} transações mapeadas (${duplicates.length} duplicatas detectadas)`,
+          'warning'
+        );
+      } else {
+        addToast(`${transactions.length} transações mapeadas com sucesso!`, 'success');
+      }
     } catch (error) {
       console.error('Erro ao aplicar mapeamento:', error);
       addToast('Erro ao aplicar mapeamento', 'error');
