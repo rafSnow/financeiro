@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Timestamp, writeBatch, collection, doc } from 'firebase/firestore';
 import ColumnMapper from '../components/ColumnMapper';
 import FileDropZone from '../components/FileDropZone';
 import Header from '../components/Header';
 import ImportPreview from '../components/ImportPreview';
 import Modal from '../components/Modal';
-import { createExpense } from '../services/expenses.service';
 import { mapCSVToTransactions, parseFile } from '../services/fileParser.service';
-import { createIncome } from '../services/income.service';
 import { saveMapping } from '../services/mappings.service';
+import { db } from '../services/firebase';
 import { useAuthStore } from '../store/authStore';
 import { useToastStore } from '../store/toastStore';
 import { findDuplicates } from '../utils/duplicateDetection';
@@ -27,6 +27,7 @@ const Import = () => {
   const [showPreview, setShowPreview] = useState(false);
   const [showMapper, setShowMapper] = useState(false);
   const [fileName, setFileName] = useState('');
+  const [importProgress, setImportProgress] = useState({ current: 0, total: 0 });
 
   const handleFileSelect = async file => {
     if (!file) return;
@@ -87,6 +88,42 @@ const Import = () => {
     }
   };
 
+  // Validar transação antes de importar
+  const validateTransaction = transaction => {
+    const errors = [];
+
+    // Validar descrição
+    if (!transaction.description || transaction.description.trim() === '') {
+      errors.push('Descrição vazia');
+    }
+
+    // Validar valor
+    if (typeof transaction.amount !== 'number' || isNaN(transaction.amount)) {
+      errors.push('Valor inválido');
+    }
+
+    if (transaction.amount === 0) {
+      errors.push('Valor não pode ser zero');
+    }
+
+    // Validar data
+    if (!transaction.date) {
+      errors.push('Data ausente');
+    } else {
+      const date = new Date(transaction.date);
+      if (isNaN(date.getTime())) {
+        errors.push('Data inválida');
+      }
+    }
+
+    // Validar tipo
+    if (!transaction.type || !['expense', 'income'].includes(transaction.type)) {
+      errors.push('Tipo inválido');
+    }
+
+    return { isValid: errors.length === 0, errors };
+  };
+
   const handleConfirmImport = async selectedTransactions => {
     if (!selectedTransactions || selectedTransactions.length === 0) {
       addToast('Nenhuma transação selecionada', 'error');
@@ -94,46 +131,81 @@ const Import = () => {
     }
 
     setLoading(true);
+    setImportProgress({ current: 0, total: selectedTransactions.length });
 
     try {
-      let importedCount = 0;
-      let errorCount = 0;
+      // Validar todas as transações primeiro
+      const validTransactions = [];
+      const invalidTransactions = [];
 
-      for (const transaction of selectedTransactions) {
-        try {
-          const data = {
-            description: transaction.description,
-            amount: transaction.amount,
-            date: transaction.date,
-            category: transaction.category || 'Outros',
-            userId: user.uid,
-          };
-
-          if (transaction.type === 'expense') {
-            await createExpense(data);
-          } else {
-            await createIncome(data);
-          }
-
-          importedCount++;
-        } catch (error) {
-          console.error('Erro ao importar transação:', error);
-          errorCount++;
+      selectedTransactions.forEach((transaction, index) => {
+        const validation = validateTransaction(transaction);
+        if (validation.isValid) {
+          validTransactions.push(transaction);
+        } else {
+          invalidTransactions.push({
+            transaction,
+            errors: validation.errors,
+            index: index + 1,
+          });
         }
+      });
+
+      // Mostrar erros de validação
+      if (invalidTransactions.length > 0) {
+        const errorMessage = `${invalidTransactions.length} transação(ões) inválida(s) foram ignoradas`;
+        addToast(errorMessage, 'warning');
+        console.warn('Transações inválidas:', invalidTransactions);
       }
 
-      if (importedCount > 0) {
-        addToast(`${importedCount} transação(ões) importada(s) com sucesso!`, 'success');
+      if (validTransactions.length === 0) {
+        addToast('Nenhuma transação válida para importar', 'error');
+        setLoading(false);
+        setImportProgress({ current: 0, total: 0 });
+        return;
       }
 
-      if (errorCount > 0) {
-        addToast(`${errorCount} transação(ões) falharam ao importar`, 'error');
+      // Usar writeBatch para importação eficiente
+      // Firestore limita batches a 500 operações
+      const BATCH_SIZE = 500;
+      let importedCount = 0;
+
+      for (let i = 0; i < validTransactions.length; i += BATCH_SIZE) {
+        const batch = writeBatch(db);
+        const batchTransactions = validTransactions.slice(i, i + BATCH_SIZE);
+
+        batchTransactions.forEach(transaction => {
+          const collectionName = transaction.type === 'expense' ? 'expenses' : 'incomes';
+          const docRef = doc(collection(db, collectionName));
+
+          batch.set(docRef, {
+            userId: user.uid,
+            description: transaction.description.trim(),
+            amount: Math.abs(transaction.amount),
+            date: Timestamp.fromDate(new Date(transaction.date)),
+            category: transaction.category || 'Outros',
+            paymentMethod: 'imported',
+            isFixed: false,
+            createdAt: Timestamp.now(),
+          });
+        });
+
+        await batch.commit();
+        importedCount += batchTransactions.length;
+        setImportProgress({ current: importedCount, total: validTransactions.length });
       }
+
+      // Mensagem de sucesso
+      addToast(
+        `${importedCount} transação(ões) importada(s) com sucesso!`,
+        'success'
+      );
 
       // Limpar estado e redirecionar
       setParsedData(null);
       setShowPreview(false);
       setFileName('');
+      setImportProgress({ current: 0, total: 0 });
 
       // Redirecionar para dashboard
       setTimeout(() => {
@@ -141,7 +213,8 @@ const Import = () => {
       }, 1500);
     } catch (error) {
       console.error('Erro ao importar transações:', error);
-      addToast('Erro ao importar transações', 'error');
+      addToast('Erro ao importar transações: ' + error.message, 'error');
+      setImportProgress({ current: 0, total: 0 });
     } finally {
       setLoading(false);
     }
@@ -255,8 +328,27 @@ const Import = () => {
             <div className="flex flex-col items-center justify-center py-12">
               <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mb-4"></div>
               <p className="text-gray-600 dark:text-gray-400">
-                {fileName ? `Processando ${fileName}...` : 'Processando arquivo...'}
+                {importProgress.total > 0
+                  ? `Importando ${importProgress.current} de ${importProgress.total} transações...`
+                  : fileName
+                  ? `Processando ${fileName}...`
+                  : 'Processando arquivo...'}
               </p>
+              {importProgress.total > 0 && (
+                <div className="w-64 mt-4">
+                  <div className="bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                    <div
+                      className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                      style={{
+                        width: `${(importProgress.current / importProgress.total) * 100}%`,
+                      }}
+                    ></div>
+                  </div>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 text-center">
+                    {Math.round((importProgress.current / importProgress.total) * 100)}%
+                  </p>
+                </div>
+              )}
             </div>
           )}
 
