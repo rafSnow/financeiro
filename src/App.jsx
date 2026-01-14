@@ -11,6 +11,7 @@ import Goals from './pages/Goals';
 import Import from './pages/Import';
 import Income from './pages/Income';
 import Login from './pages/Login';
+import RecategorizeExpenses from './pages/RecategorizeExpenses';
 import Register from './pages/Register';
 import Reports from './pages/Reports';
 
@@ -87,6 +88,14 @@ function App() {
           element={
             <PrivateRoute>
               <Import />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/recategorize"
+          element={
+            <PrivateRoute>
+              <RecategorizeExpenses />
             </PrivateRoute>
           }
         />

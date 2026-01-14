@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { DEFAULT_CATEGORIES } from '../services/categories.service';
-import { PAYMENT_METHODS } from '../utils/constants';
 import { suggestCategories } from '../services/autoCategorization.service';
+import { DEFAULT_CATEGORIES } from '../services/categories.service';
 import { saveCategorizationHistory } from '../services/categorizationHistory.service';
 import { useAuthStore } from '../store/authStore';
+import { PAYMENT_METHODS } from '../utils/constants';
 import Button from './Button';
 import CategorySuggestionChip from './CategorySuggestionChip';
 import Input from './Input';
@@ -195,7 +195,7 @@ const ExpenseForm = ({ expense, onSubmit, onCancel, loading = false }) => {
     // Salvar histórico de categorização se houver sugestão
     if (user?.uid && formData.description && formData.category) {
       const suggestedCategory = suggestions[0]?.category;
-      
+
       if (suggestedCategory) {
         saveCategorizationHistory(user.uid, {
           description: formData.description,
