@@ -189,7 +189,10 @@ const DebtForm = ({ debt, onSubmit, onCancel, loading = false }) => {
 
       {/* Tipo */}
       <div className="w-full">
-        <label htmlFor="type" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label
+          htmlFor="type"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+        >
           Tipo <span className="text-red-500 ml-1">*</span>
         </label>
         <select
@@ -216,7 +219,10 @@ const DebtForm = ({ debt, onSubmit, onCancel, loading = false }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Valor Total */}
         <div className="w-full">
-          <label htmlFor="totalAmount" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label
+            htmlFor="totalAmount"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+          >
             Valor Total <span className="text-red-500 ml-1">*</span>
           </label>
           <div className="relative">
@@ -305,7 +311,10 @@ const DebtForm = ({ debt, onSubmit, onCancel, loading = false }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Taxa de Juros */}
         <div className="w-full">
-          <label htmlFor="interestRate" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label
+            htmlFor="interestRate"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+          >
             Taxa de Juros (% ao ano)
           </label>
           <input

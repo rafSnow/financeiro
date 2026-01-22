@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { FiFilter, FiPlus } from 'react-icons/fi';
+import BottomNav from '../components/BottomNav';
 import Confetti from '../components/Confetti';
 import GoalCard from '../components/GoalCard';
 import GoalForm from '../components/GoalForm';
+import Header from '../components/Header';
 import {
   completeGoal,
   createGoal,
@@ -208,51 +210,51 @@ export default function Goals() {
     stats.totalTarget > 0 ? (stats.totalCurrent / stats.totalTarget) * 100 : 0;
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pb-20">
-      {/* Header */}
-      <div className="bg-white dark:bg-gray-800 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pb-20 lg:pb-0">
+      <Header />
+
+      <main style={{ maxWidth: '80rem', margin: '0 auto', padding: '2rem 1rem' }}>
+        {/* Cabeçalho da página */}
+        <div style={{ marginBottom: '2rem' }}>
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">🎯 Metas</h1>
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Metas</h1>
               <p className="text-gray-600 dark:text-gray-400 mt-1">
                 Gerencie seus objetivos financeiros
               </p>
             </div>
+
             <button
               onClick={handleCreate}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors shadow-sm"
             >
-              <FiPlus />
-              Nova Meta
+              <FiPlus className="w-5 h-5" />
+              <span className="hidden sm:inline">Nova Meta</span>
             </button>
           </div>
         </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Stats Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4" style={{ marginBottom: '2rem' }}>
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-5">
             <p className="text-sm text-gray-600 dark:text-gray-400">Total de Metas</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.total}</p>
           </div>
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-5">
             <p className="text-sm text-gray-600 dark:text-gray-400">Ativas</p>
             <p className="text-2xl font-bold text-green-600">{stats.active}</p>
           </div>
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-5">
             <p className="text-sm text-gray-600 dark:text-gray-400">Concluídas</p>
             <p className="text-2xl font-bold text-blue-600">{stats.completed}</p>
           </div>
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-5">
             <p className="text-sm text-gray-600 dark:text-gray-400">Progresso Geral</p>
             <p className="text-2xl font-bold text-purple-600">{Math.round(overallProgress)}%</p>
           </div>
         </div>
 
         {/* Filtros */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 mb-6">
+        <div style={{ marginBottom: '2rem' }}>
           <div className="flex items-center gap-2 mb-3">
             <FiFilter className="text-gray-600 dark:text-gray-400" />
             <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -262,40 +264,40 @@ export default function Goals() {
           <div className="flex gap-2 flex-wrap">
             <button
               onClick={() => setFilter('active')}
-              className={`px-4 py-2 rounded-lg transition-colors ${
+              className={`px-4 py-2 rounded-lg font-medium transition-all shadow-sm ${
                 filter === 'active'
-                  ? 'bg-green-500 text-white'
-                  : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                  ? 'bg-green-600 text-white shadow-md'
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'
               }`}
             >
               Ativas ({stats.active})
             </button>
             <button
               onClick={() => setFilter('completed')}
-              className={`px-4 py-2 rounded-lg transition-colors ${
+              className={`px-4 py-2 rounded-lg font-medium transition-all shadow-sm ${
                 filter === 'completed'
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                  ? 'bg-blue-600 text-white shadow-md'
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'
               }`}
             >
               Concluídas ({stats.completed})
             </button>
             <button
               onClick={() => setFilter('paused')}
-              className={`px-4 py-2 rounded-lg transition-colors ${
+              className={`px-4 py-2 rounded-lg font-medium transition-all shadow-sm ${
                 filter === 'paused'
-                  ? 'bg-yellow-500 text-white'
-                  : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                  ? 'bg-yellow-600 text-white shadow-md'
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'
               }`}
             >
               Pausadas ({stats.paused})
             </button>
             <button
               onClick={() => setFilter('all')}
-              className={`px-4 py-2 rounded-lg transition-colors ${
+              className={`px-4 py-2 rounded-lg font-medium transition-all shadow-sm ${
                 filter === 'all'
-                  ? 'bg-purple-500 text-white'
-                  : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                  ? 'bg-purple-600 text-white shadow-md'
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'
               }`}
             >
               Todas ({stats.total})
@@ -305,7 +307,7 @@ export default function Goals() {
 
         {/* Lista de Metas */}
         {filteredGoals.length === 0 ? (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-12 text-center">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-12 text-center">
             <p className="text-6xl mb-4">🎯</p>
             <p className="text-lg text-gray-600 dark:text-gray-400">
               {filter === 'all'
@@ -316,7 +318,7 @@ export default function Goals() {
             </p>
             <button
               onClick={handleCreate}
-              className="mt-4 px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+              className="mt-4 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors shadow-sm"
             >
               Criar Primeira Meta
             </button>
@@ -337,7 +339,9 @@ export default function Goals() {
             ))}
           </div>
         )}
-      </div>
+      </main>
+
+      <BottomNav />
 
       {/* Formulário Modal */}
       {showForm && (
