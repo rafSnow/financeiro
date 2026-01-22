@@ -27,7 +27,7 @@ const ExpenseCard = ({ expense, onEdit, onDelete }) => {
           className="flex items-center justify-center w-14 h-14 rounded-xl shrink-0"
           style={{ backgroundColor: category.color + '20' }}
         >
-          <span className="text-2xl">{category.icon}</span>
+          <category.icon className="text-2xl" style={{ color: category.color }} />
         </div>
 
         {/* Informações */}

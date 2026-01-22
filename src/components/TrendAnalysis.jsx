@@ -118,7 +118,9 @@ const TrendCard = ({ title, trend, icon }) => {
         </div>
         <div className="flex items-center justify-between">
           <span className="text-sm text-gray-600 dark:text-gray-400">Variação:</span>
-          <span className="font-semibold text-gray-900 dark:text-white">{trend.percentage.toFixed(1)}%</span>
+          <span className="font-semibold text-gray-900 dark:text-white">
+            {trend.percentage.toFixed(1)}%
+          </span>
         </div>
       </div>
     </div>
@@ -161,7 +163,9 @@ const CategoryTrendRow = ({ category, trend }) => {
         <span className="font-medium text-gray-900 dark:text-white">{cat.name}</span>
       </div>
       <div className="flex items-center gap-4">
-        <span className="text-sm text-gray-600 dark:text-gray-400">{trend.percentage.toFixed(1)}%</span>
+        <span className="text-sm text-gray-600 dark:text-gray-400">
+          {trend.percentage.toFixed(1)}%
+        </span>
         <span className={`text-xl ${directionColors[trend.direction]}`}>
           {directionIcons[trend.direction]}
         </span>
@@ -230,7 +234,9 @@ const TrendAnalysis = ({ userId }) => {
   if (!trendData) {
     return (
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 text-center">
-        <p className="text-gray-600 dark:text-gray-400">Não foi possível carregar os dados de tendências</p>
+        <p className="text-gray-600 dark:text-gray-400">
+          Não foi possível carregar os dados de tendências
+        </p>
       </div>
     );
   }
@@ -239,7 +245,9 @@ const TrendAnalysis = ({ userId }) => {
     <div className="space-y-6">
       {/* Título */}
       <div>
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">📈 Análise de Tendências</h2>
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+          📈 Análise de Tendências
+        </h2>
         <p className="text-gray-600 dark:text-gray-400">Análise dos últimos 6 meses</p>
       </div>
 
@@ -276,7 +284,9 @@ const TrendAnalysis = ({ userId }) => {
 
       {/* Tendências por categoria */}
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-200 dark:border-gray-700">
-        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Tendências por Categoria</h3>
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
+          Tendências por Categoria
+        </h3>
         <div className="space-y-3">
           {Object.entries(trendData.byCategory)
             .filter(([, trend]) => trend.percentage > 0.1) // Mostrar apenas categorias com mudança significativa

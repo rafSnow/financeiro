@@ -271,7 +271,7 @@ const Expenses = () => {
                       className="w-10 h-10 rounded-xl flex items-center justify-center"
                       style={{ backgroundColor: category.color + '20' }}
                     >
-                      <span className="text-xl">{category.icon}</span>
+                      <category.icon className="text-xl" style={{ color: category.color }} />
                     </div>
                   </div>
                   <h3 className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
@@ -312,7 +312,7 @@ const Expenses = () => {
                     : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'
                 }`}
               >
-                {category.icon} {category.name}
+                <category.icon style={{ color: selectedCategory === category.id ? 'white' : category.color }} /> {category.name}
               </button>
             ))}
           </div>

@@ -1,15 +1,26 @@
+import {
+  FaBolt,
+  FaBook,
+  FaBox,
+  FaCar,
+  FaGamepad,
+  FaHome,
+  FaPills,
+  FaUtensils,
+} from 'react-icons/fa';
+
 /**
  * Categorias padrão de despesas
  */
 export const DEFAULT_CATEGORIES = [
-  { id: 'moradia', name: 'Moradia', icon: '🏠', color: '#3B82F6' },
-  { id: 'alimentacao', name: 'Alimentação', icon: '🍔', color: '#10B981' },
-  { id: 'transporte', name: 'Transporte', icon: '🚗', color: '#F59E0B' },
-  { id: 'contas', name: 'Contas', icon: '⚡', color: '#EF4444' },
-  { id: 'lazer', name: 'Lazer', icon: '🎮', color: '#8B5CF6' },
-  { id: 'saude', name: 'Saúde', icon: '💊', color: '#EC4899' },
-  { id: 'educacao', name: 'Educação', icon: '📚', color: '#14B8A6' },
-  { id: 'outros', name: 'Outros', icon: '📦', color: '#6B7280' },
+  { id: 'moradia', name: 'Moradia', icon: FaHome, color: '#3B82F6' },
+  { id: 'alimentacao', name: 'Alimentação', icon: FaUtensils, color: '#10B981' },
+  { id: 'transporte', name: 'Transporte', icon: FaCar, color: '#F59E0B' },
+  { id: 'contas', name: 'Contas', icon: FaBolt, color: '#EF4444' },
+  { id: 'lazer', name: 'Lazer', icon: FaGamepad, color: '#8B5CF6' },
+  { id: 'saude', name: 'Saúde', icon: FaPills, color: '#EC4899' },
+  { id: 'educacao', name: 'Educação', icon: FaBook, color: '#14B8A6' },
+  { id: 'outros', name: 'Outros', icon: FaBox, color: '#6B7280' },
 ];
 
 /**

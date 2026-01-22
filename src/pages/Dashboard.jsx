@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { FaHandSparkles } from 'react-icons/fa';
+import { HiLightBulb } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
 import BottomNav from '../components/BottomNav';
 import ExpenseChart from '../components/ExpenseChart';
@@ -182,8 +184,9 @@ const Dashboard = () => {
       <main style={{ maxWidth: '80rem', margin: '0 auto', padding: '2rem 1rem' }}>
         {/* Boas-vindas */}
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-            Olá, {user?.displayName?.split(' ')[0] || user?.name?.split(' ')[0]}! 👋
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+            Olá, {user?.displayName?.split(' ')[0] || user?.name?.split(' ')[0]}!{' '}
+            <FaHandSparkles className="text-yellow-500" />
           </h2>
           <p className="text-gray-600 dark:text-gray-400 mt-1">
             Aqui está um resumo das suas finanças
@@ -310,8 +313,9 @@ const Dashboard = () => {
                                 <p className="font-medium text-gray-900 dark:text-gray-100">
                                   {expense.description}
                                 </p>
-                                <p className="text-sm text-gray-600 dark:text-gray-400">
-                                  {category.icon} {category.name}
+                                <p className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-1">
+                                  <category.icon style={{ color: category.color }} />{' '}
+                                  {category.name}
                                 </p>
                               </div>
                             </div>
@@ -381,8 +385,8 @@ const Dashboard = () => {
             {insights.length > 0 && (
               <div className="mt-8">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100">
-                    💡 Insights do Mês
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+                    <HiLightBulb className="text-yellow-500" /> Insights do Mês
                   </h3>
                   <button
                     onClick={() => navigate('/insights')}

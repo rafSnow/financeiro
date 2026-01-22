@@ -258,7 +258,7 @@ const BatchCategorizationList = ({ uncategorized, onUpdate, userId }) => {
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
-                <span className="text-2xl">{category.icon}</span>
+                <category.icon className="text-2xl" style={{ color: category.color }} />
                 <span className="font-medium text-gray-700">{category.name}</span>
               </button>
             ))}

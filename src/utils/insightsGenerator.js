@@ -3,6 +3,18 @@
  * Analisa dados do usuário e gera recomendações personalizadas
  */
 
+import {
+  FaChartLine,
+  FaDollarSign,
+  FaExclamationTriangle,
+  FaFileAlt,
+  FaLightbulb,
+  FaMoneyBillWave,
+  FaPartyHorn,
+  FaTrendingDown,
+  FaTrendingUp,
+} from 'react-icons/fa';
+
 import { DEFAULT_CATEGORIES } from '../services/categories.service';
 import { getExpenses } from '../services/expenses.service';
 import { getGoals } from '../services/goals.service';
@@ -145,7 +157,7 @@ export const generateMonthlyInsights = async (userId, month, year) => {
       const savingsRate = ((totalIncome - totalExpenses) / totalIncome) * 100;
       insights.push({
         type: 'savings_rate',
-        icon: '💰',
+        icon: FaDollarSign,
         title: 'Taxa de Poupança',
         message: `Você poupou ${savingsRate.toFixed(1)}% da sua renda este mês`,
         severity: savingsRate > 20 ? 'success' : savingsRate > 10 ? 'warning' : 'error',
@@ -161,7 +173,7 @@ export const generateMonthlyInsights = async (userId, month, year) => {
       if (Math.abs(percentChange) > 10) {
         insights.push({
           type: 'month_comparison',
-          icon: difference > 0 ? '📈' : '📉',
+          icon: difference > 0 ? FaTrendingUp : FaTrendingDown,
           title: 'Tendência de Gastos',
           message:
             difference > 0
@@ -181,7 +193,7 @@ export const generateMonthlyInsights = async (userId, month, year) => {
       if (topGrowing && topGrowing.growth > 20) {
         insights.push({
           type: 'category_growth',
-          icon: '🔺',
+          icon: FaChartLine,
           title: 'Categoria em Alta',
           message: `${topGrowing.categoryName} aumentou ${topGrowing.growth.toFixed(1)}%`,
           severity: 'warning',
@@ -200,7 +212,7 @@ export const generateMonthlyInsights = async (userId, month, year) => {
       if (topExpensePercent > 20) {
         insights.push({
           type: 'top_expense',
-          icon: '💸',
+          icon: FaMoneyBillWave,
           title: 'Maior Gasto',
           message: `${topExpense.description} representou ${topExpensePercent.toFixed(
             1
@@ -223,7 +235,7 @@ export const generateMonthlyInsights = async (userId, month, year) => {
         if (progress >= 100) {
           insights.push({
             type: 'goal_completed',
-            icon: '🎉',
+            icon: FaPartyHorn,
             title: 'Meta Alcançada!',
             message: `Parabéns! Você completou: ${goal.name}`,
             severity: 'success',
@@ -232,7 +244,7 @@ export const generateMonthlyInsights = async (userId, month, year) => {
         } else if (daysLeft <= 7 && daysLeft > 0 && progress < 80) {
           insights.push({
             type: 'goal_at_risk',
-            icon: '⚠️',
+            icon: FaExclamationTriangle,
             title: 'Meta em Risco',
             message: `${goal.name}: faltam ${daysLeft} dias e você está em ${progress.toFixed(0)}%`,
             severity: 'warning',
@@ -250,7 +262,7 @@ export const generateMonthlyInsights = async (userId, month, year) => {
       if (opportunity) {
         insights.push({
           type: 'savings_opportunity',
-          icon: '💡',
+          icon: FaLightbulb,
           title: 'Dica de Economia',
           message: opportunity.message,
           severity: 'info',
@@ -264,7 +276,7 @@ export const generateMonthlyInsights = async (userId, month, year) => {
     if (expenses.length === 0) {
       insights.push({
         type: 'no_expenses',
-        icon: '📝',
+        icon: FaFileAlt,
         title: 'Nenhuma Despesa',
         message: 'Você ainda não registrou despesas este mês',
         severity: 'info',
@@ -276,7 +288,7 @@ export const generateMonthlyInsights = async (userId, month, year) => {
       const deficit = totalExpenses - totalIncome;
       insights.push({
         type: 'deficit',
-        icon: '⚠️',
+        icon: FaExclamationTriangle,
         title: 'Déficit Mensal',
         message: `Você gastou R$ ${deficit.toFixed(2)} a mais do que ganhou`,
         severity: 'error',

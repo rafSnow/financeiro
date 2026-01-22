@@ -249,7 +249,7 @@ function CategoryCard({ category, onEdit, onDelete, isDefault = false }) {
     >
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-3">
-          <span className="text-3xl">{category.icon}</span>
+          <category.icon className="text-3xl" style={{ color: category.color }} />
           <div>
             <h3 className="font-semibold text-gray-900 dark:text-white">{category.name}</h3>
             <span className="text-xs text-gray-500 dark:text-gray-400 capitalize">

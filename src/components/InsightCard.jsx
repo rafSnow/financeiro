@@ -147,7 +147,7 @@ const InsightCard = ({ insight }) => {
         <div
           className={`${styles.iconBg} shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl`}
         >
-          {insight.icon}
+          {typeof insight.icon === 'function' ? <insight.icon /> : insight.icon}
         </div>
         <div className="flex-1">
           <h3 className={`text-lg font-bold ${styles.text} mb-1`}>{insight.title}</h3>
