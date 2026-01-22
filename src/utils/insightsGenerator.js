@@ -87,7 +87,7 @@ const analyzeCategoryGrowth = (current, previous) => {
  */
 const findSavingsOpportunity = (expenses, incomes) => {
   const totalIncome = sumArray(incomes, 'amount');
-  
+
   if (totalIncome === 0) return null;
 
   const byCategory = groupBy(expenses, 'category');
@@ -166,9 +166,7 @@ export const generateMonthlyInsights = async (userId, month, year) => {
           message:
             difference > 0
               ? `Você gastou ${percentChange.toFixed(1)}% a mais que o mês anterior`
-              : `Você economizou ${Math.abs(percentChange).toFixed(
-                  1
-                )}% comparado ao mês anterior`,
+              : `Você economizou ${Math.abs(percentChange).toFixed(1)}% comparado ao mês anterior`,
           severity: difference > 0 ? 'warning' : 'success',
           value: percentChange,
         });
@@ -236,9 +234,7 @@ export const generateMonthlyInsights = async (userId, month, year) => {
             type: 'goal_at_risk',
             icon: '⚠️',
             title: 'Meta em Risco',
-            message: `${goal.name}: faltam ${daysLeft} dias e você está em ${progress.toFixed(
-              0
-            )}%`,
+            message: `${goal.name}: faltam ${daysLeft} dias e você está em ${progress.toFixed(0)}%`,
             severity: 'warning',
             goalId: goal.id,
           });

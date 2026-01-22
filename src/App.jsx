@@ -10,6 +10,7 @@ import Expenses from './pages/Expenses';
 import Goals from './pages/Goals';
 import Import from './pages/Import';
 import Income from './pages/Income';
+import Insights from './pages/Insights';
 import Login from './pages/Login';
 import NotificationSettings from './pages/NotificationSettings';
 import RecategorizeExpenses from './pages/RecategorizeExpenses';
@@ -105,6 +106,14 @@ function App() {
           element={
             <PrivateRoute>
               <NotificationSettings />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/insights"
+          element={
+            <PrivateRoute>
+              <Insights />
             </PrivateRoute>
           }
         />

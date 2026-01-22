@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import BottomNav from '../components/BottomNav';
 import ExpenseChart from '../components/ExpenseChart';
 import Header from '../components/Header';
+import InsightCard from '../components/InsightCard';
 import { getDebts } from '../services/debts.service';
 import { getExpenses } from '../services/expenses.service';
 import { getIncomes } from '../services/income.service';
@@ -15,6 +16,7 @@ import {
   getTopExpenses,
 } from '../utils/calculations';
 import { formatCurrency, getCategoryById as getCategory } from '../utils/constants';
+import { generateCurrentMonthInsights, sortInsightsByPriority } from '../utils/insightsGenerator';
 
 /**
  * Página do Dashboard
@@ -27,6 +29,7 @@ const Dashboard = () => {
   const [expenses, setExpenses] = useState([]);
   const [incomes, setIncomes] = useState([]);
   const [debts, setDebts] = useState([]);
+  const [insights, setInsights] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const currentMonth = new Date().getMonth() + 1;
@@ -39,15 +42,20 @@ const Dashboard = () => {
 
       try {
         setLoading(true);
-        const [expensesData, incomesData, debtsData] = await Promise.all([
+        const [expensesData, incomesData, debtsData, insightsData] = await Promise.all([
           getExpenses(user.uid, currentMonth, currentYear),
           getIncomes(user.uid, currentMonth, currentYear),
           getDebts(user.uid),
+          generateCurrentMonthInsights(user.uid),
         ]);
 
         setExpenses(expensesData || []);
         setIncomes(incomesData || []);
         setDebts(debtsData || []);
+
+        // Ordenar e pegar apenas os top 3 insights
+        const sortedInsights = sortInsightsByPriority(insightsData || []);
+        setInsights(sortedInsights.slice(0, 3));
       } catch (error) {
         console.error('Erro ao carregar dados:', error);
       } finally {
@@ -326,6 +334,34 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
+
+            {/* Insights do Mês */}
+            {insights.length > 0 && (
+              <div className="mt-8">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-bold text-gray-900">💡 Insights do Mês</h3>
+                  <button
+                    onClick={() => navigate('/insights')}
+                    className="text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center gap-1"
+                  >
+                    Ver todos
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {insights.map((insight, index) => (
+                    <InsightCard key={index} insight={insight} />
+                  ))}
+                </div>
+              </div>
+            )}
           </>
         )}
       </main>
