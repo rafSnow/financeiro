@@ -55,27 +55,27 @@ const Modal = ({ isOpen, onClose, title, children, size = 'md' }) => {
     >
       {/* Overlay */}
       <div
-        className="fixed inset-0 bg-gray-900 bg-opacity-50 transition-opacity"
+        className="fixed inset-0 bg-gray-900 dark:bg-black bg-opacity-50 dark:bg-opacity-70 transition-opacity"
         onClick={onClose}
       ></div>
 
       {/* Modal */}
       <div className="flex min-h-screen items-center justify-center p-4">
         <div
-          className={`relative bg-white rounded-2xl shadow-2xl ${sizeClasses[size]} w-full transform transition-all`}
+          className={`relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl ${sizeClasses[size]} w-full transform transition-all`}
           onClick={e => e.stopPropagation()}
         >
           {/* Header */}
           <div
-            className="flex items-center justify-between border-b border-gray-200"
+            className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700"
             style={{ padding: '1.5rem' }}
           >
-            <h3 className="text-xl font-bold text-gray-900" id="modal-title">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100" id="modal-title">
               {title}
             </h3>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600 transition-colors"
+              className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path

@@ -173,16 +173,16 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20 lg:pb-0">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pb-20 lg:pb-0 transition-colors duration-300">
       <Header />
 
       <main style={{ maxWidth: '80rem', margin: '0 auto', padding: '2rem 1rem' }}>
         {/* Boas-vindas */}
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
             Olá, {user?.displayName?.split(' ')[0] || user?.name?.split(' ')[0]}! 👋
           </h2>
-          <p className="text-gray-600 mt-1">Aqui está um resumo das suas finanças</p>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">Aqui está um resumo das suas finanças</p>
         </div>
 
         {loading ? (
@@ -199,14 +199,14 @@ const Dashboard = () => {
               {summaryCards.map((card, index) => (
                 <div
                   key={index}
-                  className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+                  className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow border border-transparent dark:border-gray-700"
                   style={{ padding: '1.5rem' }}
                 >
                   <div className="flex items-start justify-between mb-4">
-                    <div className={`${card.bgColor} p-3 rounded-xl`}>{card.icon}</div>
+                    <div className={`${card.bgColor} dark:bg-opacity-20 p-3 rounded-xl`}>{card.icon}</div>
                   </div>
-                  <h3 className="text-sm font-medium text-gray-600 mb-1">{card.title}</h3>
-                  <p className={`text-2xl font-bold ${card.textColor || 'text-gray-900'}`}>
+                  <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">{card.title}</h3>
+                  <p className={`text-2xl font-bold ${card.textColor || 'text-gray-900 dark:text-gray-100'}`}>
                     {card.value}
                   </p>
                 </div>
@@ -217,7 +217,7 @@ const Dashboard = () => {
             <div className="mb-8 flex flex-wrap gap-4">
               <button
                 onClick={() => navigate('/expenses')}
-                className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors font-semibold shadow-md"
+                className="flex items-center gap-2 px-6 py-3 bg-blue-600 dark:bg-blue-500 text-white rounded-xl hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors font-semibold shadow-md"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
@@ -231,7 +231,7 @@ const Dashboard = () => {
               </button>
               <button
                 onClick={() => navigate('/debts')}
-                className="flex items-center gap-2 px-6 py-3 bg-white text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-semibold shadow-md border border-gray-200"
+                className="flex items-center gap-2 px-6 py-3 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors font-semibold shadow-md border border-gray-200 dark:border-gray-700"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
@@ -245,7 +245,7 @@ const Dashboard = () => {
               </button>
               <button
                 onClick={() => navigate('/income')}
-                className="flex items-center gap-2 px-6 py-3 bg-white text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-semibold shadow-md border border-gray-200"
+                className="flex items-center gap-2 px-6 py-3 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors font-semibold shadow-md border border-gray-200 dark:border-gray-700"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path

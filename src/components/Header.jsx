@@ -13,6 +13,7 @@ import { useToastStore } from '../store/toastStore';
 import { runAllChecks } from '../utils/alertRules';
 import AlertBadge from './AlertBadge';
 import AlertList from './AlertList';
+import ThemeToggle from './ThemeToggle';
 
 /**
  * Componente de header da aplicação
@@ -164,14 +165,14 @@ const Header = () => {
   const isActive = path => location.pathname === path;
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200">
+    <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 transition-colors duration-300">
       <div style={{ maxWidth: '80rem', margin: '0 auto', padding: '0 1rem' }}>
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-2">
               <span className="text-2xl">💰</span>
-              <h1 className="text-xl font-bold text-blue-600">FinanceiroApp</h1>
+              <h1 className="text-xl font-bold text-blue-600 dark:text-blue-400">FinanceiroApp</h1>
             </div>
 
             {/* Navegação Desktop */}
@@ -186,7 +187,7 @@ const Header = () => {
                         className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
                           menu.submenu.some(item => isActive(item.path))
                             ? 'bg-blue-600 text-white'
-                            : 'text-gray-700 hover:bg-gray-100'
+                            : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
                         }`}
                       >
                         <span>{menu.icon}</span>
@@ -216,15 +217,15 @@ const Header = () => {
                             className="fixed inset-0 z-10"
                             onClick={() => setOpenDropdown(null)}
                           />
-                          <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-20">
+                          <div className="absolute top-full left-0 mt-1 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-20">
                             {menu.submenu.map(item => (
                               <button
                                 key={item.path}
                                 onClick={() => handleNavigate(item.path)}
                                 className={`w-full flex items-center gap-3 px-4 py-2 text-left transition-colors ${
                                   isActive(item.path)
-                                    ? 'bg-blue-50 text-blue-600 font-medium'
-                                    : 'text-gray-700 hover:bg-gray-50'
+                                    ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium'
+                                    : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700'
                                 }`}
                               >
                                 <span>{item.icon}</span>
@@ -245,7 +246,7 @@ const Header = () => {
                       className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
                         isActive(menu.path)
                           ? 'bg-blue-600 text-white'
-                          : 'text-gray-700 hover:bg-gray-100'
+                          : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
                       }`}
                     >
                       <span>{menu.icon}</span>
@@ -262,13 +263,16 @@ const Header = () => {
             {/* Badge de Alertas */}
             <AlertBadge count={unreadCount} onClick={() => setShowAlertList(true)} />
 
+            {/* Theme Toggle */}
+            <ThemeToggle />
+
             <div className="text-right hidden sm:block">
-              <p className="text-sm font-medium text-gray-900">{user?.displayName || user?.name}</p>
-              <p className="text-xs text-gray-500">{user?.email}</p>
+              <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{user?.displayName || user?.name}</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">{user?.email}</p>
             </div>
             <button
               onClick={handleLogout}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path

@@ -5,6 +5,13 @@
 /* Reset básico */
 
 :root {
+  /* Light Mode Colors */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f9fafb;
+  --color-text-primary: #111827;
+  --color-text-secondary: #6b7280;
+  --color-border: #e5e7eb;
+
   /* Cores principais */
   --primary: #3b82f6;
   --success: #10b981;
@@ -38,10 +45,30 @@
   box-sizing: border-box;
 }
 
+.dark {
+  /* Dark Mode Colors */
+  --color-bg-primary: #1f2937;
+  --color-bg-secondary: #374151;
+  --color-text-primary: #f9fafb;
+  --color-text-secondary: #d1d5db;
+  --color-border: #4b5563;
+
+  /* Cores principais (mais vibrantes para dark) */
+  --primary: #60a5fa;
+  --success: #34d399;
+  --warning: #fbbf24;
+  --danger: #f87171;
+
+  /* Backgrounds */
+  --bg-primary: #1f2937;
+  --bg-secondary: #374151;
+}
+
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background-color: var(--bg-secondary);
-  color: var(--gray-900);
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }

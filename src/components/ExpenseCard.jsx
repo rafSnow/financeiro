@@ -9,7 +9,7 @@ const ExpenseCard = ({ expense, onEdit, onDelete }) => {
   const category = getCategoryById(expense.category);
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all">
+    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all">
       <div className="flex items-start gap-4" style={{ padding: '1.5rem' }}>
         {/* Ícone da categoria */}
         <div
@@ -23,11 +23,11 @@ const ExpenseCard = ({ expense, onEdit, onDelete }) => {
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-2">
             <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-gray-900 truncate text-base">
+              <h3 className="font-semibold text-gray-900 dark:text-gray-100 truncate text-base">
                 {expense.description}
               </h3>
               <div className="flex items-center gap-2" style={{ marginTop: '0.25rem' }}>
-                <span className="text-sm text-gray-600">{category.name}</span>
+                <span className="text-sm text-gray-600 dark:text-gray-400">{category.name}</span>
                 {expense.isFixed && (
                   <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-blue-100 text-blue-800">
                     Fixa
@@ -36,8 +36,8 @@ const ExpenseCard = ({ expense, onEdit, onDelete }) => {
               </div>
             </div>
             <div className="text-right shrink-0">
-              <p className="text-xl font-bold text-gray-900">{formatCurrency(expense.amount)}</p>
-              <p className="text-xs text-gray-500" style={{ marginTop: '0.25rem' }}>
+              <p className="text-xl font-bold text-gray-900 dark:text-gray-100">{formatCurrency(expense.amount)}</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400" style={{ marginTop: '0.25rem' }}>
                 {formatDate(expense.date)}
               </p>
             </div>

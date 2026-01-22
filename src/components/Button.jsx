@@ -26,11 +26,11 @@ const Button = ({
 
   const variants = {
     primary:
-      'bg-blue-600 text-white hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 active:bg-blue-800',
+      'bg-blue-600 text-white hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 active:bg-blue-800 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800',
     secondary:
-      'bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-4 focus:ring-gray-200 active:bg-gray-400',
+      'bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-4 focus:ring-gray-200 active:bg-gray-400 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 dark:focus:ring-gray-800',
     danger:
-      'bg-red-600 text-white hover:bg-red-700 focus:ring-4 focus:ring-red-300 active:bg-red-800',
+      'bg-red-600 text-white hover:bg-red-700 focus:ring-4 focus:ring-red-300 active:bg-red-800 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800',
   };
 
   return (
