@@ -214,7 +214,9 @@ const Income = () => {
               <h2 className="text-xl font-bold text-gray-900 dark:text-white">
                 {getMonthName(currentMonth)} {currentYear}
               </h2>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Total: {formatCurrency(total)}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                Total: {formatCurrency(total)}
+              </p>
             </div>
 
             <button
@@ -249,7 +251,9 @@ const Income = () => {
               <span className="text-2xl">💵</span>
               <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Total</h3>
             </div>
-            <p className="text-2xl font-bold text-gray-900 dark:text-white">{formatCurrency(total)}</p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">
+              {formatCurrency(total)}
+            </p>
           </div>
 
           {/* Salários */}
@@ -354,7 +358,9 @@ const Income = () => {
               >
                 Nenhuma renda
               </h3>
-              <p className="text-gray-600 dark:text-gray-400">Adicione sua primeira renda para começar</p>
+              <p className="text-gray-600 dark:text-gray-400">
+                Adicione sua primeira renda para começar
+              </p>
             </div>
           ) : (
             <div className="flex flex-col gap-4">

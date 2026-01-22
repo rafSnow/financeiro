@@ -148,7 +148,10 @@ const IncomeForm = ({ income, onSubmit, onCancel, loading = false }) => {
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       {/* Tipo */}
       <div className="w-full">
-        <label htmlFor="type" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label
+          htmlFor="type"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+        >
           Tipo <span className="text-red-500 ml-1">*</span>
         </label>
         <select
@@ -185,7 +188,10 @@ const IncomeForm = ({ income, onSubmit, onCancel, loading = false }) => {
 
       {/* Valor */}
       <div className="w-full">
-        <label htmlFor="amount" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label
+          htmlFor="amount"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+        >
           Valor <span className="text-red-500 ml-1">*</span>
         </label>
         <div className="relative">
@@ -214,7 +220,10 @@ const IncomeForm = ({ income, onSubmit, onCancel, loading = false }) => {
 
       {/* Data */}
       <div className="w-full">
-        <label htmlFor="date" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label
+          htmlFor="date"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+        >
           Data <span className="text-red-500 ml-1">*</span>
         </label>
         <input
