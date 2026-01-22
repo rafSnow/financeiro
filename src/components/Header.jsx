@@ -1,4 +1,17 @@
 import { useEffect, useState } from 'react';
+import {
+  FaBell,
+  FaBullseye,
+  FaChartBar,
+  FaCog,
+  FaDollarSign,
+  FaExclamationCircle,
+  FaFileImport,
+  FaHome,
+  FaMoneyBillWave,
+  FaSave,
+  FaTags,
+} from 'react-icons/fa';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   deleteAlert,
@@ -40,7 +53,6 @@ const Header = () => {
     // Recarregar alertas a cada 5 minutos
     const interval = setInterval(loadAlerts, 5 * 60 * 1000);
     return () => clearInterval(interval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const loadAlerts = async () => {
@@ -126,48 +138,48 @@ const Header = () => {
   const menuStructure = [
     {
       label: 'Dashboard',
-      icon: '🏠',
+      icon: FaHome,
       path: '/dashboard',
     },
     {
       label: 'Transações',
-      icon: '💸',
+      icon: FaMoneyBillWave,
       submenu: [
-        { label: 'Despesas', icon: '💸', path: '/expenses' },
-        { label: 'Rendas', icon: '💰', path: '/income' },
-        { label: 'Categorias', icon: '🏷️', path: '/categories' },
-        { label: 'Importar', icon: '📥', path: '/import' },
+        { label: 'Despesas', icon: FaMoneyBillWave, path: '/expenses' },
+        { label: 'Rendas', icon: FaDollarSign, path: '/income' },
+        { label: 'Categorias', icon: FaTags, path: '/categories' },
+        { label: 'Importar', icon: FaFileImport, path: '/import' },
       ],
     },
     {
       label: 'Dívidas',
-      icon: '🔴',
+      icon: FaExclamationCircle,
       path: '/debts',
     },
     {
       label: 'Planejamento',
-      icon: '🎯',
+      icon: FaBullseye,
       submenu: [
-        { label: 'Metas', icon: '🎯', path: '/goals' },
-        { label: 'Relatórios', icon: '📊', path: '/reports' },
+        { label: 'Metas', icon: FaBullseye, path: '/goals' },
+        { label: 'Relatórios', icon: FaChartBar, path: '/reports' },
       ],
     },
     {
       label: 'Configurações',
-      icon: '⚙️',
+      icon: FaCog,
       submenu: [
-        { label: 'Notificações', icon: '🔔', path: '/notifications' },
-        { label: 'Backup', icon: '💾', path: '/settings' },
+        { label: 'Notificações', icon: FaBell, path: '/notifications' },
+        { label: 'Backup', icon: FaSave, path: '/settings' },
       ],
     },
   ];
 
   const navItems = [
-    { path: '/dashboard', label: 'Dashboard', icon: '🏠' },
-    { path: '/expenses', label: 'Despesas', icon: '💸' },
-    { path: '/income', label: 'Rendas', icon: '💰' },
-    { path: '/debts', label: 'Dívidas', icon: '🔴' },
-    { path: '/reports', label: 'Relatórios', icon: '📊' },
+    { path: '/dashboard', label: 'Dashboard', icon: FaHome },
+    { path: '/expenses', label: 'Despesas', icon: FaMoneyBillWave },
+    { path: '/income', label: 'Rendas', icon: FaDollarSign },
+    { path: '/debts', label: 'Dívidas', icon: FaExclamationCircle },
+    { path: '/reports', label: 'Relatórios', icon: FaChartBar },
   ];
 
   const isActive = path => location.pathname === path;
@@ -182,9 +194,7 @@ const Header = () => {
           {/* Logo */}
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-2">
-              <span className="text-2xl" aria-hidden="true">
-                💰
-              </span>
+              <FaDollarSign className="text-2xl text-blue-600 dark:text-blue-400" />
               <h1 className="text-xl font-bold text-blue-600 dark:text-blue-400">FinanceiroApp</h1>
             </div>
 
@@ -210,7 +220,6 @@ const Header = () => {
                         aria-haspopup="true"
                         aria-label={`Menu ${menu.label}`}
                       >
-                        <span>{menu.icon}</span>
                         <span>{menu.label}</span>
                         <svg
                           className={`w-4 h-4 transition-transform ${
@@ -248,7 +257,6 @@ const Header = () => {
                                     : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700'
                                 }`}
                               >
-                                <span>{item.icon}</span>
                                 <span>{item.label}</span>
                               </button>
                             ))}
@@ -271,7 +279,6 @@ const Header = () => {
                       aria-label={`Ir para ${menu.label}`}
                       aria-current={isActive(menu.path) ? 'page' : undefined}
                     >
-                      <span aria-hidden="true">{menu.icon}</span>
                       <span>{menu.label}</span>
                     </button>
                   );

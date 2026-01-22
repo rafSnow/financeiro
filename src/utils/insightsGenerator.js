@@ -4,15 +4,15 @@
  */
 
 import {
+  FaArrowDown,
+  FaArrowUp,
   FaChartLine,
   FaDollarSign,
   FaExclamationTriangle,
   FaFileAlt,
   FaLightbulb,
   FaMoneyBillWave,
-  FaPartyHorn,
-  FaTrendingDown,
-  FaTrendingUp,
+  FaTrophy,
 } from 'react-icons/fa';
 
 import { DEFAULT_CATEGORIES } from '../services/categories.service';
@@ -173,7 +173,7 @@ export const generateMonthlyInsights = async (userId, month, year) => {
       if (Math.abs(percentChange) > 10) {
         insights.push({
           type: 'month_comparison',
-          icon: difference > 0 ? FaTrendingUp : FaTrendingDown,
+          icon: difference > 0 ? FaArrowUp : FaArrowDown,
           title: 'Tendência de Gastos',
           message:
             difference > 0
@@ -235,7 +235,7 @@ export const generateMonthlyInsights = async (userId, month, year) => {
         if (progress >= 100) {
           insights.push({
             type: 'goal_completed',
-            icon: FaPartyHorn,
+            icon: FaTrophy,
             title: 'Meta Alcançada!',
             message: `Parabéns! Você completou: ${goal.name}`,
             severity: 'success',

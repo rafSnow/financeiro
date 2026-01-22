@@ -201,8 +201,8 @@ const BatchCategorizationList = ({ uncategorized, onUpdate, userId }) => {
                         percentage >= 90
                           ? 'bg-green-100 text-green-700'
                           : percentage >= 70
-                          ? 'bg-yellow-100 text-yellow-700'
-                          : 'bg-orange-100 text-orange-700'
+                            ? 'bg-yellow-100 text-yellow-700'
+                            : 'bg-orange-100 text-orange-700'
                       }`}
                     >
                       {percentage}% confiança

@@ -1,3 +1,4 @@
+import { FaMoon, FaSun } from 'react-icons/fa';
 import { useTheme } from '../contexts/ThemeContext';
 
 /**
@@ -20,8 +21,8 @@ const ThemeToggle = () => {
       aria-label={`Mudar para modo ${theme === 'light' ? 'escuro' : 'claro'}`}
       title={`Modo ${theme === 'light' ? 'Escuro' : 'Claro'}`}
     >
-      <span className="text-2xl transition-transform duration-300 hover:scale-110 inline-block">
-        {theme === 'light' ? '🌙' : '☀️'}
+      <span className="text-2xl transition-transform duration-300 hover:scale-110 inline-block text-gray-700 dark:text-gray-300">
+        {theme === 'light' ? <FaMoon /> : <FaSun />}
       </span>
     </button>
   );

@@ -14,7 +14,9 @@ const EmptyState = ({
   return (
     <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
       {/* Ícone */}
-      <div className="text-6xl mb-4 animate-bounce-slow">{icon}</div>
+      <div className="text-6xl mb-4 animate-bounce-slow text-gray-400 dark:text-gray-500">
+        {icon}
+      </div>
 
       {/* Título */}
       <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">{title}</h3>
@@ -35,7 +37,7 @@ const EmptyState = ({
 };
 
 EmptyState.propTypes = {
-  icon: PropTypes.string,
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   title: PropTypes.string,
   description: PropTypes.string,
   action: PropTypes.shape({

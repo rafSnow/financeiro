@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { FaMoneyBillWave, FaSearch } from 'react-icons/fa';
 import { AnimatedCard, AnimatedList } from '../components/Animations';
 import BottomNav from '../components/BottomNav';
 import EmptyState from '../components/EmptyState';
@@ -306,13 +307,16 @@ const Expenses = () => {
               <button
                 key={category.id}
                 onClick={() => setSelectedCategory(category.id)}
-                className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-all shadow-sm ${
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-all shadow-sm ${
                   selectedCategory === category.id
                     ? 'bg-blue-600 text-white shadow-md'
                     : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'
                 }`}
               >
-                <category.icon style={{ color: selectedCategory === category.id ? 'white' : category.color }} /> {category.name}
+                <category.icon
+                  style={{ color: selectedCategory === category.id ? 'white' : category.color }}
+                />
+                {category.name}
               </button>
             ))}
           </div>
@@ -328,7 +332,13 @@ const Expenses = () => {
             </div>
           ) : filteredExpenses.length === 0 ? (
             <EmptyState
-              icon={selectedCategory === 'all' ? '💸' : '🔍'}
+              icon={
+                selectedCategory === 'all' ? (
+                  <FaMoneyBillWave className="text-6xl" />
+                ) : (
+                  <FaSearch className="text-6xl" />
+                )
+              }
               title={
                 selectedCategory === 'all'
                   ? 'Nenhuma despesa registrada'

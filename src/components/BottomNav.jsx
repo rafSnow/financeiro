@@ -1,4 +1,13 @@
 import { useState } from 'react';
+import {
+  FaBell,
+  FaBullseye,
+  FaChartBar,
+  FaFileImport,
+  FaLightbulb,
+  FaSave,
+  FaTags,
+} from 'react-icons/fa';
 import { Link, useLocation } from 'react-router-dom';
 
 /**
@@ -69,13 +78,13 @@ const BottomNav = () => {
   ];
 
   const menuItems = [
-    { path: '/goals', label: 'Metas', icon: '🎯' },
-    { path: '/reports', label: 'Relatórios', icon: '📊' },
-    { path: '/categories', label: 'Categorias', icon: '🏷️' },
-    { path: '/import', label: 'Importar', icon: '📥' },
-    { path: '/insights', label: 'Insights', icon: '💡' },
-    { path: '/notifications', label: 'Notificações', icon: '🔔' },
-    { path: '/settings', label: 'Backup', icon: '💾' },
+    { path: '/goals', label: 'Metas', icon: FaBullseye },
+    { path: '/reports', label: 'Relatórios', icon: FaChartBar },
+    { path: '/categories', label: 'Categorias', icon: FaTags },
+    { path: '/import', label: 'Importar', icon: FaFileImport },
+    { path: '/insights', label: 'Insights', icon: FaLightbulb },
+    { path: '/notifications', label: 'Notificações', icon: FaBell },
+    { path: '/settings', label: 'Backup', icon: FaSave },
   ];
 
   return (
@@ -155,8 +164,7 @@ const BottomNav = () => {
                         : 'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600'
                     }`}
                   >
-                    <span className="text-2xl mb-1">{item.icon}</span>
-                    <span className="text-xs font-medium text-center">{item.label}</span>
+                    <span className="text-sm font-medium text-center">{item.label}</span>
                   </Link>
                 ))}
               </div>
