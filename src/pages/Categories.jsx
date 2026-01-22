@@ -143,7 +143,9 @@ export default function Categories() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Categorias</h1>
-              <p className="text-gray-600 dark:text-gray-400 mt-1">Gerencie suas categorias de despesas</p>
+              <p className="text-gray-600 dark:text-gray-400 mt-1">
+                Gerencie suas categorias de despesas
+              </p>
             </div>
 
             <button
@@ -161,7 +163,9 @@ export default function Categories() {
           <div className="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-2xl flex items-start gap-3">
             <FiAlertCircle className="text-blue-500 dark:text-blue-400 mt-0.5 shrink-0" size={20} />
             <div>
-              <p className="text-sm text-blue-900 dark:text-blue-200 font-medium">Usando Categorias Padrão</p>
+              <p className="text-sm text-blue-900 dark:text-blue-200 font-medium">
+                Usando Categorias Padrão
+              </p>
               <p className="text-sm text-blue-700 dark:text-blue-300 mt-1">
                 Você está usando as categorias padrão do sistema. Clique no botão abaixo para salvar
                 suas próprias categorias e poder editá-las.
@@ -178,45 +182,49 @@ export default function Categories() {
           {/* Categorias Personalizadas */}
           {customCategories.length > 0 && (
             <div>
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Minhas Categorias</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                Minhas Categorias
+              </h2>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {customCategories.map(category => (
-                <CategoryCard
-                  key={category.id}
-                  category={category}
-                  onEdit={handleEdit}
-                  onDelete={handleDelete}
-                />
-              ))}
+                {customCategories.map(category => (
+                  <CategoryCard
+                    key={category.id}
+                    category={category}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
           {/* Categorias Padrão */}
           {defaultCategories.length > 0 && (
             <div>
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Categorias Padrão</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                Categorias Padrão
+              </h2>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {defaultCategories.map(category => (
-                <CategoryCard
-                  key={category.id}
-                  category={category}
-                  onEdit={handleEdit}
-                  onDelete={handleDelete}
-                  isDefault
-                />
-              ))}
+                {defaultCategories.map(category => (
+                  <CategoryCard
+                    key={category.id}
+                    category={category}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
+                    isDefault
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Estado vazio */}
-        {categories.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-gray-600 dark:text-gray-400 mb-4">Nenhuma categoria encontrada</p>
-            <Button onClick={() => setIsFormOpen(true)}>Criar Primeira Categoria</Button>
-          </div>
-        )}
+          {/* Estado vazio */}
+          {categories.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-gray-600 dark:text-gray-400 mb-4">Nenhuma categoria encontrada</p>
+              <Button onClick={() => setIsFormOpen(true)}>Criar Primeira Categoria</Button>
+            </div>
+          )}
         </div>
       </main>
 

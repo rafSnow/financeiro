@@ -179,28 +179,28 @@ export default function CategoryForm({ isOpen, onClose, onSubmit, initialData = 
 
         {/* Ícone */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Ícone</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Ícone</label>
           <div className="flex items-center gap-3">
             <button
               type="button"
               onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-              className="w-16 h-16 text-3xl bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center"
+              className="w-16 h-16 text-3xl bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors flex items-center justify-center"
             >
               {formData.icon}
             </button>
-            <span className="text-sm text-gray-600">Clique para escolher um emoji</span>
+            <span className="text-sm text-gray-600 dark:text-gray-400">Clique para escolher um emoji</span>
           </div>
 
           {showEmojiPicker && (
-            <div className="mt-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
+            <div className="mt-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
               <div className="grid grid-cols-8 gap-2 max-h-48 overflow-y-auto">
                 {AVAILABLE_EMOJIS.map(emoji => (
                   <button
                     key={emoji}
                     type="button"
                     onClick={() => handleEmojiSelect(emoji)}
-                    className={`text-2xl p-2 rounded hover:bg-gray-200 transition-colors ${
-                      formData.icon === emoji ? 'bg-blue-100 ring-2 ring-blue-500' : ''
+                    className={`text-2xl p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors ${
+                      formData.icon === emoji ? 'bg-blue-100 dark:bg-blue-900 ring-2 ring-blue-500' : ''
                     }`}
                   >
                     {emoji}
@@ -213,7 +213,7 @@ export default function CategoryForm({ isOpen, onClose, onSubmit, initialData = 
 
         {/* Cor */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Cor</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Cor</label>
           <div className="grid grid-cols-5 gap-2">
             {AVAILABLE_COLORS.map(color => (
               <button
@@ -222,7 +222,7 @@ export default function CategoryForm({ isOpen, onClose, onSubmit, initialData = 
                 onClick={() => setFormData(prev => ({ ...prev, color: color.value }))}
                 className={`h-10 rounded-lg transition-all ${
                   formData.color === color.value
-                    ? 'ring-2 ring-offset-2 ring-gray-900 scale-110'
+                    ? 'ring-2 ring-offset-2 dark:ring-offset-gray-800 ring-gray-900 dark:ring-gray-100 scale-110'
                     : 'hover:scale-105'
                 }`}
                 style={{ backgroundColor: color.value }}
@@ -234,7 +234,7 @@ export default function CategoryForm({ isOpen, onClose, onSubmit, initialData = 
 
         {/* Tipo */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Tipo de Despesa</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tipo de Despesa</label>
           <div className="flex gap-3">
             <button
               type="button"
@@ -242,7 +242,7 @@ export default function CategoryForm({ isOpen, onClose, onSubmit, initialData = 
               className={`flex-1 py-2 px-4 rounded-lg font-medium transition-colors ${
                 formData.type === 'fixed'
                   ? 'bg-blue-500 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
               }`}
             >
               Fixa
@@ -253,7 +253,7 @@ export default function CategoryForm({ isOpen, onClose, onSubmit, initialData = 
               className={`flex-1 py-2 px-4 rounded-lg font-medium transition-colors ${
                 formData.type === 'variable'
                   ? 'bg-blue-500 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
               }`}
             >
               Variável
