@@ -123,20 +123,22 @@ const BottomNav = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 lg:hidden">
-      <div className="flex justify-around items-center h-16">
+    <nav className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 lg:hidden z-50">
+      <div className="flex justify-between items-center px-1 py-2 overflow-x-auto scrollbar-hide">
         {navItems.map(item => {
           const isActive = location.pathname === item.path;
           return (
             <Link
               key={item.path}
               to={item.path}
-              className={`flex flex-col items-center justify-center flex-1 h-full transition-colors ${
-                isActive ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'
+              className={`flex flex-col items-center justify-center min-w-[60px] px-2 py-1 transition-colors ${
+                isActive 
+                  ? 'text-blue-600 dark:text-blue-400' 
+                  : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
               }`}
             >
               {item.icon}
-              <span className="text-xs mt-1 font-medium">{item.label}</span>
+              <span className="text-[10px] mt-1 font-medium truncate max-w-[60px]">{item.label}</span>
             </Link>
           );
         })}

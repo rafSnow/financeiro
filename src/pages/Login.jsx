@@ -180,8 +180,12 @@ const Login = () => {
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-blue-600 dark:text-blue-500">💰 FinanceiroApp</h1>
-          <h2 className="mt-6 text-3xl font-bold text-gray-900 dark:text-white">Bem-vindo de volta!</h2>
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">Entre com sua conta para continuar</p>
+          <h2 className="mt-6 text-3xl font-bold text-gray-900 dark:text-white">
+            Bem-vindo de volta!
+          </h2>
+          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+            Entre com sua conta para continuar
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="mt-8">
@@ -244,7 +248,10 @@ const Login = () => {
           <div className="text-center mt-6">
             <p className="text-sm text-gray-600 dark:text-gray-400">
               Não tem uma conta?{' '}
-              <Link to="/register" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">
+              <Link
+                to="/register"
+                className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
+              >
                 Cadastre-se
               </Link>
             </p>

@@ -245,7 +245,10 @@ const Register = () => {
           <div className="text-center mt-6">
             <p className="text-sm text-gray-600 dark:text-gray-400">
               Já tem uma conta?{' '}
-              <Link to="/login" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">
+              <Link
+                to="/login"
+                className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
+              >
                 Faça login
               </Link>
             </p>
