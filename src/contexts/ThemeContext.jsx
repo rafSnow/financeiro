@@ -74,6 +74,17 @@ export const ThemeProvider = ({ children }) => {
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     console.log('🔄 [toggleTheme] Toggling from', theme, 'to', newTheme);
+
+    // Aplicar classe IMEDIATAMENTE, ANTES do setState
+    // Isso garante que quando os componentes re-renderizarem, a classe já está aplicada
+    if (newTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+      console.log('⚡ [toggleTheme] SYNC Added "dark" class');
+    } else {
+      document.documentElement.classList.remove('dark');
+      console.log('⚡ [toggleTheme] SYNC Removed "dark" class');
+    }
+
     setTheme(newTheme);
   };
 
