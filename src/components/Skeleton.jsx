@@ -174,6 +174,93 @@ export const InsightCardSkeleton = () => (
 );
 
 /**
+ * Skeleton para Gráficos (Charts)
+ */
+export const ChartSkeleton = () => (
+  <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-6">
+    <div className="space-y-4">
+      {/* Título do gráfico */}
+      <div className="flex items-center justify-between">
+        <Skeleton width="w-32" height="h-6" />
+        <Skeleton width="w-20" height="h-8" className="rounded-lg" />
+      </div>
+
+      {/* Área do gráfico */}
+      <div className="space-y-2">
+        {/* Simulando barras de gráfico */}
+        <div className="flex items-end justify-between gap-2 h-48">
+          {Array.from({ length: 7 }).map((_, index) => (
+            <Skeleton
+              key={index}
+              width="w-full"
+              height={`h-${[32, 40, 24, 48, 36, 28, 44][index]}`}
+              className="rounded-t-lg"
+            />
+          ))}
+        </div>
+
+        {/* Labels do eixo X */}
+        <div className="flex justify-between">
+          {Array.from({ length: 7 }).map((_, index) => (
+            <Skeleton key={index} width="w-10" height="h-3" />
+          ))}
+        </div>
+      </div>
+
+      {/* Legenda */}
+      <div className="flex items-center gap-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+        <div className="flex items-center gap-2">
+          <Skeleton width="w-4" height="h-4" className="rounded" />
+          <Skeleton width="w-16" height="h-3" />
+        </div>
+        <div className="flex items-center gap-2">
+          <Skeleton width="w-4" height="h-4" className="rounded" />
+          <Skeleton width="w-16" height="h-3" />
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+/**
+ * Skeleton para Tabelas
+ */
+export const TableSkeleton = ({ rows = 5 }) => (
+  <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden">
+    {/* Header da tabela */}
+    <div className="bg-gray-50 dark:bg-gray-700/50 px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+      <div className="grid grid-cols-4 gap-4">
+        <Skeleton width="w-24" height="h-4" />
+        <Skeleton width="w-20" height="h-4" />
+        <Skeleton width="w-20" height="h-4" />
+        <Skeleton width="w-16" height="h-4" />
+      </div>
+    </div>
+
+    {/* Linhas da tabela */}
+    <div className="divide-y divide-gray-200 dark:divide-gray-700">
+      {Array.from({ length: rows }).map((_, index) => (
+        <div key={index} className="px-6 py-4">
+          <div className="grid grid-cols-4 gap-4 items-center">
+            <Skeleton width="w-32" height="h-5" />
+            <Skeleton width="w-24" height="h-5" />
+            <Skeleton width="w-20" height="h-4" />
+            <div className="flex gap-2">
+              <Skeleton width="w-8" height="h-8" className="rounded-lg" />
+              <Skeleton width="w-8" height="h-8" className="rounded-lg" />
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+TableSkeleton.propTypes = {
+  rows: PropTypes.number,
+};
+
+/**
  * Container de Skeleton com múltiplos items
  */
 export const SkeletonList = ({ count = 3, component: SkeletonComponent = ExpenseCardSkeleton }) => (

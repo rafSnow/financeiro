@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { formatCurrency, formatDate, getCategoryById } from '../utils/constants';
+import { hapticFeedback } from '../utils/haptics';
 
 /**
  * Card de despesa
@@ -7,6 +8,16 @@ import { formatCurrency, formatDate, getCategoryById } from '../utils/constants'
  */
 const ExpenseCard = ({ expense, onEdit, onDelete }) => {
   const category = getCategoryById(expense.category);
+
+  const handleEdit = () => {
+    hapticFeedback('light');
+    onEdit(expense);
+  };
+
+  const handleDelete = () => {
+    hapticFeedback('error');
+    onDelete(expense);
+  };
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all">
@@ -65,7 +76,7 @@ const ExpenseCard = ({ expense, onEdit, onDelete }) => {
           {/* Ações */}
           <div className="flex items-center gap-2" style={{ marginTop: '1rem' }}>
             <button
-              onClick={() => onEdit(expense)}
+              onClick={handleEdit}
               className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -79,7 +90,7 @@ const ExpenseCard = ({ expense, onEdit, onDelete }) => {
               Editar
             </button>
             <button
-              onClick={() => onDelete(expense)}
+              onClick={handleDelete}
               className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

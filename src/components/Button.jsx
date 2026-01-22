@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { hapticFeedback } from '../utils/haptics';
 
 /**
  * Componente de botão reutilizável
@@ -10,6 +11,7 @@ import PropTypes from 'prop-types';
  * @param {function} props.onClick - Função de clique
  * @param {React.ReactNode} props.children - Conteúdo do botão
  * @param {string} props.className - Classes adicionais
+ * @param {boolean} props.enableHaptic - Habilitar feedback háptico (padrão: true)
  */
 const Button = ({
   variant = 'primary',
@@ -19,6 +21,7 @@ const Button = ({
   onClick,
   children,
   className = '',
+  enableHaptic = true,
   ...props
 }) => {
   const baseClasses =
@@ -33,10 +36,28 @@ const Button = ({
       'bg-red-600 text-white hover:bg-red-700 focus:ring-4 focus:ring-red-300 active:bg-red-800 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800',
   };
 
+  const handleClick = (e) => {
+    // Disparar feedback háptico baseado na variante
+    if (enableHaptic && !disabled && !loading) {
+      if (variant === 'danger') {
+        hapticFeedback('error');
+      } else if (variant === 'primary') {
+        hapticFeedback('success');
+      } else {
+        hapticFeedback('light');
+      }
+    }
+
+    // Chamar onClick se fornecido
+    if (onClick) {
+      onClick(e);
+    }
+  };
+
   return (
     <button
       type={type}
-      onClick={onClick}
+      onClick={handleClick}
       disabled={disabled || loading}
       className={`${baseClasses} ${variants[variant]} ${className}`}
       aria-busy={loading}
@@ -78,6 +99,13 @@ const Button = ({
 Button.propTypes = {
   variant: PropTypes.oneOf(['primary', 'secondary', 'danger']),
   loading: PropTypes.bool,
+  disabled: PropTypes.bool,
+  type: PropTypes.oneOf(['button', 'submit', 'reset']),
+  onClick: PropTypes.func,
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+  enableHaptic: PropTypes.bool,
+};
   disabled: PropTypes.bool,
   type: PropTypes.oneOf(['button', 'submit', 'reset']),
   onClick: PropTypes.func,

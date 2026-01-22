@@ -173,18 +173,27 @@ const Header = () => {
   const isActive = path => location.pathname === path;
 
   return (
-    <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 transition-colors duration-300" role="banner">
+    <header
+      className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 transition-colors duration-300"
+      role="banner"
+    >
       <div style={{ maxWidth: '80rem', margin: '0 auto', padding: '0 1rem' }}>
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-2">
-              <span className="text-2xl" aria-hidden="true">💰</span>
+              <span className="text-2xl" aria-hidden="true">
+                💰
+              </span>
               <h1 className="text-xl font-bold text-blue-600 dark:text-blue-400">FinanceiroApp</h1>
             </div>
 
             {/* Navegação Desktop */}
-            <nav className="hidden lg:flex items-center gap-1" role="navigation" aria-label="Navegação principal">
+            <nav
+              className="hidden lg:flex items-center gap-1"
+              role="navigation"
+              aria-label="Navegação principal"
+            >
               {menuStructure.map(menu => {
                 if (menu.submenu) {
                   // Menu com submenu (dropdown)
@@ -290,7 +299,13 @@ const Header = () => {
               className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
               aria-label="Fazer logout"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"

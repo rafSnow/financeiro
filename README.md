@@ -5,11 +5,13 @@ Sistema completo de gestão financeira pessoal com foco em quitação de dívida
 ## ✨ Features Implementadas
 
 ### 🔐 Autenticação
+
 - Login e cadastro de usuários
 - Recuperação de senha
 - Persistência de sessão
 
 ### 💸 Controle de Despesas
+
 - Cadastro, edição e exclusão de despesas
 - Categorização de despesas
 - Filtros por período e categoria
@@ -19,11 +21,13 @@ Sistema completo de gestão financeira pessoal com foco em quitação de dívida
 - Métricas de categorização
 
 ### 💰 Controle de Rendas
+
 - Cadastro de rendas fixas e variáveis
 - Visualização mensal
 - Comparativo com despesas
 
 ### 🔴 Gerenciamento de Dívidas
+
 - Cadastro de dívidas com juros
 - Método Bola de Neve (Snowball)
 - Método Avalanche
@@ -33,11 +37,13 @@ Sistema completo de gestão financeira pessoal com foco em quitação de dívida
 - Insights e projeções
 
 ### 🎯 Metas Financeiras
+
 - Criação de metas com valor alvo
 - Acompanhamento de progresso
 - Notificações de progresso
 
 ### 📊 Dashboard e Insights
+
 - Visão geral financeira
 - Gráficos de evolução mensal
 - Top despesas por categoria
@@ -46,17 +52,20 @@ Sistema completo de gestão financeira pessoal com foco em quitação de dívida
 - Métricas de desempenho financeiro
 
 ### 🏷️ Categorias
+
 - Sistema de categorias customizáveis
 - Ícones e cores personalizadas
 - Sugestões automáticas de categorização
 
 ### 📥 Importação
+
 - Suporte para arquivos CSV e OFX
 - Mapeamento de colunas
 - Preview antes da importação
 - Detecção automática de formato
 
 ### 🔔 Sistema de Alertas
+
 - Alertas de metas próximas
 - Alertas de dívidas próximas do vencimento
 - Alertas de orçamento excedido
@@ -64,12 +73,14 @@ Sistema completo de gestão financeira pessoal com foco em quitação de dívida
 - Notificações push (PWA)
 
 ### 💾 Backup e Exportação
+
 - Backup automático no Firebase
 - Exportação de dados em CSV
 - Exportação de dados em Excel
 - Backup manual sob demanda
 
 ### 🎨 Interface e UX
+
 - Modo escuro completo
 - Tema claro/escuro com persistência
 - Animações com Framer Motion
@@ -80,6 +91,7 @@ Sistema completo de gestão financeira pessoal com foco em quitação de dívida
 - Navegação intuitiva com bottom nav
 
 ### ⚡ Performance
+
 - Code splitting com React.lazy
 - Memoização com useMemo/useCallback
 - Paginação de dados
@@ -87,12 +99,14 @@ Sistema completo de gestão financeira pessoal com foco em quitação de dívida
 - Cache strategies otimizadas
 
 ### ♿ Acessibilidade
+
 - ARIA labels em componentes
 - Navegação por teclado
 - Suporte a screen readers
 - Contraste WCAG AA
 
 ### 🔍 SEO
+
 - Meta tags otimizadas
 - Open Graph tags (Facebook)
 - Twitter Cards
@@ -101,6 +115,7 @@ Sistema completo de gestão financeira pessoal com foco em quitação de dívida
 ## 🚀 Tecnologias
 
 ### Frontend
+
 - **React 19.2.0** - Framework frontend
 - **Vite 7.2.4** - Build tool e dev server
 - **Tailwind CSS 4.0.0** - Framework CSS
@@ -109,17 +124,20 @@ Sistema completo de gestão financeira pessoal com foco em quitação de dívida
 - **React Hot Toast 2.4.1** - Notificações
 
 ### Backend
+
 - **Firebase 12.7.0** - Backend completo
   - Firestore Database - Banco de dados
   - Authentication - Autenticação
   - Cloud Functions - Serverless (opcional)
 
 ### Estado e Dados
+
 - **Zustand 5.0.3** - Gerenciamento de estado
 - **date-fns 4.1.0** - Manipulação de datas
 - **xlsx 0.18.5** - Exportação Excel
 
 ### PWA
+
 - **Workbox** - Service Worker
 - **Web App Manifest** - Instalação
 - **Push Notifications** - Notificações
@@ -206,6 +224,7 @@ Configurar regras de segurança no Firestore (ver `firestore.rules`).
 ### 4. PWA Configuration
 
 O app já está configurado como PWA:
+
 - Service Worker em `public/firebase-messaging-sw.js`
 - Manifest em `firebase.json`
 - Ícones em `public/`
@@ -213,18 +232,21 @@ O app já está configurado como PWA:
 ## 📱 Como Usar
 
 ### Primeiro Acesso
+
 1. Criar conta ou fazer login
 2. Adicionar suas despesas e rendas
 3. Cadastrar suas dívidas (se houver)
 4. Definir metas financeiras
 
 ### Controle de Despesas
+
 1. Acessar "Despesas"
 2. Clicar em "Nova Despesa"
 3. Preencher dados (valor, categoria, data)
 4. Visualizar em lista ou gráficos
 
 ### Gerenciamento de Dívidas
+
 1. Acessar "Dívidas"
 2. Adicionar suas dívidas
 3. Escolher método de quitação (Bola de Neve ou Avalanche)
@@ -232,6 +254,7 @@ O app já está configurado como PWA:
 5. Registrar pagamentos
 
 ### Importação de Extratos
+
 1. Acessar "Importar"
 2. Fazer upload de arquivo CSV ou OFX
 3. Mapear colunas
@@ -239,6 +262,7 @@ O app já está configurado como PWA:
 5. Confirmar importação
 
 ### Backup e Exportação
+
 1. Acessar "Configurações"
 2. Escolher tipo de backup/exportação
 3. Backup automático salva no Firebase
@@ -247,11 +271,13 @@ O app já está configurado como PWA:
 ## 🎨 Personalização
 
 ### Tema
+
 - Alternar entre claro/escuro no header
 - Tema persiste entre sessões
 - Suporta preferência do sistema
 
 ### Categorias
+
 - Criar categorias customizadas
 - Escolher ícone e cor
 - Organizar despesas por categoria
@@ -274,6 +300,7 @@ O app já está configurado como PWA:
 ## 🛣️ Roadmap
 
 ### Sprint 8 ✅ (Completa)
+
 - ✅ Modo Escuro
 - ✅ Sistema de Backup
 - ✅ Exportação CSV/Excel
@@ -282,6 +309,7 @@ O app já está configurado como PWA:
 - ✅ Polish Final (SEO, Acessibilidade)
 
 ### Próximas Features
+
 - [ ] Controle de investimentos
 - [ ] Open Finance integration
 - [ ] Modo família
@@ -296,6 +324,7 @@ Nenhum problema conhecido no momento.
 ## 📝 Changelog
 
 ### v0.8.0 - Sprint 8 (Fevereiro 2025)
+
 - Adicionado modo escuro completo
 - Sistema de backup e restauração
 - Exportação CSV/Excel
@@ -305,17 +334,20 @@ Nenhum problema conhecido no momento.
 - SEO e acessibilidade
 
 ### v0.7.0 - Sprint 7 (Janeiro 2025)
+
 - Sistema de alertas
 - Notificações push
 - Métricas de categorização
 - Insights automáticos
 
 ### v0.6.0 - Sprint 6 (Janeiro 2025)
+
 - Importação OFX
 - Recategorização em lote
 - Melhorias no dashboard
 
 ### v0.1.0 - v0.5.0 (Dezembro 2024 - Janeiro 2025)
+
 - MVP inicial
 - Autenticação
 - Controle de despesas e rendas
@@ -328,7 +360,7 @@ MIT
 
 ## 👨‍💻 Desenvolvimento
 
-**Sprint atual:** Sprint 8 - Completa  
+**Sprint atual:** Sprint 8 - Completa
 **Documentação completa:** `../financeiro-docs/`
 
 ## 🤝 Contribuindo
@@ -341,6 +373,6 @@ Para suporte, abra uma issue no repositório.
 
 ---
 
-**Status:** ✅ Versão estável  
-**Versão:** 0.8.0  
+**Status:** ✅ Versão estável
+**Versão:** 0.8.0
 **Última atualização:** Fevereiro 2025
