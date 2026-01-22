@@ -41,10 +41,10 @@ const ExpensesPieChart = ({ data }) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (
-        <div className="bg-white p-3 rounded-lg shadow-lg border border-gray-200">
-          <p className="font-semibold text-gray-800">{data.name}</p>
-          <p className="text-sm text-gray-600 mt-1">{formatCurrency(data.value)}</p>
-          <p className="text-xs text-gray-500">{data.percentage}% do total</p>
+        <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
+          <p className="font-semibold text-gray-800 dark:text-white">{data.name}</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{formatCurrency(data.value)}</p>
+          <p className="text-xs text-gray-500 dark:text-gray-400">{data.percentage}% do total</p>
         </div>
       );
     }
@@ -53,14 +53,14 @@ const ExpensesPieChart = ({ data }) => {
 
   if (!data || data.length === 0) {
     return (
-      <div className="flex items-center justify-center h-64 text-gray-500">
+      <div className="flex items-center justify-center h-64 text-gray-500 dark:text-gray-400">
         <p>Nenhum gasto registrado neste período</p>
       </div>
     );
   }
 
   return (
-    <div className="w-full h-64 min-h-64">
+    <div className="w-full" style={{ height: '256px', minHeight: '256px' }}>
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie

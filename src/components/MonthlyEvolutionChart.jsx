@@ -30,8 +30,8 @@ const MonthlyEvolutionChart = ({ data }) => {
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white p-3 rounded-lg shadow-lg border border-gray-200">
-          <p className="font-semibold text-gray-800 mb-2">{label}</p>
+        <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
+          <p className="font-semibold text-gray-800 dark:text-white mb-2">{label}</p>
           {payload.map((entry, index) => (
             <p key={index} className="text-sm" style={{ color: entry.color }}>
               {entry.name}:{' '}
@@ -49,14 +49,14 @@ const MonthlyEvolutionChart = ({ data }) => {
 
   if (!data || data.length === 0) {
     return (
-      <div className="flex items-center justify-center h-64 text-gray-500">
+      <div className="flex items-center justify-center h-64 text-gray-500 dark:text-gray-400">
         <p>Nenhum dado disponível para o período</p>
       </div>
     );
   }
 
   return (
-    <div className="w-full h-64 min-h-64">
+    <div className="w-full" style={{ height: '256px', minHeight: '256px' }}>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data}>
           <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
