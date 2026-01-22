@@ -4,6 +4,8 @@ import BottomNav from '../components/BottomNav';
 import ExpenseChart from '../components/ExpenseChart';
 import Header from '../components/Header';
 import InsightCard from '../components/InsightCard';
+import ThemeDebug from '../components/ThemeDebug';
+import { useTheme } from '../contexts/ThemeContext';
 import { getDebts } from '../services/debts.service';
 import { getExpenses } from '../services/expenses.service';
 import { getIncomes } from '../services/income.service';
@@ -25,6 +27,13 @@ import { generateCurrentMonthInsights, sortInsightsByPriority } from '../utils/i
 const Dashboard = () => {
   const { user } = useAuthStore();
   const navigate = useNavigate();
+  const { theme, isDark } = useTheme();
+
+  console.log('📊 [Dashboard RENDER] Current theme:', theme, 'isDark:', isDark);
+  console.log(
+    '📊 [Dashboard] HTML has dark class:',
+    document.documentElement.classList.contains('dark')
+  );
 
   const [expenses, setExpenses] = useState([]);
   const [incomes, setIncomes] = useState([]);
@@ -408,6 +417,9 @@ const Dashboard = () => {
             )}
           </>
         )}
+
+        {/* Debug Component */}
+        <ThemeDebug />
       </main>
 
       <BottomNav />
