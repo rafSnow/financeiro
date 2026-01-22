@@ -4,8 +4,6 @@ import BottomNav from '../components/BottomNav';
 import ExpenseChart from '../components/ExpenseChart';
 import Header from '../components/Header';
 import InsightCard from '../components/InsightCard';
-import ThemeDebug from '../components/ThemeDebug';
-import { useTheme } from '../contexts/ThemeContext';
 import { getDebts } from '../services/debts.service';
 import { getExpenses } from '../services/expenses.service';
 import { getIncomes } from '../services/income.service';
