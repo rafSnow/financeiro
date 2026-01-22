@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import BottomNav from '../components/BottomNav';
 import Header from '../components/Header';
 import InsightCard from '../components/InsightCard';
+import TrendAnalysis from '../components/TrendAnalysis';
 import { useAuthStore } from '../store/authStore';
 import { generateCurrentMonthInsights, sortInsightsByPriority } from '../utils/insightsGenerator';
 
@@ -160,6 +161,11 @@ const Insights = () => {
                 <p className="text-gray-600">Nenhum insight nesta categoria</p>
               </div>
             )}
+
+            {/* Análise de Tendências */}
+            <div className="mt-12">
+              <TrendAnalysis userId={user.uid} />
+            </div>
           </>
         )}
       </main>
