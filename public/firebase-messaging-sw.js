@@ -11,12 +11,7 @@ const STATIC_CACHE = 'static-v1';
 const DYNAMIC_CACHE = 'dynamic-v1';
 
 // Assets to precache
-const PRECACHE_ASSETS = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/logo192.png',
-];
+const PRECACHE_ASSETS = ['/', '/index.html', '/manifest.json', '/logo192.png'];
 
 // Initialize Firebase in service worker
 firebase.initializeApp({
@@ -60,25 +55,33 @@ self.addEventListener('activate', event => {
 // Fetch event - implement cache strategies
 self.addEventListener('fetch', event => {
   const { request } = event;
-  
+
   // Skip non-GET requests
   if (request.method !== 'GET') return;
-  
+
   // Skip Firebase requests
   if (request.url.includes('firebaseio.com') || request.url.includes('googleapis.com')) {
     return;
   }
 
   // Cache-first strategy for static assets
-  if (request.url.includes('.js') || request.url.includes('.css') || request.url.includes('.png') || request.url.includes('.jpg')) {
+  if (
+    request.url.includes('.js') ||
+    request.url.includes('.css') ||
+    request.url.includes('.png') ||
+    request.url.includes('.jpg')
+  ) {
     event.respondWith(
       caches.match(request).then(cached => {
-        return cached || fetch(request).then(response => {
-          return caches.open(STATIC_CACHE).then(cache => {
-            cache.put(request, response.clone());
-            return response;
-          });
-        });
+        return (
+          cached ||
+          fetch(request).then(response => {
+            return caches.open(STATIC_CACHE).then(cache => {
+              cache.put(request, response.clone());
+              return response;
+            });
+          })
+        );
       })
     );
     return;
