@@ -48,10 +48,10 @@ const CategoryBreakdown = ({ expenses, totalExpenses }) => {
    * Retorna cor baseada no percentual
    */
   const getColorByPercentage = percentage => {
-    if (percentage >= 30) return 'text-red-600 bg-red-50';
-    if (percentage >= 15) return 'text-orange-600 bg-orange-50';
-    if (percentage >= 5) return 'text-yellow-600 bg-yellow-50';
-    return 'text-green-600 bg-green-50';
+    if (percentage >= 30) return 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/30';
+    if (percentage >= 15) return 'text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/30';
+    if (percentage >= 5) return 'text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/30';
+    return 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/30';
   };
 
   /**
