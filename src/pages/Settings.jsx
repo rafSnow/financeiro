@@ -12,6 +12,7 @@ import {
 import { useAuthStore } from '../store/authStore';
 import { useToastStore } from '../store/toastStore';
 import { formatDate } from '../utils/constants';
+import { exportToCSV, exportToExcel } from '../utils/exportData';
 
 /**
  * Página de configurações e backup
@@ -23,6 +24,7 @@ const Settings = () => {
   const [backups, setBackups] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingBackupId, setLoadingBackupId] = useState(null);
+  const [exportLoading, setExportLoading] = useState(null);
 
   const loadBackups = async () => {
     try {
@@ -110,6 +112,35 @@ const Settings = () => {
     });
 
     return totalItems;
+  };
+
+  const handleExportCSV = async type => {
+    setExportLoading(type);
+    try {
+      await exportToCSV(user.uid, type);
+      addToast(
+        `${type === 'expenses' ? 'Despesas' : type === 'debts' ? 'Dívidas' : type === 'incomes' ? 'Rendas' : 'Metas'} exportadas para CSV!`,
+        'success'
+      );
+    } catch (error) {
+      console.error('Erro ao exportar CSV:', error);
+      addToast(error.message || 'Erro ao exportar CSV', 'error');
+    } finally {
+      setExportLoading(null);
+    }
+  };
+
+  const handleExportExcel = async () => {
+    setExportLoading('excel');
+    try {
+      await exportToExcel(user.uid);
+      addToast('Dados exportados para Excel!', 'success');
+    } catch (error) {
+      console.error('Erro ao exportar Excel:', error);
+      addToast(error.message || 'Erro ao exportar Excel', 'error');
+    } finally {
+      setExportLoading(null);
+    }
   };
 
   return (
@@ -228,6 +259,107 @@ const Settings = () => {
                   ))}
                 </div>
               )}
+            </div>
+          </div>
+        </div>
+
+        {/* Seção de Exportação */}
+        <div className="mt-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden transition-colors duration-300">
+          <div style={{ padding: '2rem' }}>
+            <div className="flex items-center gap-3 mb-4">
+              <span className="text-3xl">📤</span>
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                  Exportar Dados
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Exporte seus dados para CSV ou Excel
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-green-50 dark:bg-green-900/20 border-2 border-green-200 dark:border-green-800 rounded-lg p-4 mb-6">
+              <div className="flex items-start gap-3">
+                <span className="text-2xl">💡</span>
+                <div className="flex-1">
+                  <h4 className="font-semibold text-green-900 dark:text-green-200 mb-2">
+                    Formatos disponíveis:
+                  </h4>
+                  <ul className="text-sm text-green-800 dark:text-green-300 space-y-1">
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-500 dark:text-green-400">•</span>
+                      <span>
+                        CSV: Exporta cada tipo de dado individualmente (despesas, dívidas, rendas,
+                        metas)
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-500 dark:text-green-400">•</span>
+                      <span>
+                        Excel: Exporta todos os dados em um único arquivo com múltiplas abas
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-500 dark:text-green-400">•</span>
+                      <span>
+                        Arquivos podem ser abertos no Excel, Google Sheets ou qualquer editor de
+                        planilhas
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Exportar CSV individual */}
+            <div className="mb-6">
+              <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">
+                Exportar para CSV:
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <button
+                  onClick={() => handleExportCSV('expenses')}
+                  disabled={exportLoading !== null}
+                  className="flex items-center justify-center gap-2 px-4 py-3 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/50 rounded-lg transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed border border-blue-200 dark:border-blue-800"
+                >
+                  {exportLoading === 'expenses' ? '⏳' : '💸'} Despesas
+                </button>
+                <button
+                  onClick={() => handleExportCSV('incomes')}
+                  disabled={exportLoading !== null}
+                  className="flex items-center justify-center gap-2 px-4 py-3 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-900/50 rounded-lg transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed border border-green-200 dark:border-green-800"
+                >
+                  {exportLoading === 'incomes' ? '⏳' : '💰'} Rendas
+                </button>
+                <button
+                  onClick={() => handleExportCSV('debts')}
+                  disabled={exportLoading !== null}
+                  className="flex items-center justify-center gap-2 px-4 py-3 bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/50 rounded-lg transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed border border-red-200 dark:border-red-800"
+                >
+                  {exportLoading === 'debts' ? '⏳' : '🔴'} Dívidas
+                </button>
+                <button
+                  onClick={() => handleExportCSV('goals')}
+                  disabled={exportLoading !== null}
+                  className="flex items-center justify-center gap-2 px-4 py-3 bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 hover:bg-purple-100 dark:hover:bg-purple-900/50 rounded-lg transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed border border-purple-200 dark:border-purple-800"
+                >
+                  {exportLoading === 'goals' ? '⏳' : '🎯'} Metas
+                </button>
+              </div>
+            </div>
+
+            {/* Exportar Excel completo */}
+            <div>
+              <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">
+                Exportar tudo para Excel:
+              </h4>
+              <Button
+                onClick={handleExportExcel}
+                loading={exportLoading === 'excel'}
+                variant="primary"
+              >
+                {exportLoading === 'excel' ? 'Exportando...' : '📊 Exportar para Excel'}
+              </Button>
             </div>
           </div>
         </div>
