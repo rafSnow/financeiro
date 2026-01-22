@@ -226,7 +226,9 @@ const Expenses = () => {
               <h2 className="text-xl font-bold text-gray-900 dark:text-white">
                 {getMonthName(currentMonth)} {currentYear}
               </h2>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Total: {formatCurrency(total)}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                Total: {formatCurrency(total)}
+              </p>
             </div>
 
             <button
@@ -272,8 +274,12 @@ const Expenses = () => {
                       <span className="text-xl">{category.icon}</span>
                     </div>
                   </div>
-                  <h3 className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">{category.name}</h3>
-                  <p className="text-xl font-bold text-gray-900 dark:text-white">{formatCurrency(amount)}</p>
+                  <h3 className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                    {category.name}
+                  </h3>
+                  <p className="text-xl font-bold text-gray-900 dark:text-white">
+                    {formatCurrency(amount)}
+                  </p>
                 </div>
               );
             })}

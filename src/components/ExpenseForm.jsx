@@ -241,7 +241,7 @@ const ExpenseForm = ({ expense, onSubmit, onCancel, loading = false }) => {
       {/* Sugestões de Categoria */}
       {suggestions.length > 0 && (
         <div className="w-full">
-          <p className="text-sm font-medium text-gray-700 mb-2">
+          <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Sugestões de Categoria
             {isLoadingSuggestions && (
               <span className="ml-2 text-blue-500 text-xs">Carregando...</span>
@@ -263,11 +263,11 @@ const ExpenseForm = ({ expense, onSubmit, onCancel, loading = false }) => {
 
       {/* Valor */}
       <div className="w-full">
-        <label htmlFor="amount" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="amount" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           Valor <span className="text-red-500 ml-1">*</span>
         </label>
         <div className="relative">
-          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 pointer-events-none">
+          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 dark:text-gray-400 pointer-events-none">
             R$
           </span>
           <input
@@ -277,13 +277,13 @@ const ExpenseForm = ({ expense, onSubmit, onCancel, loading = false }) => {
             placeholder="0,00"
             value={formData.amount}
             onChange={handleAmountChange}
-            className={`w-full rounded-lg border transition-all duration-200 pl-12 pr-4 py-3
+            className={`w-full rounded-lg border transition-all duration-200 pl-12 pr-4 py-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100
               ${
                 errors.amount
                   ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
-                  : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
+                  : 'border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500'
               }
-              focus:ring-2 focus:outline-none placeholder:text-gray-400
+              focus:ring-2 focus:outline-none placeholder:text-gray-400 dark:placeholder:text-gray-500
             `}
           />
         </div>
@@ -292,7 +292,7 @@ const ExpenseForm = ({ expense, onSubmit, onCancel, loading = false }) => {
 
       {/* Categoria */}
       <div className="w-full">
-        <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           Categoria <span className="text-red-500 ml-1">*</span>
         </label>
         <select
@@ -300,11 +300,11 @@ const ExpenseForm = ({ expense, onSubmit, onCancel, loading = false }) => {
           name="category"
           value={formData.category}
           onChange={handleChange}
-          className={`w-full rounded-lg border transition-all duration-200 px-4 py-3
+          className={`w-full rounded-lg border transition-all duration-200 px-4 py-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100
             ${
               errors.category
                 ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
-                : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
+                : 'border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500'
             }
             focus:ring-2 focus:outline-none
           `}
@@ -321,7 +321,7 @@ const ExpenseForm = ({ expense, onSubmit, onCancel, loading = false }) => {
 
       {/* Forma de Pagamento */}
       <div className="w-full">
-        <label htmlFor="paymentMethod" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="paymentMethod" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           Forma de Pagamento <span className="text-red-500 ml-1">*</span>
         </label>
         <select
@@ -329,11 +329,11 @@ const ExpenseForm = ({ expense, onSubmit, onCancel, loading = false }) => {
           name="paymentMethod"
           value={formData.paymentMethod}
           onChange={handleChange}
-          className={`w-full rounded-lg border transition-all duration-200 px-4 py-3
+          className={`w-full rounded-lg border transition-all duration-200 px-4 py-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100
             ${
               errors.paymentMethod
                 ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
-                : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
+                : 'border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500'
             }
             focus:ring-2 focus:outline-none
           `}
@@ -352,7 +352,7 @@ const ExpenseForm = ({ expense, onSubmit, onCancel, loading = false }) => {
 
       {/* Data */}
       <div className="w-full">
-        <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="date" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           Data <span className="text-red-500 ml-1">*</span>
         </label>
         <input
@@ -362,11 +362,11 @@ const ExpenseForm = ({ expense, onSubmit, onCancel, loading = false }) => {
           value={formData.date}
           onChange={handleChange}
           max={new Date().toISOString().split('T')[0]}
-          className={`w-full rounded-lg border transition-all duration-200 px-4 py-3
+          className={`w-full rounded-lg border transition-all duration-200 px-4 py-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100
             ${
               errors.date
                 ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
-                : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
+                : 'border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500'
             }
             focus:ring-2 focus:outline-none
           `}
@@ -382,9 +382,9 @@ const ExpenseForm = ({ expense, onSubmit, onCancel, loading = false }) => {
           type="checkbox"
           checked={formData.isFixed}
           onChange={handleChange}
-          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+          className="w-4 h-4 text-blue-600 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 focus:ring-2"
         />
-        <label htmlFor="isFixed" className="text-sm font-medium text-gray-700">
+        <label htmlFor="isFixed" className="text-sm font-medium text-gray-700 dark:text-gray-300">
           Despesa fixa (repete todo mês)
         </label>
       </div>
