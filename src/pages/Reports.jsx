@@ -223,13 +223,13 @@ const Reports = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <Header />
         <main className="container mx-auto px-4 py-6 pb-20">
           <div className="flex items-center justify-center h-64">
             <div className="text-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-              <p className="mt-4 text-gray-600">Carregando relatórios...</p>
+              <p className="mt-4 text-gray-600 dark:text-gray-400">Carregando relatórios...</p>
             </div>
           </div>
         </main>
@@ -239,24 +239,29 @@ const Reports = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Header />
 
       <main className="container mx-auto px-4 py-6 pb-20">
         {/* Cabeçalho com seletores */}
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-800 mb-4">📊 Relatórios Financeiros</h1>
+          <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-4">
+            📊 Relatórios Financeiros
+          </h1>
 
           <div className="flex flex-wrap gap-4 items-center">
             <div>
-              <label htmlFor="month" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="month"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              >
                 Mês
               </label>
               <select
                 id="month"
                 value={selectedMonth}
                 onChange={handleMonthChange}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               >
                 {monthNames.map((name, index) => (
                   <option key={index} value={index + 1}>
@@ -267,14 +272,17 @@ const Reports = () => {
             </div>
 
             <div>
-              <label htmlFor="year" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="year"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              >
                 Ano
               </label>
               <select
                 id="year"
                 value={selectedYear}
                 onChange={handleYearChange}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               >
                 {getYearOptions().map(year => (
                   <option key={year} value={year}>
@@ -294,8 +302,8 @@ const Reports = () => {
         {/* Gráficos */}
         <div className="space-y-6">
           {/* Painel de Insights */}
-          <div className="bg-white p-6 rounded-lg border border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4 flex items-center gap-2">
               <span>💡</span>
               <span>Insights e Recomendações</span>
             </h3>
@@ -307,14 +315,18 @@ const Reports = () => {
           </div>
 
           {/* Top Despesas */}
-          <div className="bg-white p-6 rounded-lg border border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Análise de Gastos</h3>
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
+              Análise de Gastos
+            </h3>
             <TopExpenses expenses={currentExpenses} previousExpenses={previousExpenses} />
           </div>
 
           {/* Breakdown por Categoria */}
-          <div className="bg-white p-6 rounded-lg border border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Detalhamento por Categoria</h3>
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
+              Detalhamento por Categoria
+            </h3>
             <CategoryBreakdown
               expenses={currentExpenses}
               totalExpenses={currentMonthData?.expenses || 0}
@@ -322,27 +334,31 @@ const Reports = () => {
           </div>
 
           {/* Gráfico de Pizza - Gastos por Categoria */}
-          <div className="bg-white p-6 rounded-lg border border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Gastos por Categoria</h3>
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
+              Gastos por Categoria
+            </h3>
             <ExpensesPieChart data={categoryData} />
           </div>
 
           {/* Gráfico de Barras - Evolução Mensal */}
-          <div className="bg-white p-6 rounded-lg border border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
               Evolução Mensal (Últimos 6 Meses)
             </h3>
             <MonthlyEvolutionChart data={evolutionData} />
           </div>
 
           {/* Gráfico de Linhas - Tendência de Gastos */}
-          <div className="bg-white p-6 rounded-lg border border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Tendência de Gastos</h3>
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
+              Tendência de Gastos
+            </h3>
             <ExpensesTrendChart data={trendData} />
           </div>
 
           {/* Métricas de Categorização Automática */}
-          <div className="bg-white p-6 rounded-lg border border-gray-200">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
             <CategorizationMetrics />
           </div>
         </div>

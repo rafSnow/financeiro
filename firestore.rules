@@ -148,7 +148,7 @@ service cloud.firestore {
     }
 
     // Regras para coleção de histórico de categorização
-    match /categorizationHistory/{historyId} {
+    match /categorization_history/{historyId} {
       // Permitir leitura apenas dos próprios documentos
       allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
 

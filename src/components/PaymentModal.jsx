@@ -91,7 +91,9 @@ const PaymentModal = ({ isOpen, onClose, debt, onConfirm }) => {
 
         {/* Tipo de pagamento */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Tipo de Pagamento</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+            Tipo de Pagamento
+          </label>
           <div className="grid grid-cols-2 gap-3">
             <button
               type="button"
@@ -123,14 +125,19 @@ const PaymentModal = ({ isOpen, onClose, debt, onConfirm }) => {
             >
               <div className="text-2xl mb-1">💰</div>
               <div className="font-semibold text-gray-900 dark:text-white">Pagamento Extra</div>
-              <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">Amortização adicional</div>
+              <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                Amortização adicional
+              </div>
             </button>
           </div>
         </div>
 
         {/* Valor do pagamento */}
         <div>
-          <label htmlFor="amount" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label
+            htmlFor="amount"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+          >
             Valor do Pagamento (R$)
           </label>
           <input
@@ -163,7 +170,10 @@ const PaymentModal = ({ isOpen, onClose, debt, onConfirm }) => {
 
         {/* Observações */}
         <div>
-          <label htmlFor="notes" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label
+            htmlFor="notes"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+          >
             Observações (opcional)
           </label>
           <textarea
@@ -186,21 +196,27 @@ const PaymentModal = ({ isOpen, onClose, debt, onConfirm }) => {
             <div className="space-y-3">
               <div className="flex justify-between items-center">
                 <span className="text-sm text-gray-600 dark:text-gray-400">Novo saldo:</span>
-                <span className={`font-bold ${willBePaidOff ? 'text-green-600 dark:text-green-400' : 'text-gray-900 dark:text-white'}`}>
+                <span
+                  className={`font-bold ${willBePaidOff ? 'text-green-600 dark:text-green-400' : 'text-gray-900 dark:text-white'}`}
+                >
                   {willBePaidOff ? '✅ QUITADA!' : formatCurrency(newRemainingAmount)}
                 </span>
               </div>
               {!willBePaidOff && (
                 <>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600 dark:text-gray-400">Parcelas restantes:</span>
+                    <span className="text-sm text-gray-600 dark:text-gray-400">
+                      Parcelas restantes:
+                    </span>
                     <span className="font-semibold text-gray-900 dark:text-white">
                       {newRemainingInstallments} de {debt.totalInstallments}
                     </span>
                   </div>
                   {debt.interestRate > 0 && (
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Economia de juros/mês:</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                        Economia de juros/mês:
+                      </span>
                       <span className="font-semibold text-green-600 dark:text-green-400">
                         -{formatCurrency(interestSaved)}
                       </span>
