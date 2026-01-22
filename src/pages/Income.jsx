@@ -156,7 +156,7 @@ const Income = () => {
   const totalPending = getTotalPending();
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20 lg:pb-0">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pb-20 lg:pb-0">
       <Header />
 
       <main style={{ maxWidth: '80rem', margin: '0 auto', padding: '2rem 1rem' }}>
@@ -164,8 +164,8 @@ const Income = () => {
         <div style={{ marginBottom: '2rem' }}>
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Rendas</h1>
-              <p className="text-gray-600 mt-1">Gerencie suas fontes de renda</p>
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Rendas</h1>
+              <p className="text-gray-600 dark:text-gray-400 mt-1">Gerencie suas fontes de renda</p>
             </div>
 
             <button
@@ -187,16 +187,16 @@ const Income = () => {
 
         {/* Seletor de mês */}
         <div
-          className="bg-white rounded-2xl shadow-lg border border-gray-100"
+          className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700"
           style={{ marginBottom: '2rem' }}
         >
           <div className="flex items-center justify-between" style={{ padding: '1.5rem' }}>
             <button
               onClick={handlePreviousMonth}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
             >
               <svg
-                className="w-6 h-6 text-gray-600"
+                className="w-6 h-6 text-gray-600 dark:text-gray-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -211,18 +211,18 @@ const Income = () => {
             </button>
 
             <div className="text-center">
-              <h2 className="text-xl font-bold text-gray-900">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">
                 {getMonthName(currentMonth)} {currentYear}
               </h2>
-              <p className="text-sm text-gray-600 mt-1">Total: {formatCurrency(total)}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Total: {formatCurrency(total)}</p>
             </div>
 
             <button
               onClick={handleNextMonth}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
             >
               <svg
-                className="w-6 h-6 text-gray-600"
+                className="w-6 h-6 text-gray-600 dark:text-gray-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -244,37 +244,37 @@ const Income = () => {
           style={{ marginBottom: '2rem' }}
         >
           {/* Total */}
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-6">
             <div className="flex items-center gap-2 mb-2">
               <span className="text-2xl">💵</span>
-              <h3 className="text-sm font-medium text-gray-600">Total</h3>
+              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Total</h3>
             </div>
-            <p className="text-2xl font-bold text-gray-900">{formatCurrency(total)}</p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">{formatCurrency(total)}</p>
           </div>
 
           {/* Salários */}
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-6">
             <div className="flex items-center gap-2 mb-2">
               <span className="text-2xl">💼</span>
-              <h3 className="text-sm font-medium text-gray-600">Salários</h3>
+              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Salários</h3>
             </div>
             <p className="text-2xl font-bold text-blue-600">{formatCurrency(totalByType.salary)}</p>
           </div>
 
           {/* Extras */}
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-6">
             <div className="flex items-center gap-2 mb-2">
               <span className="text-2xl">💰</span>
-              <h3 className="text-sm font-medium text-gray-600">Extras</h3>
+              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Extras</h3>
             </div>
             <p className="text-2xl font-bold text-green-600">{formatCurrency(totalByType.extra)}</p>
           </div>
 
           {/* Recebido vs Pendente */}
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-6">
             <div className="flex items-center gap-2 mb-2">
               <span className="text-2xl">📊</span>
-              <h3 className="text-sm font-medium text-gray-600">Status</h3>
+              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Status</h3>
             </div>
             <div className="space-y-1">
               <p className="text-sm text-green-600 font-medium">
@@ -295,7 +295,7 @@ const Income = () => {
               className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-all shadow-sm ${
                 filterType === 'all'
                   ? 'bg-green-600 text-white shadow-md'
-                  : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'
               }`}
             >
               Todas
@@ -305,7 +305,7 @@ const Income = () => {
               className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-all shadow-sm ${
                 filterType === 'salary'
                   ? 'bg-green-600 text-white shadow-md'
-                  : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'
               }`}
             >
               💼 Salários
@@ -315,7 +315,7 @@ const Income = () => {
               className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-all shadow-sm ${
                 filterType === 'extra'
                   ? 'bg-green-600 text-white shadow-md'
-                  : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'
               }`}
             >
               💰 Extras
@@ -331,11 +331,11 @@ const Income = () => {
             </div>
           ) : filteredIncomes.length === 0 ? (
             <div
-              className="bg-white rounded-2xl shadow-lg border border-gray-100 text-center"
+              className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 text-center"
               style={{ padding: '3rem' }}
             >
               <svg
-                className="w-16 h-16 text-gray-400 mx-auto"
+                className="w-16 h-16 text-gray-400 dark:text-gray-500 mx-auto"
                 style={{ marginBottom: '1rem' }}
                 fill="none"
                 stroke="currentColor"
@@ -349,12 +349,12 @@ const Income = () => {
                 />
               </svg>
               <h3
-                className="text-lg font-semibold text-gray-900"
+                className="text-lg font-semibold text-gray-900 dark:text-white"
                 style={{ marginBottom: '0.5rem' }}
               >
                 Nenhuma renda
               </h3>
-              <p className="text-gray-600">Adicione sua primeira renda para começar</p>
+              <p className="text-gray-600 dark:text-gray-400">Adicione sua primeira renda para começar</p>
             </div>
           ) : (
             <div className="flex flex-col gap-4">
@@ -396,7 +396,7 @@ const Income = () => {
         size="sm"
       >
         <div className="text-center">
-          <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="w-12 h-12 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg
               className="w-6 h-6 text-red-600"
               fill="none"
@@ -411,10 +411,10 @@ const Income = () => {
               />
             </svg>
           </div>
-          <p className="text-gray-700 mb-6">
+          <p className="text-gray-700 dark:text-gray-300 mb-6">
             Tem certeza que deseja excluir esta renda?
             {selectedIncome && (
-              <span className="block mt-2 font-semibold text-gray-900">
+              <span className="block mt-2 font-semibold text-gray-900 dark:text-white">
                 {selectedIncome.description} - {formatCurrency(selectedIncome.amount)}
               </span>
             )}
@@ -423,7 +423,7 @@ const Income = () => {
             <button
               onClick={handleCloseDeleteModal}
               disabled={formLoading}
-              className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50"
+              className="flex-1 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors disabled:opacity-50"
             >
               Cancelar
             </button>

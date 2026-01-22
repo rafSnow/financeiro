@@ -148,7 +148,7 @@ const IncomeForm = ({ income, onSubmit, onCancel, loading = false }) => {
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       {/* Tipo */}
       <div className="w-full">
-        <label htmlFor="type" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="type" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           Tipo <span className="text-red-500 ml-1">*</span>
         </label>
         <select
@@ -156,11 +156,11 @@ const IncomeForm = ({ income, onSubmit, onCancel, loading = false }) => {
           name="type"
           value={formData.type}
           onChange={handleChange}
-          className={`w-full rounded-lg border transition-all duration-200 px-4 py-3
+          className={`w-full rounded-lg border transition-all duration-200 px-4 py-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100
             ${
               errors.type
                 ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
-                : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
+                : 'border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500'
             }
             focus:ring-2 focus:outline-none
           `}
@@ -185,11 +185,11 @@ const IncomeForm = ({ income, onSubmit, onCancel, loading = false }) => {
 
       {/* Valor */}
       <div className="w-full">
-        <label htmlFor="amount" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="amount" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           Valor <span className="text-red-500 ml-1">*</span>
         </label>
         <div className="relative">
-          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 pointer-events-none">
+          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 dark:text-gray-400 pointer-events-none">
             R$
           </span>
           <input
@@ -199,13 +199,13 @@ const IncomeForm = ({ income, onSubmit, onCancel, loading = false }) => {
             placeholder="0,00"
             value={formData.amount}
             onChange={handleAmountChange}
-            className={`w-full rounded-lg border transition-all duration-200 pl-12 pr-4 py-3
+            className={`w-full rounded-lg border transition-all duration-200 pl-12 pr-4 py-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100
               ${
                 errors.amount
                   ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
-                  : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
+                  : 'border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500'
               }
-              focus:ring-2 focus:outline-none placeholder:text-gray-400
+              focus:ring-2 focus:outline-none placeholder:text-gray-400 dark:placeholder:text-gray-500
             `}
           />
         </div>
@@ -214,7 +214,7 @@ const IncomeForm = ({ income, onSubmit, onCancel, loading = false }) => {
 
       {/* Data */}
       <div className="w-full">
-        <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="date" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           Data <span className="text-red-500 ml-1">*</span>
         </label>
         <input
@@ -224,11 +224,11 @@ const IncomeForm = ({ income, onSubmit, onCancel, loading = false }) => {
           value={formData.date}
           onChange={handleChange}
           max={new Date().toISOString().split('T')[0]}
-          className={`w-full rounded-lg border transition-all duration-200 px-4 py-3
+          className={`w-full rounded-lg border transition-all duration-200 px-4 py-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100
             ${
               errors.date
                 ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
-                : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
+                : 'border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500'
             }
             focus:ring-2 focus:outline-none
           `}
@@ -244,9 +244,9 @@ const IncomeForm = ({ income, onSubmit, onCancel, loading = false }) => {
           type="checkbox"
           checked={formData.received}
           onChange={handleChange}
-          className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2"
+          className="w-4 h-4 text-green-600 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded focus:ring-green-500 focus:ring-2"
         />
-        <label htmlFor="received" className="text-sm font-medium text-gray-700">
+        <label htmlFor="received" className="text-sm font-medium text-gray-700 dark:text-gray-300">
           ✅ Recebido
         </label>
       </div>

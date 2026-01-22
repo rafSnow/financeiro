@@ -263,7 +263,10 @@ const ExpenseForm = ({ expense, onSubmit, onCancel, loading = false }) => {
 
       {/* Valor */}
       <div className="w-full">
-        <label htmlFor="amount" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label
+          htmlFor="amount"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+        >
           Valor <span className="text-red-500 ml-1">*</span>
         </label>
         <div className="relative">
@@ -292,7 +295,10 @@ const ExpenseForm = ({ expense, onSubmit, onCancel, loading = false }) => {
 
       {/* Categoria */}
       <div className="w-full">
-        <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label
+          htmlFor="category"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+        >
           Categoria <span className="text-red-500 ml-1">*</span>
         </label>
         <select
@@ -321,7 +327,10 @@ const ExpenseForm = ({ expense, onSubmit, onCancel, loading = false }) => {
 
       {/* Forma de Pagamento */}
       <div className="w-full">
-        <label htmlFor="paymentMethod" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label
+          htmlFor="paymentMethod"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+        >
           Forma de Pagamento <span className="text-red-500 ml-1">*</span>
         </label>
         <select
@@ -352,7 +361,10 @@ const ExpenseForm = ({ expense, onSubmit, onCancel, loading = false }) => {
 
       {/* Data */}
       <div className="w-full">
-        <label htmlFor="date" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label
+          htmlFor="date"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+        >
           Data <span className="text-red-500 ml-1">*</span>
         </label>
         <input
