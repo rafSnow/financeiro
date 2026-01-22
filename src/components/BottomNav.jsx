@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 /**
@@ -6,6 +7,7 @@ import { Link, useLocation } from 'react-router-dom';
  */
 const BottomNav = () => {
   const location = useLocation();
+  const [showMenu, setShowMenu] = useState(false);
 
   const navItems = [
     {
@@ -96,9 +98,7 @@ const BottomNav = () => {
               }`}
             >
               {item.icon}
-              <span className="text-xs mt-1 font-medium">
-                {item.label}
-              </span>
+              <span className="text-xs mt-1 font-medium">{item.label}</span>
             </Link>
           );
         })}
