@@ -189,7 +189,7 @@ const DebtForm = ({ debt, onSubmit, onCancel, loading = false }) => {
 
       {/* Tipo */}
       <div className="w-full">
-        <label htmlFor="type" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="type" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           Tipo <span className="text-red-500 ml-1">*</span>
         </label>
         <select
@@ -197,11 +197,11 @@ const DebtForm = ({ debt, onSubmit, onCancel, loading = false }) => {
           name="type"
           value={formData.type}
           onChange={handleChange}
-          className={`w-full rounded-lg border transition-all duration-200 px-4 py-3
+          className={`w-full rounded-lg border transition-all duration-200 px-4 py-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100
             ${
               errors.type
                 ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
-                : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
+                : 'border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500'
             }
             focus:ring-2 focus:outline-none
           `}
@@ -216,11 +216,11 @@ const DebtForm = ({ debt, onSubmit, onCancel, loading = false }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Valor Total */}
         <div className="w-full">
-          <label htmlFor="totalAmount" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="totalAmount" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Valor Total <span className="text-red-500 ml-1">*</span>
           </label>
           <div className="relative">
-            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 pointer-events-none">
+            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 dark:text-gray-400 pointer-events-none">
               R$
             </span>
             <input
@@ -230,13 +230,13 @@ const DebtForm = ({ debt, onSubmit, onCancel, loading = false }) => {
               placeholder="0,00"
               value={formData.totalAmount}
               onChange={e => handleAmountChange('totalAmount', e.target.value)}
-              className={`w-full rounded-lg border transition-all duration-200 pl-12 pr-4 py-3
+              className={`w-full rounded-lg border transition-all duration-200 pl-12 pr-4 py-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100
                 ${
                   errors.totalAmount
                     ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
-                    : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
+                    : 'border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500'
                 }
-                focus:ring-2 focus:outline-none placeholder:text-gray-400
+                focus:ring-2 focus:outline-none placeholder:text-gray-400 dark:placeholder:text-gray-500
               `}
             />
           </div>
@@ -247,12 +247,12 @@ const DebtForm = ({ debt, onSubmit, onCancel, loading = false }) => {
         <div className="w-full">
           <label
             htmlFor="installmentValue"
-            className="block text-sm font-medium text-gray-700 mb-2"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
           >
             Valor da Parcela <span className="text-red-500 ml-1">*</span>
           </label>
           <div className="relative">
-            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 pointer-events-none">
+            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 dark:text-gray-400 pointer-events-none">
               R$
             </span>
             <input
@@ -262,13 +262,13 @@ const DebtForm = ({ debt, onSubmit, onCancel, loading = false }) => {
               placeholder="0,00"
               value={formData.installmentValue}
               onChange={e => handleAmountChange('installmentValue', e.target.value)}
-              className={`w-full rounded-lg border transition-all duration-200 pl-12 pr-4 py-3
+              className={`w-full rounded-lg border transition-all duration-200 pl-12 pr-4 py-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100
                 ${
                   errors.installmentValue
                     ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
-                    : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
+                    : 'border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500'
                 }
-                focus:ring-2 focus:outline-none placeholder:text-gray-400
+                focus:ring-2 focus:outline-none placeholder:text-gray-400 dark:placeholder:text-gray-500
               `}
             />
           </div>
@@ -305,7 +305,7 @@ const DebtForm = ({ debt, onSubmit, onCancel, loading = false }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Taxa de Juros */}
         <div className="w-full">
-          <label htmlFor="interestRate" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="interestRate" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Taxa de Juros (% ao ano)
           </label>
           <input
@@ -315,7 +315,7 @@ const DebtForm = ({ debt, onSubmit, onCancel, loading = false }) => {
             placeholder="0,00"
             value={formData.interestRate}
             onChange={e => handleAmountChange('interestRate', e.target.value)}
-            className="w-full rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 focus:ring-2 focus:outline-none px-4 py-3 placeholder:text-gray-400 transition-all duration-200"
+            className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-blue-500 focus:border-blue-500 focus:ring-2 focus:outline-none px-4 py-3 placeholder:text-gray-400 dark:placeholder:text-gray-500 transition-all duration-200"
           />
         </div>
 

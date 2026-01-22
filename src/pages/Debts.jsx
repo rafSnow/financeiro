@@ -259,7 +259,9 @@ const Debts = () => {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Dívidas</h1>
-              <p className="text-gray-600 dark:text-gray-400 mt-1">Gerencie suas dívidas com método snowball</p>
+              <p className="text-gray-600 dark:text-gray-400 mt-1">
+                Gerencie suas dívidas com método snowball
+              </p>
             </div>
 
             <button
@@ -292,13 +294,15 @@ const Debts = () => {
                 totalDebt > 10000
                   ? 'bg-red-500'
                   : totalDebt > 5000
-                  ? 'bg-orange-500'
-                  : 'bg-green-500'
+                    ? 'bg-orange-500'
+                    : 'bg-green-500'
               }`}
             />
             <div className="flex items-center gap-2 mb-2">
               <span className="text-2xl">💰</span>
-              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Devendo</h3>
+              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                Total Devendo
+              </h3>
             </div>
             <p className="text-2xl font-bold text-red-600">{formatCurrency(totalDebt)}</p>
             {totalDebt > 0 && (
@@ -318,13 +322,15 @@ const Debts = () => {
                 totalMonthlyPayment > 2000
                   ? 'bg-red-500'
                   : totalMonthlyPayment > 1000
-                  ? 'bg-orange-500'
-                  : 'bg-blue-500'
+                    ? 'bg-orange-500'
+                    : 'bg-blue-500'
               }`}
             />
             <div className="flex items-center gap-2 mb-2">
               <span className="text-2xl">📅</span>
-              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Pagamento/Mês</h3>
+              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                Pagamento/Mês
+              </h3>
             </div>
             <p className="text-2xl font-bold text-orange-600">
               {formatCurrency(totalMonthlyPayment)}
@@ -338,8 +344,8 @@ const Debts = () => {
                 totalInterest > 500
                   ? 'bg-red-500'
                   : totalInterest > 200
-                  ? 'bg-yellow-500'
-                  : 'bg-green-500'
+                    ? 'bg-yellow-500'
+                    : 'bg-green-500'
               }`}
             />
             <div className="flex items-center gap-2 mb-2">
@@ -350,7 +356,9 @@ const Debts = () => {
             </div>
             <p className="text-2xl font-bold text-yellow-600">{formatCurrency(totalInterest)}</p>
             {totalInterest > 0 && (
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{formatCurrency(totalInterest * 12)}/ano</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                {formatCurrency(totalInterest * 12)}/ano
+              </p>
             )}
           </div>
 
@@ -359,7 +367,9 @@ const Debts = () => {
             <div className={`absolute top-0 left-0 right-0 h-1 bg-blue-500`} />
             <div className="flex items-center gap-2 mb-2">
               <span className="text-2xl">📊</span>
-              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Dívidas Ativas</h3>
+              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                Dívidas Ativas
+              </h3>
             </div>
             <p className="text-2xl font-bold text-gray-900 dark:text-white">{activeDebts.length}</p>
             {debts.filter(d => d.status === 'paid').length > 0 && (
@@ -461,8 +471,8 @@ const Debts = () => {
                 {filterStatus === 'all'
                   ? 'Parabéns! Você não tem dívidas cadastradas'
                   : filterStatus === 'active'
-                  ? 'Você não tem dívidas ativas'
-                  : 'Você ainda não quitou nenhuma dívida'}
+                    ? 'Você não tem dívidas ativas'
+                    : 'Você ainda não quitou nenhuma dívida'}
               </p>
             </div>
           ) : (
