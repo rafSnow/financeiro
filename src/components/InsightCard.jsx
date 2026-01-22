@@ -11,28 +11,28 @@ const InsightCard = ({ insight }) => {
   // Cores por severidade
   const severityStyles = {
     success: {
-      bg: 'bg-green-50',
-      border: 'border-green-500',
-      text: 'text-green-800',
-      iconBg: 'bg-green-100',
+      bg: 'bg-green-50 dark:bg-green-900/30',
+      border: 'border-green-500 dark:border-green-700',
+      text: 'text-green-800 dark:text-green-300',
+      iconBg: 'bg-green-100 dark:bg-green-900/50',
     },
     warning: {
-      bg: 'bg-yellow-50',
-      border: 'border-yellow-500',
-      text: 'text-yellow-800',
-      iconBg: 'bg-yellow-100',
+      bg: 'bg-yellow-50 dark:bg-yellow-900/30',
+      border: 'border-yellow-500 dark:border-yellow-700',
+      text: 'text-yellow-800 dark:text-yellow-300',
+      iconBg: 'bg-yellow-100 dark:bg-yellow-900/50',
     },
     error: {
-      bg: 'bg-red-50',
-      border: 'border-red-500',
-      text: 'text-red-800',
-      iconBg: 'bg-red-100',
+      bg: 'bg-red-50 dark:bg-red-900/30',
+      border: 'border-red-500 dark:border-red-700',
+      text: 'text-red-800 dark:text-red-300',
+      iconBg: 'bg-red-100 dark:bg-red-900/50',
     },
     info: {
-      bg: 'bg-blue-50',
-      border: 'border-blue-500',
-      text: 'text-blue-800',
-      iconBg: 'bg-blue-100',
+      bg: 'bg-blue-50 dark:bg-blue-900/30',
+      border: 'border-blue-500 dark:border-blue-700',
+      text: 'text-blue-800 dark:text-blue-300',
+      iconBg: 'bg-blue-100 dark:bg-blue-900/50',
     },
   };
 
@@ -151,14 +151,16 @@ const InsightCard = ({ insight }) => {
         </div>
         <div className="flex-1">
           <h3 className={`text-lg font-bold ${styles.text} mb-1`}>{insight.title}</h3>
-          <p className="text-gray-700 text-sm leading-relaxed">{insight.message}</p>
+          <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+            {insight.message}
+          </p>
         </div>
       </div>
 
       {/* Valor adicional (se disponível) */}
       {insight.value !== undefined && (
         <div className={`mt-3 pt-3 border-t ${styles.border} border-opacity-30`}>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
             <span className="font-semibold">Valor:</span>{' '}
             {typeof insight.value === 'number' && insight.value >= 0
               ? insight.value.toFixed(2)

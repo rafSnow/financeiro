@@ -273,16 +273,26 @@ const Dashboard = () => {
             {/* Grid com duas colunas */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Gráfico de despesas */}
-              <div className="bg-white rounded-2xl shadow-lg" style={{ padding: '2rem' }}>
-                <h3 className="text-lg font-bold text-gray-900 mb-6">Gastos por Categoria</h3>
+              <div
+                className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-transparent dark:border-gray-700"
+                style={{ padding: '2rem' }}
+              >
+                <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-6">
+                  Gastos por Categoria
+                </h3>
                 <ExpenseChart expenses={expenses} />
               </div>
 
               {/* Resumo e Top 3 */}
               <div className="space-y-6">
                 {/* Top 3 Gastos */}
-                <div className="bg-white rounded-2xl shadow-lg" style={{ padding: '2rem' }}>
-                  <h3 className="text-lg font-bold text-gray-900 mb-4">Maiores Gastos</h3>
+                <div
+                  className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-transparent dark:border-gray-700"
+                  style={{ padding: '2rem' }}
+                >
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4">
+                    Maiores Gastos
+                  </h3>
                   {topExpenses.length > 0 ? (
                     <div className="space-y-3">
                       {topExpenses.map((expense, index) => {
@@ -290,20 +300,22 @@ const Dashboard = () => {
                         return (
                           <div
                             key={expense.id}
-                            className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                            className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
                           >
                             <div className="flex items-center gap-3">
-                              <div className="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full text-blue-600 font-bold text-sm">
+                              <div className="flex items-center justify-center w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-full text-blue-600 dark:text-blue-400 font-bold text-sm">
                                 {index + 1}
                               </div>
                               <div>
-                                <p className="font-medium text-gray-900">{expense.description}</p>
-                                <p className="text-sm text-gray-600">
+                                <p className="font-medium text-gray-900 dark:text-gray-100">
+                                  {expense.description}
+                                </p>
+                                <p className="text-sm text-gray-600 dark:text-gray-400">
                                   {category.icon} {category.name}
                                 </p>
                               </div>
                             </div>
-                            <p className="text-lg font-bold text-gray-900">
+                            <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
                               {formatCurrency(expense.amount)}
                             </p>
                           </div>
@@ -311,32 +323,51 @@ const Dashboard = () => {
                       })}
                     </div>
                   ) : (
-                    <p className="text-gray-500 text-center py-8">Nenhuma despesa registrada</p>
+                    <p className="text-gray-500 dark:text-gray-400 text-center py-8">
+                      Nenhuma despesa registrada
+                    </p>
                   )}
                 </div>
 
                 {/* Resumo Rápido */}
-                <div className="bg-white rounded-2xl shadow-lg" style={{ padding: '2rem' }}>
-                  <h3 className="text-lg font-bold text-gray-900 mb-4">Resumo do Mês</h3>
+                <div
+                  className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-transparent dark:border-gray-700"
+                  style={{ padding: '2rem' }}
+                >
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4">
+                    Resumo do Mês
+                  </h3>
                   <div className="space-y-3">
-                    <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg">
-                      <span className="text-gray-700 font-medium">Total de Rendas</span>
-                      <span className="text-green-600 font-bold">{incomes.length}</span>
+                    <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-900/30 rounded-lg">
+                      <span className="text-gray-700 dark:text-gray-300 font-medium">
+                        Total de Rendas
+                      </span>
+                      <span className="text-green-600 dark:text-green-400 font-bold">
+                        {incomes.length}
+                      </span>
                     </div>
-                    <div className="flex justify-between items-center p-3 bg-red-50 rounded-lg">
-                      <span className="text-gray-700 font-medium">Total de Despesas</span>
-                      <span className="text-red-600 font-bold">{expenses.length}</span>
+                    <div className="flex justify-between items-center p-3 bg-red-50 dark:bg-red-900/30 rounded-lg">
+                      <span className="text-gray-700 dark:text-gray-300 font-medium">
+                        Total de Despesas
+                      </span>
+                      <span className="text-red-600 dark:text-red-400 font-bold">
+                        {expenses.length}
+                      </span>
                     </div>
-                    <div className="flex justify-between items-center p-3 bg-yellow-50 rounded-lg">
-                      <span className="text-gray-700 font-medium">Dívidas Ativas</span>
-                      <span className="text-yellow-600 font-bold">
+                    <div className="flex justify-between items-center p-3 bg-yellow-50 dark:bg-yellow-900/30 rounded-lg">
+                      <span className="text-gray-700 dark:text-gray-300 font-medium">
+                        Dívidas Ativas
+                      </span>
+                      <span className="text-yellow-600 dark:text-yellow-400 font-bold">
                         {debts.filter(d => d.status === 'active').length}
                       </span>
                     </div>
                     {totalIncome > 0 && (
-                      <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
-                        <span className="text-gray-700 font-medium">% de Gastos</span>
-                        <span className="text-blue-600 font-bold">
+                      <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+                        <span className="text-gray-700 dark:text-gray-300 font-medium">
+                          % de Gastos
+                        </span>
+                        <span className="text-blue-600 dark:text-blue-400 font-bold">
                           {((totalExpenses / totalIncome) * 100).toFixed(1)}%
                         </span>
                       </div>
@@ -350,10 +381,12 @@ const Dashboard = () => {
             {insights.length > 0 && (
               <div className="mt-8">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-bold text-gray-900">💡 Insights do Mês</h3>
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100">
+                    💡 Insights do Mês
+                  </h3>
                   <button
                     onClick={() => navigate('/insights')}
-                    className="text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center gap-1"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium text-sm flex items-center gap-1"
                   >
                     Ver todos
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

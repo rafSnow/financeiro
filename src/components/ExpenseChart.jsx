@@ -12,13 +12,15 @@ const CustomTooltip = ({ active, payload, chartData }) => {
     const percentage = ((data.value / total) * 100).toFixed(1);
 
     return (
-      <div className="bg-white px-4 py-3 rounded-lg shadow-lg border border-gray-200">
+      <div className="bg-white dark:bg-gray-800 px-4 py-3 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
         <div className="flex items-center gap-2 mb-2">
           <span className="text-2xl">{data.icon}</span>
-          <p className="font-semibold text-gray-900">{data.name}</p>
+          <p className="font-semibold text-gray-900 dark:text-gray-100">{data.name}</p>
         </div>
-        <p className="text-lg font-bold text-gray-900">{formatCurrency(data.value)}</p>
-        <p className="text-sm text-gray-600">{percentage}% do total</p>
+        <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
+          {formatCurrency(data.value)}
+        </p>
+        <p className="text-sm text-gray-600 dark:text-gray-400">{percentage}% do total</p>
       </div>
     );
   }
@@ -62,7 +64,7 @@ const ExpenseChart = ({ expenses }) => {
   // Se não houver dados, mostrar mensagem
   if (chartData.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-gray-400">
+      <div className="flex flex-col items-center justify-center py-12 text-gray-400 dark:text-gray-500">
         <svg className="w-16 h-16 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
             strokeLinecap="round"
@@ -111,7 +113,7 @@ const ExpenseChart = ({ expenses }) => {
             formatter={value => {
               const item = chartData.find(d => d.name === value);
               return (
-                <span className="text-sm text-gray-700">
+                <span className="text-sm text-gray-700 dark:text-gray-300">
                   {item?.icon} {value}
                 </span>
               );
@@ -129,16 +131,18 @@ const ExpenseChart = ({ expenses }) => {
           return (
             <div
               key={index}
-              className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+              className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
             >
               <div className="flex items-center gap-3">
                 <span className="text-2xl">{item.icon}</span>
                 <div>
-                  <p className="font-medium text-gray-900">{item.name}</p>
-                  <p className="text-sm text-gray-600">{percentage}% do total</p>
+                  <p className="font-medium text-gray-900 dark:text-gray-100">{item.name}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{percentage}% do total</p>
                 </div>
               </div>
-              <p className="text-lg font-bold text-gray-900">{formatCurrency(item.value)}</p>
+              <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
+                {formatCurrency(item.value)}
+              </p>
             </div>
           );
         })}
