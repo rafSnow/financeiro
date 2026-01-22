@@ -250,7 +250,7 @@ const Debts = () => {
   const activeDebts = getActiveDebts();
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20 lg:pb-0">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pb-20 lg:pb-0">
       <Header />
 
       <main style={{ maxWidth: '80rem', margin: '0 auto', padding: '2rem 1rem' }}>
@@ -258,8 +258,8 @@ const Debts = () => {
         <div style={{ marginBottom: '2rem' }}>
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Dívidas</h1>
-              <p className="text-gray-600 mt-1">Gerencie suas dívidas com método snowball</p>
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Dívidas</h1>
+              <p className="text-gray-600 dark:text-gray-400 mt-1">Gerencie suas dívidas com método snowball</p>
             </div>
 
             <button
@@ -285,7 +285,7 @@ const Debts = () => {
           style={{ marginBottom: '2rem' }}
         >
           {/* Total Devendo */}
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 relative overflow-hidden">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-6 relative overflow-hidden">
             {/* Barra de severidade */}
             <div
               className={`absolute top-0 left-0 right-0 h-1 ${
@@ -298,11 +298,11 @@ const Debts = () => {
             />
             <div className="flex items-center gap-2 mb-2">
               <span className="text-2xl">💰</span>
-              <h3 className="text-sm font-medium text-gray-600">Total Devendo</h3>
+              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Devendo</h3>
             </div>
             <p className="text-2xl font-bold text-red-600">{formatCurrency(totalDebt)}</p>
             {totalDebt > 0 && (
-              <div className="mt-2 w-full bg-gray-200 rounded-full h-1.5">
+              <div className="mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
                 <div
                   className="bg-red-500 h-1.5 rounded-full transition-all"
                   style={{ width: `${Math.min((totalDebt / 20000) * 100, 100)}%` }}
@@ -312,7 +312,7 @@ const Debts = () => {
           </div>
 
           {/* Pagamento Mensal */}
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 relative overflow-hidden">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-6 relative overflow-hidden">
             <div
               className={`absolute top-0 left-0 right-0 h-1 ${
                 totalMonthlyPayment > 2000
@@ -324,7 +324,7 @@ const Debts = () => {
             />
             <div className="flex items-center gap-2 mb-2">
               <span className="text-2xl">📅</span>
-              <h3 className="text-sm font-medium text-gray-600">Pagamento/Mês</h3>
+              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Pagamento/Mês</h3>
             </div>
             <p className="text-2xl font-bold text-orange-600">
               {formatCurrency(totalMonthlyPayment)}
@@ -332,7 +332,7 @@ const Debts = () => {
           </div>
 
           {/* Juros/Mês */}
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 relative overflow-hidden">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-6 relative overflow-hidden">
             <div
               className={`absolute top-0 left-0 right-0 h-1 ${
                 totalInterest > 500
@@ -346,22 +346,22 @@ const Debts = () => {
               <span className="text-2xl">
                 {totalInterest > 500 ? '😱' : totalInterest > 200 ? '😰' : '📈'}
               </span>
-              <h3 className="text-sm font-medium text-gray-600">Juros/Mês</h3>
+              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Juros/Mês</h3>
             </div>
             <p className="text-2xl font-bold text-yellow-600">{formatCurrency(totalInterest)}</p>
             {totalInterest > 0 && (
-              <p className="text-xs text-gray-500 mt-1">{formatCurrency(totalInterest * 12)}/ano</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{formatCurrency(totalInterest * 12)}/ano</p>
             )}
           </div>
 
           {/* Dívidas Ativas */}
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 relative overflow-hidden">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-6 relative overflow-hidden">
             <div className={`absolute top-0 left-0 right-0 h-1 bg-blue-500`} />
             <div className="flex items-center gap-2 mb-2">
               <span className="text-2xl">📊</span>
-              <h3 className="text-sm font-medium text-gray-600">Dívidas Ativas</h3>
+              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Dívidas Ativas</h3>
             </div>
-            <p className="text-2xl font-bold text-gray-900">{activeDebts.length}</p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">{activeDebts.length}</p>
             {debts.filter(d => d.status === 'paid').length > 0 && (
               <p className="text-xs text-green-600 mt-1">
                 ✓ {debts.filter(d => d.status === 'paid').length} quitada
@@ -393,7 +393,7 @@ const Debts = () => {
               className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-all shadow-sm ${
                 filterStatus === 'all'
                   ? 'bg-red-600 text-white shadow-md'
-                  : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'
               }`}
             >
               Todas
@@ -403,7 +403,7 @@ const Debts = () => {
               className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-all shadow-sm ${
                 filterStatus === 'active'
                   ? 'bg-red-600 text-white shadow-md'
-                  : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'
               }`}
             >
               🔴 Ativas
@@ -413,7 +413,7 @@ const Debts = () => {
               className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-all shadow-sm ${
                 filterStatus === 'paid'
                   ? 'bg-red-600 text-white shadow-md'
-                  : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'
               }`}
             >
               ✅ Quitadas
@@ -434,11 +434,11 @@ const Debts = () => {
             </div>
           ) : filteredDebts.length === 0 ? (
             <div
-              className="bg-white rounded-2xl shadow-lg border border-gray-100 text-center"
+              className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 text-center"
               style={{ padding: '3rem' }}
             >
               <svg
-                className="w-16 h-16 text-gray-400 mx-auto"
+                className="w-16 h-16 text-gray-400 dark:text-gray-500 mx-auto"
                 style={{ marginBottom: '1rem' }}
                 fill="none"
                 stroke="currentColor"
@@ -452,12 +452,12 @@ const Debts = () => {
                 />
               </svg>
               <h3
-                className="text-lg font-semibold text-gray-900"
+                className="text-lg font-semibold text-gray-900 dark:text-white"
                 style={{ marginBottom: '0.5rem' }}
               >
                 Nenhuma dívida
               </h3>
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-400">
                 {filterStatus === 'all'
                   ? 'Parabéns! Você não tem dívidas cadastradas'
                   : filterStatus === 'active'
@@ -525,7 +525,7 @@ const Debts = () => {
         size="sm"
       >
         <div className="text-center">
-          <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="w-12 h-12 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg
               className="w-6 h-6 text-red-600"
               fill="none"
@@ -540,10 +540,10 @@ const Debts = () => {
               />
             </svg>
           </div>
-          <p className="text-gray-700 mb-6">
+          <p className="text-gray-700 dark:text-gray-300 mb-6">
             Tem certeza que deseja excluir esta dívida?
             {selectedDebt && (
-              <span className="block mt-2 font-semibold text-gray-900">
+              <span className="block mt-2 font-semibold text-gray-900 dark:text-white">
                 {selectedDebt.name} - {formatCurrency(selectedDebt.remainingAmount)}
               </span>
             )}
@@ -552,7 +552,7 @@ const Debts = () => {
             <button
               onClick={handleCloseDeleteModal}
               disabled={formLoading}
-              className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50"
+              className="flex-1 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors disabled:opacity-50"
             >
               Cancelar
             </button>

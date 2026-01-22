@@ -179,7 +179,9 @@ export default function CategoryForm({ isOpen, onClose, onSubmit, initialData = 
 
         {/* Ícone */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Ícone</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Ícone
+          </label>
           <div className="flex items-center gap-3">
             <button
               type="button"
@@ -188,7 +190,9 @@ export default function CategoryForm({ isOpen, onClose, onSubmit, initialData = 
             >
               {formData.icon}
             </button>
-            <span className="text-sm text-gray-600 dark:text-gray-400">Clique para escolher um emoji</span>
+            <span className="text-sm text-gray-600 dark:text-gray-400">
+              Clique para escolher um emoji
+            </span>
           </div>
 
           {showEmojiPicker && (
@@ -200,7 +204,9 @@ export default function CategoryForm({ isOpen, onClose, onSubmit, initialData = 
                     type="button"
                     onClick={() => handleEmojiSelect(emoji)}
                     className={`text-2xl p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors ${
-                      formData.icon === emoji ? 'bg-blue-100 dark:bg-blue-900 ring-2 ring-blue-500' : ''
+                      formData.icon === emoji
+                        ? 'bg-blue-100 dark:bg-blue-900 ring-2 ring-blue-500'
+                        : ''
                     }`}
                   >
                     {emoji}
@@ -213,7 +219,9 @@ export default function CategoryForm({ isOpen, onClose, onSubmit, initialData = 
 
         {/* Cor */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Cor</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Cor
+          </label>
           <div className="grid grid-cols-5 gap-2">
             {AVAILABLE_COLORS.map(color => (
               <button
@@ -234,7 +242,9 @@ export default function CategoryForm({ isOpen, onClose, onSubmit, initialData = 
 
         {/* Tipo */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tipo de Despesa</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Tipo de Despesa
+          </label>
           <div className="flex gap-3">
             <button
               type="button"
