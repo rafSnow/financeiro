@@ -103,22 +103,22 @@ const TrendCard = ({ title, trend, icon }) => {
   const config = directionConfig[trend.direction] || directionConfig.stable;
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-200 dark:border-gray-700">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
           <div className="text-3xl">{icon}</div>
-          <h3 className="text-lg font-bold text-gray-900">{title}</h3>
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white">{title}</h3>
         </div>
         <div className="text-2xl">{config.icon}</div>
       </div>
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <span className="text-sm text-gray-600">Tendência:</span>
+          <span className="text-sm text-gray-600 dark:text-gray-400">Tendência:</span>
           <span className={`font-semibold ${config.color}`}>{config.label}</span>
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-sm text-gray-600">Variação:</span>
-          <span className="font-semibold text-gray-900">{trend.percentage.toFixed(1)}%</span>
+          <span className="text-sm text-gray-600 dark:text-gray-400">Variação:</span>
+          <span className="font-semibold text-gray-900 dark:text-white">{trend.percentage.toFixed(1)}%</span>
         </div>
       </div>
     </div>
@@ -155,13 +155,13 @@ const CategoryTrendRow = ({ category, trend }) => {
   };
 
   return (
-    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+    <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
       <div className="flex items-center gap-3">
         <span className="text-2xl">{cat.icon}</span>
-        <span className="font-medium text-gray-900">{cat.name}</span>
+        <span className="font-medium text-gray-900 dark:text-white">{cat.name}</span>
       </div>
       <div className="flex items-center gap-4">
-        <span className="text-sm text-gray-600">{trend.percentage.toFixed(1)}%</span>
+        <span className="text-sm text-gray-600 dark:text-gray-400">{trend.percentage.toFixed(1)}%</span>
         <span className={`text-xl ${directionColors[trend.direction]}`}>
           {directionIcons[trend.direction]}
         </span>
@@ -222,15 +222,15 @@ const TrendAnalysis = ({ userId }) => {
     return (
       <div className="flex flex-col items-center justify-center py-12">
         <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mb-4"></div>
-        <p className="text-gray-600">Analisando tendências...</p>
+        <p className="text-gray-600 dark:text-gray-400">Analisando tendências...</p>
       </div>
     );
   }
 
   if (!trendData) {
     return (
-      <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
-        <p className="text-gray-600">Não foi possível carregar os dados de tendências</p>
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 text-center">
+        <p className="text-gray-600 dark:text-gray-400">Não foi possível carregar os dados de tendências</p>
       </div>
     );
   }
@@ -239,8 +239,8 @@ const TrendAnalysis = ({ userId }) => {
     <div className="space-y-6">
       {/* Título */}
       <div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">📈 Análise de Tendências</h2>
-        <p className="text-gray-600">Análise dos últimos 6 meses</p>
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">📈 Análise de Tendências</h2>
+        <p className="text-gray-600 dark:text-gray-400">Análise dos últimos 6 meses</p>
       </div>
 
       {/* Cards principais */}
@@ -251,21 +251,21 @@ const TrendAnalysis = ({ userId }) => {
       </div>
 
       {/* Resumo dos últimos 6 meses */}
-      <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
-        <h3 className="text-lg font-bold text-gray-900 mb-4">Histórico Mensal</h3>
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-200 dark:border-gray-700">
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Histórico Mensal</h3>
         <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
           {trendData.monthlyData.map((monthData, index) => (
             <div key={index} className="text-center">
-              <div className="text-sm font-medium text-gray-600 mb-2 capitalize">
+              <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2 capitalize">
                 {monthData.monthName}
               </div>
               <div className="space-y-1">
-                <div className="text-xs text-gray-500">Gastos</div>
-                <div className="text-sm font-semibold text-red-600">
+                <div className="text-xs text-gray-500 dark:text-gray-400">Gastos</div>
+                <div className="text-sm font-semibold text-red-600 dark:text-red-400">
                   {formatCurrency(monthData.totalExpenses)}
                 </div>
-                <div className="text-xs text-gray-500">Receitas</div>
-                <div className="text-sm font-semibold text-green-600">
+                <div className="text-xs text-gray-500 dark:text-gray-400">Receitas</div>
+                <div className="text-sm font-semibold text-green-600 dark:text-green-400">
                   {formatCurrency(monthData.totalIncome)}
                 </div>
               </div>
@@ -275,8 +275,8 @@ const TrendAnalysis = ({ userId }) => {
       </div>
 
       {/* Tendências por categoria */}
-      <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
-        <h3 className="text-lg font-bold text-gray-900 mb-4">Tendências por Categoria</h3>
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-200 dark:border-gray-700">
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Tendências por Categoria</h3>
         <div className="space-y-3">
           {Object.entries(trendData.byCategory)
             .filter(([, trend]) => trend.percentage > 0.1) // Mostrar apenas categorias com mudança significativa
@@ -286,7 +286,7 @@ const TrendAnalysis = ({ userId }) => {
             ))}
         </div>
         {Object.values(trendData.byCategory).every(t => t.percentage <= 0.1) && (
-          <p className="text-center text-gray-500 py-4">
+          <p className="text-center text-gray-500 dark:text-gray-400 py-4">
             Nenhuma variação significativa nas categorias
           </p>
         )}

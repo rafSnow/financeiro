@@ -60,8 +60,12 @@ const Insights = () => {
       <main className="container mx-auto px-4 pb-24 pt-20">
         {/* Cabeçalho */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">💡 Seus Insights</h1>
-          <p className="text-gray-600 dark:text-gray-400">Análise inteligente das suas finanças este mês</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+            💡 Seus Insights
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400">
+            Análise inteligente das suas finanças este mês
+          </p>
         </div>
 
         {loading ? (
@@ -74,7 +78,9 @@ const Insights = () => {
           // Estado vazio
           <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-12 text-center">
             <div className="text-6xl mb-4">📊</div>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Nenhum insight disponível</h3>
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+              Nenhum insight disponível
+            </h3>
             <p className="text-gray-600 dark:text-gray-400 mb-6">
               Registre suas despesas e receitas para gerar insights automáticos
             </p>
