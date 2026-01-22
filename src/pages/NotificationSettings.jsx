@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 import Header from '../components/Header';
-import { useAuthStore } from '../store/authStore';
 import {
   getNotificationPermissionStatus,
   isNotificationSupported,
@@ -16,6 +15,7 @@ import {
   subscribeToNotifications,
   unsubscribeFromNotifications,
 } from '../services/notifications.service';
+import { useAuthStore } from '../store/authStore';
 
 /**
  * Página de configurações de notificações
@@ -127,19 +127,17 @@ const NotificationSettings = () => {
           </button>
 
           {/* Título */}
-          <h1 className="text-2xl font-bold text-gray-800 mb-6">🔔 Configurações de Notificações</h1>
+          <h1 className="text-2xl font-bold text-gray-800 mb-6">
+            🔔 Configurações de Notificações
+          </h1>
 
           {/* Status Card */}
           <div className="bg-white rounded-lg border-2 border-gray-200 p-6 mb-6">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-lg font-semibold text-gray-800">
-                  Status das Notificações
-                </h3>
+                <h3 className="text-lg font-semibold text-gray-800">Status das Notificações</h3>
                 <p className="text-sm text-gray-600 mt-1">
-                  {isEnabled
-                    ? 'Você está recebendo notificações'
-                    : 'Notificações desabilitadas'}
+                  {isEnabled ? 'Você está recebendo notificações' : 'Notificações desabilitadas'}
                 </p>
               </div>
               <div
@@ -184,9 +182,7 @@ const NotificationSettings = () => {
 
           {/* Tipos de Notificações */}
           <div className="bg-white rounded-lg border-2 border-gray-200 p-6 mb-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">
-              Tipos de Notificações
-            </h3>
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">Tipos de Notificações</h3>
 
             <div className="space-y-4">
               {Object.entries(notificationTypes).map(([type, config]) => (
@@ -198,7 +194,9 @@ const NotificationSettings = () => {
                     <span className="text-2xl">{config.icon}</span>
                     <div>
                       <div className="font-medium text-gray-800">{config.title}</div>
-                      <div className="text-xs text-gray-500">{getNotificationDescription(type)}</div>
+                      <div className="text-xs text-gray-500">
+                        {getNotificationDescription(type)}
+                      </div>
                     </div>
                   </div>
                   <label className="relative inline-flex items-center cursor-pointer">
@@ -223,9 +221,7 @@ const NotificationSettings = () => {
 
           {/* Informações */}
           <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-4">
-            <h4 className="text-sm font-semibold text-blue-900 mb-2">
-              ℹ️ Sobre as Notificações
-            </h4>
+            <h4 className="text-sm font-semibold text-blue-900 mb-2">ℹ️ Sobre as Notificações</h4>
             <ul className="text-xs text-blue-700 space-y-1">
               <li>• Você será notificado sobre vencimentos de dívidas</li>
               <li>• Receberá alertas quando metas estiverem em risco</li>

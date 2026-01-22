@@ -18,7 +18,7 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 
 // Handle background messages
-messaging.onBackgroundMessage((payload) => {
+messaging.onBackgroundMessage(payload => {
   console.log('[firebase-messaging-sw.js] Received background message:', payload);
 
   const notificationTitle = payload.notification?.title || 'Nova Notificação';
@@ -36,7 +36,7 @@ messaging.onBackgroundMessage((payload) => {
 });
 
 // Handle notification click
-self.addEventListener('notificationclick', (event) => {
+self.addEventListener('notificationclick', event => {
   console.log('[firebase-messaging-sw.js] Notification clicked:', event);
 
   event.notification.close();
@@ -45,7 +45,7 @@ self.addEventListener('notificationclick', (event) => {
   const urlToOpen = getUrlForNotificationType(event.notification.data);
 
   event.waitUntil(
-    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then(clientList => {
       // Check if app is already open
       for (const client of clientList) {
         if (client.url.includes(urlToOpen) && 'focus' in client) {
