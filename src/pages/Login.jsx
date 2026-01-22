@@ -126,18 +126,18 @@ const Login = () => {
 
   if (showResetPassword) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center px-4 py-12">
         <div className="max-w-md w-full space-y-8">
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-900">Recuperar Senha</h2>
-            <p className="mt-2 text-sm text-gray-600">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Recuperar Senha</h2>
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
               Digite seu email para receber o link de recuperação
             </p>
           </div>
 
           <form onSubmit={handleResetPassword} className="mt-8">
             <div
-              className="bg-white shadow-lg rounded-2xl flex flex-col gap-6"
+              className="bg-white dark:bg-gray-800 shadow-lg rounded-2xl flex flex-col gap-6"
               style={{ padding: '2rem' }}
             >
               <Input
@@ -164,7 +164,7 @@ const Login = () => {
                   setErrors({});
                   setResetEmail('');
                 }}
-                className="w-full text-center text-sm text-gray-600 hover:text-gray-900"
+                className="w-full text-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
               >
                 Voltar ao login
               </button>
@@ -176,27 +176,27 @@ const Login = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center px-4 py-12">
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-blue-600">💰 FinanceiroApp</h1>
-          <h2 className="mt-6 text-3xl font-bold text-gray-900">Bem-vindo de volta!</h2>
-          <p className="mt-2 text-sm text-gray-600">Entre com sua conta para continuar</p>
+          <h1 className="text-4xl font-bold text-blue-600 dark:text-blue-500">💰 FinanceiroApp</h1>
+          <h2 className="mt-6 text-3xl font-bold text-gray-900 dark:text-white">Bem-vindo de volta!</h2>
+          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">Entre com sua conta para continuar</p>
         </div>
 
         <form onSubmit={handleSubmit} className="mt-8">
           <div
-            className="bg-white shadow-lg rounded-2xl flex flex-col gap-6"
+            className="bg-white dark:bg-gray-800 shadow-lg rounded-2xl flex flex-col gap-6"
             style={{ padding: '2rem' }}
           >
             {errors.general && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg">
                 {errors.general}
               </div>
             )}
 
             {successMessage && (
-              <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+              <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-400 px-4 py-3 rounded-lg">
                 {successMessage}
               </div>
             )}
@@ -242,9 +242,9 @@ const Login = () => {
           </div>
 
           <div className="text-center mt-6">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
               Não tem uma conta?{' '}
-              <Link to="/register" className="text-blue-600 hover:text-blue-700 font-medium">
+              <Link to="/register" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">
                 Cadastre-se
               </Link>
             </p>

@@ -145,23 +145,23 @@ const Register = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center px-4 py-12">
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-blue-600">💰 FinanceiroApp</h1>
-          <h2 className="mt-6 text-3xl font-bold text-gray-900">Criar conta</h2>
-          <p className="mt-2 text-sm text-gray-600">
+          <h1 className="text-4xl font-bold text-blue-600 dark:text-blue-500">💰 FinanceiroApp</h1>
+          <h2 className="mt-6 text-3xl font-bold text-gray-900 dark:text-white">Criar conta</h2>
+          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
             Preencha os dados abaixo para começar a organizar suas finanças
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="mt-8">
           <div
-            className="bg-white shadow-lg rounded-2xl flex flex-col gap-6"
+            className="bg-white dark:bg-gray-800 shadow-lg rounded-2xl flex flex-col gap-6"
             style={{ padding: '2rem' }}
           >
             {errors.general && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg">
                 {errors.general}
               </div>
             )}
@@ -229,7 +229,7 @@ const Register = () => {
               step="0.01"
             />
 
-            <div className="text-xs text-gray-500 mt-2">
+            <div className="text-xs text-gray-500 dark:text-gray-400 mt-2">
               <p>Requisitos da senha:</p>
               <ul className="list-disc list-inside mt-1">
                 <li>Mínimo de 6 caracteres</li>
@@ -243,9 +243,9 @@ const Register = () => {
           </div>
 
           <div className="text-center mt-6">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
               Já tem uma conta?{' '}
-              <Link to="/login" className="text-blue-600 hover:text-blue-700 font-medium">
+              <Link to="/login" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">
                 Faça login
               </Link>
             </p>
