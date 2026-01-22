@@ -37,15 +37,16 @@ const LoadingFallback = () => (
 // Componente com page transitions
 const AnimatedRoutes = () => {
   const location = useLocation();
+  const isMobile = window.innerWidth < 768; // Breakpoint md do Tailwind
 
   return (
     <AnimatePresence mode="wait">
       <motion.div
         key={location.pathname}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -20 }}
-        transition={{ duration: 0.2 }}
+        initial={isMobile ? { opacity: 0, y: 20 } : false}
+        animate={isMobile ? { opacity: 1, y: 0 } : { opacity: 1 }}
+        exit={isMobile ? { opacity: 0, y: -20 } : false}
+        transition={{ duration: isMobile ? 0.2 : 0 }}
       >
         <Routes location={location}>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />

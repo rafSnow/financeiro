@@ -101,7 +101,9 @@ const NotificationSettings = () => {
               ← Voltar
             </button>
 
-            <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">🔔 Notificações</h1>
+            <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
+              🔔 Notificações
+            </h1>
 
             <div className="bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-200 dark:border-yellow-800 rounded-lg p-6 text-center">
               <div className="text-4xl mb-3">⚠️</div>
@@ -141,7 +143,9 @@ const NotificationSettings = () => {
           <div className="bg-white dark:bg-gray-800 rounded-lg border-2 border-gray-200 dark:border-gray-700 p-6 mb-6">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-lg font-semibold text-gray-800 dark:text-white">Status das Notificações</h3>
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+                  Status das Notificações
+                </h3>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                   {isEnabled ? 'Você está recebendo notificações' : 'Notificações desabilitadas'}
                 </p>
@@ -202,7 +206,9 @@ const NotificationSettings = () => {
 
           {/* Tipos de Notificações */}
           <div className="bg-white dark:bg-gray-800 rounded-lg border-2 border-gray-200 dark:border-gray-700 p-6 mb-6">
-            <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">Tipos de Notificações</h3>
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
+              Tipos de Notificações
+            </h3>
 
             <div className="space-y-4">
               {Object.entries(notificationTypes).map(([type, config]) => (
@@ -215,7 +221,9 @@ const NotificationSettings = () => {
                       {config.icon}
                     </span>
                     <div>
-                      <div className="font-medium text-gray-800 dark:text-white">{config.title}</div>
+                      <div className="font-medium text-gray-800 dark:text-white">
+                        {config.title}
+                      </div>
                       <div className="text-xs text-gray-500 dark:text-gray-400">
                         {getNotificationDescription(type)}
                       </div>
@@ -243,7 +251,9 @@ const NotificationSettings = () => {
 
           {/* Informações */}
           <div className="bg-blue-50 dark:bg-blue-900/20 border-2 border-blue-200 dark:border-blue-800 rounded-lg p-4 transition-all duration-300 hover:shadow-md">
-            <h4 className="text-sm font-semibold text-blue-900 dark:text-blue-200 mb-2">ℹ️ Sobre as Notificações</h4>
+            <h4 className="text-sm font-semibold text-blue-900 dark:text-blue-200 mb-2">
+              ℹ️ Sobre as Notificações
+            </h4>
             <ul className="text-xs text-blue-700 dark:text-blue-300 space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-blue-500 dark:text-blue-400">•</span>
