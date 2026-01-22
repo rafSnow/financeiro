@@ -25,13 +25,6 @@ import { generateCurrentMonthInsights, sortInsightsByPriority } from '../utils/i
 const Dashboard = () => {
   const { user } = useAuthStore();
   const navigate = useNavigate();
-  const { theme, isDark } = useTheme();
-
-  console.log('📊 [Dashboard RENDER] Current theme:', theme, 'isDark:', isDark);
-  console.log(
-    '📊 [Dashboard] HTML has dark class:',
-    document.documentElement.classList.contains('dark')
-  );
 
   const [expenses, setExpenses] = useState([]);
   const [incomes, setIncomes] = useState([]);
