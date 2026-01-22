@@ -43,7 +43,9 @@ const ExpensesPieChart = ({ data }) => {
       return (
         <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
           <p className="font-semibold text-gray-800 dark:text-white">{data.name}</p>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{formatCurrency(data.value)}</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+            {formatCurrency(data.value)}
+          </p>
           <p className="text-xs text-gray-500 dark:text-gray-400">{data.percentage}% do total</p>
         </div>
       );
