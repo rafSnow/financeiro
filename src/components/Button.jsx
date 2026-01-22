@@ -36,7 +36,7 @@ const Button = ({
       'bg-red-600 text-white hover:bg-red-700 focus:ring-4 focus:ring-red-300 active:bg-red-800 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800',
   };
 
-  const handleClick = (e) => {
+  const handleClick = e => {
     // Disparar feedback háptico baseado na variante
     if (enableHaptic && !disabled && !loading) {
       if (variant === 'danger') {
@@ -105,12 +105,6 @@ Button.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
   enableHaptic: PropTypes.bool,
-};
-  disabled: PropTypes.bool,
-  type: PropTypes.oneOf(['button', 'submit', 'reset']),
-  onClick: PropTypes.func,
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
 };
 
 export default Button;
