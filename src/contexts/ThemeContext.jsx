@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useLayoutEffect, useState } from 'react';
 
 const ThemeContext = createContext();
 
@@ -35,8 +35,8 @@ export const ThemeProvider = ({ children }) => {
     return 'light';
   });
 
-  useEffect(() => {
-    console.log('🔄 [ThemeContext useEffect] Theme changed to:', theme);
+  useLayoutEffect(() => {
+    console.log('🔄 [ThemeContext useLayoutEffect] Theme changed to:', theme);
 
     // Salvar preferência
     localStorage.setItem('theme', theme);
