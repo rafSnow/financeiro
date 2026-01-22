@@ -408,9 +408,6 @@ const Dashboard = () => {
             )}
           </>
         )}
-
-        {/* Debug Component */}
-        <ThemeDebug />
       </main>
 
       <BottomNav />
