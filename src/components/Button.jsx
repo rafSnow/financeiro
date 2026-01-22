@@ -39,6 +39,8 @@ const Button = ({
       onClick={onClick}
       disabled={disabled || loading}
       className={`${baseClasses} ${variants[variant]} ${className}`}
+      aria-busy={loading}
+      aria-disabled={disabled}
       {...props}
     >
       {loading ? (
@@ -48,6 +50,7 @@ const Button = ({
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
+            aria-hidden="true"
           >
             <circle
               className="opacity-25"

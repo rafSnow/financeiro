@@ -173,18 +173,18 @@ const Header = () => {
   const isActive = path => location.pathname === path;
 
   return (
-    <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 transition-colors duration-300">
+    <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 transition-colors duration-300" role="banner">
       <div style={{ maxWidth: '80rem', margin: '0 auto', padding: '0 1rem' }}>
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-2">
-              <span className="text-2xl">💰</span>
+              <span className="text-2xl" aria-hidden="true">💰</span>
               <h1 className="text-xl font-bold text-blue-600 dark:text-blue-400">FinanceiroApp</h1>
             </div>
 
             {/* Navegação Desktop */}
-            <nav className="hidden lg:flex items-center gap-1">
+            <nav className="hidden lg:flex items-center gap-1" role="navigation" aria-label="Navegação principal">
               {menuStructure.map(menu => {
                 if (menu.submenu) {
                   // Menu com submenu (dropdown)
@@ -197,6 +197,9 @@ const Header = () => {
                             ? 'bg-blue-600 text-white'
                             : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
                         }`}
+                        aria-expanded={openDropdown === menu.label}
+                        aria-haspopup="true"
+                        aria-label={`Menu ${menu.label}`}
                       >
                         <span>{menu.icon}</span>
                         <span>{menu.label}</span>
@@ -256,8 +259,10 @@ const Header = () => {
                           ? 'bg-blue-600 text-white'
                           : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
                       }`}
+                      aria-label={`Ir para ${menu.label}`}
+                      aria-current={isActive(menu.path) ? 'page' : undefined}
                     >
-                      <span>{menu.icon}</span>
+                      <span aria-hidden="true">{menu.icon}</span>
                       <span>{menu.label}</span>
                     </button>
                   );
@@ -283,8 +288,9 @@ const Header = () => {
             <button
               onClick={handleLogout}
               className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              aria-label="Fazer logout"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
