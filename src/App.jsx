@@ -1,8 +1,8 @@
+import { Toaster } from 'react-hot-toast';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import InstallPWA from './components/InstallPWA';
 import OfflineBanner from './components/OfflineBanner';
 import PrivateRoute from './components/PrivateRoute';
-import ToastContainer from './components/ToastContainer';
 import Categories from './pages/Categories';
 import Dashboard from './pages/Dashboard';
 import Debts from './pages/Debts';
@@ -22,7 +22,32 @@ function App() {
   return (
     <BrowserRouter>
       <OfflineBanner />
-      <ToastContainer />
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: 'var(--color-bg-primary)',
+            color: 'var(--color-text-primary)',
+            border: '1px solid var(--color-border)',
+            borderRadius: '0.75rem',
+            padding: '1rem',
+            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+          },
+          success: {
+            iconTheme: {
+              primary: '#10b981',
+              secondary: 'white',
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: '#ef4444',
+              secondary: 'white',
+            },
+          },
+        }}
+      />
       <InstallPWA />
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />

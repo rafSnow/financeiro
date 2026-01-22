@@ -1,43 +1,50 @@
+import toast from 'react-hot-toast';
 import { create } from 'zustand';
 
 /**
  * Store para gerenciar notificações toast
+ * Agora usa react-hot-toast internamente
  */
-export const useToastStore = create(set => ({
-  toasts: [],
-
+export const useToastStore = create(() => ({
   /**
    * Adiciona um novo toast
    * @param {string} message - Mensagem do toast
    * @param {string} type - Tipo: success, error, warning, info
-   * @param {number} duration - Duração em ms (padrão: 3000)
    */
-  addToast: (message, type = 'info', duration = 3000) => {
-    const id = Date.now();
-    set(state => ({
-      toasts: [...state.toasts, { id, message, type, duration }],
-    }));
-
-    // Auto-remover após duração
-    setTimeout(() => {
-      set(state => ({
-        toasts: state.toasts.filter(toast => toast.id !== id),
-      }));
-    }, duration);
+  addToast: (message, type = 'info') => {
+    switch (type) {
+      case 'success':
+        toast.success(message);
+        break;
+      case 'error':
+        toast.error(message);
+        break;
+      case 'warning':
+        toast(message, {
+          icon: '⚠️',
+        });
+        break;
+      case 'info':
+      default:
+        toast(message, {
+          icon: 'ℹ️',
+        });
+        break;
+    }
   },
 
   /**
-   * Remove um toast específico
-   * @param {number} id - ID do toast
+   * Remove um toast específico (compatibilidade)
+   * @param {string} id - ID do toast
    */
   removeToast: id => {
-    set(state => ({
-      toasts: state.toasts.filter(toast => toast.id !== id),
-    }));
+    toast.dismiss(id);
   },
 
   /**
    * Limpa todos os toasts
    */
-  clearToasts: () => set({ toasts: [] }),
+  clearToasts: () => {
+    toast.dismiss();
+  },
 }));
