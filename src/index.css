@@ -80,8 +80,6 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background-color: var(--color-bg-secondary);
-  color: var(--color-text-primary);
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
