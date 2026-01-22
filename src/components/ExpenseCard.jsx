@@ -36,8 +36,13 @@ const ExpenseCard = ({ expense, onEdit, onDelete }) => {
               </div>
             </div>
             <div className="text-right shrink-0">
-              <p className="text-xl font-bold text-gray-900 dark:text-gray-100">{formatCurrency(expense.amount)}</p>
-              <p className="text-xs text-gray-500 dark:text-gray-400" style={{ marginTop: '0.25rem' }}>
+              <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                {formatCurrency(expense.amount)}
+              </p>
+              <p
+                className="text-xs text-gray-500 dark:text-gray-400"
+                style={{ marginTop: '0.25rem' }}
+              >
                 {formatDate(expense.date)}
               </p>
             </div>

@@ -152,6 +152,14 @@ const Header = () => {
         { label: 'Relatórios', icon: '📊', path: '/reports' },
       ],
     },
+    {
+      label: 'Configurações',
+      icon: '⚙️',
+      submenu: [
+        { label: 'Notificações', icon: '🔔', path: '/notifications' },
+        { label: 'Backup', icon: '💾', path: '/settings' },
+      ],
+    },
   ];
 
   const navItems = [
@@ -267,7 +275,9 @@ const Header = () => {
             <ThemeToggle />
 
             <div className="text-right hidden sm:block">
-              <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{user?.displayName || user?.name}</p>
+              <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                {user?.displayName || user?.name}
+              </p>
               <p className="text-xs text-gray-500 dark:text-gray-400">{user?.email}</p>
             </div>
             <button

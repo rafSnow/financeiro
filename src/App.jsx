@@ -16,6 +16,7 @@ import NotificationSettings from './pages/NotificationSettings';
 import RecategorizeExpenses from './pages/RecategorizeExpenses';
 import Register from './pages/Register';
 import Reports from './pages/Reports';
+import Settings from './pages/Settings';
 
 function App() {
   return (
@@ -114,6 +115,14 @@ function App() {
           element={
             <PrivateRoute>
               <Insights />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <PrivateRoute>
+              <Settings />
             </PrivateRoute>
           }
         />

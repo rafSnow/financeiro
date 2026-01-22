@@ -1,6 +1,6 @@
 /* Importar fonte Inter do Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* Reset básico */
 
@@ -30,8 +30,19 @@
   --bg-secondary: #f9fafb;
 
   /* Fonte */
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    'Roboto',
+    'Oxygen',
+    'Ubuntu',
+    'Cantarell',
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -70,5 +81,7 @@ body {
   min-height: 100vh;
   background-color: var(--color-bg-secondary);
   color: var(--color-text-primary);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }

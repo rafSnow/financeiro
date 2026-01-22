@@ -182,7 +182,9 @@ const Dashboard = () => {
           <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
             Olá, {user?.displayName?.split(' ')[0] || user?.name?.split(' ')[0]}! 👋
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">Aqui está um resumo das suas finanças</p>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">
+            Aqui está um resumo das suas finanças
+          </p>
         </div>
 
         {loading ? (
@@ -203,10 +205,16 @@ const Dashboard = () => {
                   style={{ padding: '1.5rem' }}
                 >
                   <div className="flex items-start justify-between mb-4">
-                    <div className={`${card.bgColor} dark:bg-opacity-20 p-3 rounded-xl`}>{card.icon}</div>
+                    <div className={`${card.bgColor} dark:bg-opacity-20 p-3 rounded-xl`}>
+                      {card.icon}
+                    </div>
                   </div>
-                  <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">{card.title}</h3>
-                  <p className={`text-2xl font-bold ${card.textColor || 'text-gray-900 dark:text-gray-100'}`}>
+                  <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">
+                    {card.title}
+                  </h3>
+                  <p
+                    className={`text-2xl font-bold ${card.textColor || 'text-gray-900 dark:text-gray-100'}`}
+                  >
                     {card.value}
                   </p>
                 </div>
