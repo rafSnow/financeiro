@@ -11,6 +11,7 @@ import Goals from './pages/Goals';
 import Import from './pages/Import';
 import Income from './pages/Income';
 import Login from './pages/Login';
+import NotificationSettings from './pages/NotificationSettings';
 import RecategorizeExpenses from './pages/RecategorizeExpenses';
 import Register from './pages/Register';
 import Reports from './pages/Reports';
@@ -96,6 +97,14 @@ function App() {
           element={
             <PrivateRoute>
               <RecategorizeExpenses />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/notifications"
+          element={
+            <PrivateRoute>
+              <NotificationSettings />
             </PrivateRoute>
           }
         />

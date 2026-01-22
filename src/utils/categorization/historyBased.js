@@ -3,7 +3,7 @@
  * Aprende com padrões anteriores de categorização
  */
 
-import { getUserPatterns } from '../services/categorizationHistory.service';
+import { getUserPatterns } from '../../services/categorizationHistory.service';
 
 /**
  * Categoriza uma descrição baseada no histórico do usuário
