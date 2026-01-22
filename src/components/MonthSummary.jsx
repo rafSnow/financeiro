@@ -39,10 +39,12 @@ const MonthSummary = ({ currentMonth, previousMonth }) => {
    */
   const StatCard = ({ title, value, color, subtext, icon }) => {
     const colorClasses = {
-      green: 'bg-green-50 border-green-200 text-green-800',
-      red: 'bg-red-50 border-red-200 text-red-800',
-      blue: 'bg-blue-50 border-blue-200 text-blue-800',
-      purple: 'bg-purple-50 border-purple-200 text-purple-800',
+      green:
+        'bg-green-50 dark:bg-green-900/30 border-green-200 dark:border-green-800 text-green-800 dark:text-green-300',
+      red: 'bg-red-50 dark:bg-red-900/30 border-red-200 dark:border-red-800 text-red-800 dark:text-red-300',
+      blue: 'bg-blue-50 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-300',
+      purple:
+        'bg-purple-50 dark:bg-purple-900/30 border-purple-200 dark:border-purple-800 text-purple-800 dark:text-purple-300',
     };
 
     return (
@@ -71,23 +73,23 @@ const MonthSummary = ({ currentMonth, previousMonth }) => {
     // Para renda, aumento é positivo (verde), redução é negativo (vermelho)
     const isExpense = label === 'Gastos';
     const color = isNeutral
-      ? 'text-gray-600'
+      ? 'text-gray-600 dark:text-gray-400'
       : isExpense
-      ? isPositive
-        ? 'text-red-600'
-        : 'text-green-600'
-      : isPositive
-      ? 'text-green-600'
-      : 'text-red-600';
+        ? isPositive
+          ? 'text-red-600 dark:text-red-400'
+          : 'text-green-600 dark:text-green-400'
+        : isPositive
+          ? 'text-green-600 dark:text-green-400'
+          : 'text-red-600 dark:text-red-400';
 
     const arrow = isNeutral ? '→' : isPositive ? '↑' : '↓';
     const diffPercentage = previous > 0 ? ((diff / previous) * 100).toFixed(1) : 0;
 
     return (
-      <div className="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">
-        <span className="text-gray-700 font-medium">{label}</span>
+      <div className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700 last:border-0">
+        <span className="text-gray-700 dark:text-gray-300 font-medium">{label}</span>
         <div className="flex items-center gap-3">
-          <span className="text-gray-600">{formatCurrency(previous)}</span>
+          <span className="text-gray-600 dark:text-gray-400">{formatCurrency(previous)}</span>
           <span className={`font-semibold ${color}`}>
             {arrow} {formatCurrency(Math.abs(diff))}
           </span>
@@ -101,8 +103,12 @@ const MonthSummary = ({ currentMonth, previousMonth }) => {
     <div className="space-y-6">
       {/* Título */}
       <div>
-        <h2 className="text-2xl font-bold text-gray-800">Resumo de {monthName}</h2>
-        <p className="text-gray-600 mt-1">Visão geral das suas finanças do mês</p>
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200">
+          Resumo de {monthName}
+        </h2>
+        <p className="text-gray-600 dark:text-gray-400 mt-1">
+          Visão geral das suas finanças do mês
+        </p>
       </div>
 
       {/* Cards de resumo */}
@@ -152,8 +158,10 @@ const MonthSummary = ({ currentMonth, previousMonth }) => {
 
       {/* Comparação com mês anterior */}
       {previousMonth && (
-        <div className="bg-white p-6 rounded-lg border border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Comparado a {prevMonthName}:</h3>
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
+            Comparado a {prevMonthName}:
+          </h3>
 
           <div className="space-y-1">
             <ComparisonRow label="Renda" current={income} previous={prevIncome} />
@@ -161,21 +169,21 @@ const MonthSummary = ({ currentMonth, previousMonth }) => {
           </div>
 
           {/* Mensagem de feedback */}
-          <div className="mt-4 pt-4 border-t border-gray-200">
+          <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
             {expensesDiff < 0 ? (
-              <p className="text-green-600 font-semibold flex items-center gap-2">
+              <p className="text-green-600 dark:text-green-400 font-semibold flex items-center gap-2">
                 <span>🎉</span>
                 <span>
                   Parabéns! Você economizou {formatCurrency(Math.abs(expensesDiff))} este mês!
                 </span>
               </p>
             ) : expensesDiff > 0 ? (
-              <p className="text-orange-600 font-semibold flex items-center gap-2">
+              <p className="text-orange-600 dark:text-orange-400 font-semibold flex items-center gap-2">
                 <span>⚠️</span>
                 <span>Atenção! Você gastou {formatCurrency(expensesDiff)} a mais este mês.</span>
               </p>
             ) : (
-              <p className="text-gray-600 font-semibold flex items-center gap-2">
+              <p className="text-gray-600 dark:text-gray-400 font-semibold flex items-center gap-2">
                 <span>→</span>
                 <span>Seus gastos se mantiveram estáveis este mês.</span>
               </p>

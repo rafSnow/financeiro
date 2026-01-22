@@ -67,7 +67,7 @@ const CategoryBreakdown = ({ expenses, totalExpenses }) => {
 
   if (categories.length === 0) {
     return (
-      <div className="text-center py-8 text-gray-500">
+      <div className="text-center py-8 text-gray-500 dark:text-gray-400">
         <p>Nenhuma categoria encontrada neste período</p>
       </div>
     );
@@ -77,28 +77,45 @@ const CategoryBreakdown = ({ expenses, totalExpenses }) => {
     <div className="overflow-x-auto">
       <table className="w-full">
         <thead>
-          <tr className="border-b-2 border-gray-200">
-            <th className="text-left py-3 px-4 font-semibold text-gray-700">Categoria</th>
-            <th className="text-right py-3 px-4 font-semibold text-gray-700">Gastos</th>
-            <th className="text-right py-3 px-4 font-semibold text-gray-700">Qtd</th>
-            <th className="text-right py-3 px-4 font-semibold text-gray-700">Média</th>
-            <th className="text-right py-3 px-4 font-semibold text-gray-700">%</th>
-            <th className="text-center py-3 px-4 font-semibold text-gray-700">Status</th>
+          <tr className="border-b-2 border-gray-200 dark:border-gray-700">
+            <th className="text-left py-3 px-4 font-semibold text-gray-700 dark:text-gray-300">
+              Categoria
+            </th>
+            <th className="text-right py-3 px-4 font-semibold text-gray-700 dark:text-gray-300">
+              Gastos
+            </th>
+            <th className="text-right py-3 px-4 font-semibold text-gray-700 dark:text-gray-300">
+              Qtd
+            </th>
+            <th className="text-right py-3 px-4 font-semibold text-gray-700 dark:text-gray-300">
+              Média
+            </th>
+            <th className="text-right py-3 px-4 font-semibold text-gray-700 dark:text-gray-300">
+              %
+            </th>
+            <th className="text-center py-3 px-4 font-semibold text-gray-700 dark:text-gray-300">
+              Status
+            </th>
           </tr>
         </thead>
         <tbody>
           {categories.map((cat, index) => (
-            <tr key={index} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+            <tr
+              key={index}
+              className="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+            >
               <td className="py-3 px-4">
                 <div className="flex items-center gap-2">
-                  <span className="font-medium text-gray-800">{cat.name}</span>
+                  <span className="font-medium text-gray-800 dark:text-gray-200">{cat.name}</span>
                 </div>
               </td>
-              <td className="py-3 px-4 text-right font-semibold text-gray-800">
+              <td className="py-3 px-4 text-right font-semibold text-gray-800 dark:text-gray-200">
                 {formatCurrency(cat.total)}
               </td>
-              <td className="py-3 px-4 text-right text-gray-600">{cat.count}</td>
-              <td className="py-3 px-4 text-right text-gray-600">{formatCurrency(cat.average)}</td>
+              <td className="py-3 px-4 text-right text-gray-600 dark:text-gray-400">{cat.count}</td>
+              <td className="py-3 px-4 text-right text-gray-600 dark:text-gray-400">
+                {formatCurrency(cat.average)}
+              </td>
               <td className="py-3 px-4 text-right">
                 <span className={`font-semibold ${getColorByPercentage(cat.percentage)}`}>
                   {cat.percentage.toFixed(1)}%
@@ -113,10 +130,10 @@ const CategoryBreakdown = ({ expenses, totalExpenses }) => {
                     cat.percentage >= 30
                       ? 'Alto impacto'
                       : cat.percentage >= 15
-                      ? 'Médio impacto'
-                      : cat.percentage >= 5
-                      ? 'Baixo impacto'
-                      : 'Muito baixo'
+                        ? 'Médio impacto'
+                        : cat.percentage >= 5
+                          ? 'Baixo impacto'
+                          : 'Muito baixo'
                   }
                 >
                   {getIconByPercentage(cat.percentage)}
@@ -126,14 +143,18 @@ const CategoryBreakdown = ({ expenses, totalExpenses }) => {
           ))}
         </tbody>
         <tfoot>
-          <tr className="border-t-2 border-gray-200 font-bold bg-gray-50">
-            <td className="py-3 px-4 text-gray-800">TOTAL</td>
-            <td className="py-3 px-4 text-right text-gray-800">{formatCurrency(totalExpenses)}</td>
-            <td className="py-3 px-4 text-right text-gray-600">{expenses.length}</td>
-            <td className="py-3 px-4 text-right text-gray-600">
+          <tr className="border-t-2 border-gray-200 dark:border-gray-700 font-bold bg-gray-50 dark:bg-gray-800">
+            <td className="py-3 px-4 text-gray-800 dark:text-gray-200">TOTAL</td>
+            <td className="py-3 px-4 text-right text-gray-800 dark:text-gray-200">
+              {formatCurrency(totalExpenses)}
+            </td>
+            <td className="py-3 px-4 text-right text-gray-600 dark:text-gray-400">
+              {expenses.length}
+            </td>
+            <td className="py-3 px-4 text-right text-gray-600 dark:text-gray-400">
               {formatCurrency(expenses.length > 0 ? totalExpenses / expenses.length : 0)}
             </td>
-            <td className="py-3 px-4 text-right text-gray-600">100%</td>
+            <td className="py-3 px-4 text-right text-gray-600 dark:text-gray-400">100%</td>
             <td className="py-3 px-4"></td>
           </tr>
         </tfoot>

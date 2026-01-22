@@ -113,7 +113,7 @@ const TopExpenses = ({ expenses, previousExpenses = [] }) => {
 
   if (expenses.length === 0) {
     return (
-      <div className="text-center py-8 text-gray-500">
+      <div className="text-center py-8 text-gray-500 dark:text-gray-400">
         <p>Nenhum gasto registrado neste período</p>
       </div>
     );
@@ -123,7 +123,7 @@ const TopExpenses = ({ expenses, previousExpenses = [] }) => {
     <div className="space-y-6">
       {/* Top 5 Gastos Individuais */}
       <div>
-        <h4 className="text-md font-semibold text-gray-800 mb-3 flex items-center gap-2">
+        <h4 className="text-md font-semibold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
           <span>💸</span>
           <span>Top 5 Maiores Gastos</span>
         </h4>
@@ -131,18 +131,22 @@ const TopExpenses = ({ expenses, previousExpenses = [] }) => {
           {topIndividual.map((expense, index) => (
             <div
               key={index}
-              className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200"
+              className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700"
             >
               <div className="flex items-center gap-3 flex-1">
                 <span className="text-xl">{getMedal(index)}</span>
                 <div className="flex-1">
-                  <p className="font-medium text-gray-800">{expense.description}</p>
-                  <p className="text-sm text-gray-500">
+                  <p className="font-medium text-gray-800 dark:text-gray-200">
+                    {expense.description}
+                  </p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
                     {expense.category} • {formatDate(expense.date)}
                   </p>
                 </div>
               </div>
-              <span className="font-bold text-red-600">{formatCurrency(expense.amount)}</span>
+              <span className="font-bold text-red-600 dark:text-red-400">
+                {formatCurrency(expense.amount)}
+              </span>
             </div>
           ))}
         </div>
@@ -150,7 +154,7 @@ const TopExpenses = ({ expenses, previousExpenses = [] }) => {
 
       {/* Top 3 Categorias */}
       <div>
-        <h4 className="text-md font-semibold text-gray-800 mb-3 flex items-center gap-2">
+        <h4 className="text-md font-semibold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
           <span>📊</span>
           <span>Top 3 Categorias</span>
         </h4>
@@ -158,13 +162,15 @@ const TopExpenses = ({ expenses, previousExpenses = [] }) => {
           {topCategories.map((cat, index) => (
             <div
               key={index}
-              className="flex items-center justify-between p-3 bg-blue-50 rounded-lg border border-blue-200"
+              className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg border border-blue-200 dark:border-blue-800"
             >
               <div className="flex items-center gap-3">
                 <span className="text-xl">{getMedal(index)}</span>
-                <span className="font-medium text-gray-800">{cat.name}</span>
+                <span className="font-medium text-gray-800 dark:text-gray-200">{cat.name}</span>
               </div>
-              <span className="font-bold text-blue-600">{formatCurrency(cat.total)}</span>
+              <span className="font-bold text-blue-600 dark:text-blue-400">
+                {formatCurrency(cat.total)}
+              </span>
             </div>
           ))}
         </div>
@@ -173,23 +179,25 @@ const TopExpenses = ({ expenses, previousExpenses = [] }) => {
       {/* Categoria com Maior Crescimento */}
       {fastestGrowing && fastestGrowing.growth > 0 && (
         <div>
-          <h4 className="text-md font-semibold text-gray-800 mb-3 flex items-center gap-2">
+          <h4 className="text-md font-semibold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
             <span>📈</span>
             <span>Maior Crescimento</span>
           </h4>
-          <div className="p-4 bg-orange-50 rounded-lg border border-orange-200">
+          <div className="p-4 bg-orange-50 dark:bg-orange-900/30 rounded-lg border border-orange-200 dark:border-orange-800">
             <div className="flex items-center justify-between mb-2">
-              <span className="font-semibold text-gray-800">{fastestGrowing.name}</span>
-              <span className="text-orange-600 font-bold">
+              <span className="font-semibold text-gray-800 dark:text-gray-200">
+                {fastestGrowing.name}
+              </span>
+              <span className="text-orange-600 dark:text-orange-400 font-bold">
                 +{fastestGrowing.growth.toFixed(1)}%
               </span>
             </div>
-            <div className="flex items-center justify-between text-sm text-gray-600">
+            <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
               <span>Mês anterior: {formatCurrency(fastestGrowing.previous)}</span>
               <span>→</span>
               <span>Este mês: {formatCurrency(fastestGrowing.current)}</span>
             </div>
-            <p className="text-xs text-orange-600 mt-2">
+            <p className="text-xs text-orange-600 dark:text-orange-400 mt-2">
               ⚠️ Aumento de {formatCurrency(fastestGrowing.difference)} em relação ao mês anterior
             </p>
           </div>

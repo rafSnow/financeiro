@@ -175,18 +175,21 @@ const InsightsPanel = ({ currentData, previousData, goals = [] }) => {
    */
   const getTypeClasses = type => {
     const classes = {
-      success: 'bg-green-50 border-green-200 text-green-800',
-      warning: 'bg-orange-50 border-orange-200 text-orange-800',
-      error: 'bg-red-50 border-red-200 text-red-800',
-      info: 'bg-blue-50 border-blue-200 text-blue-800',
-      tip: 'bg-purple-50 border-purple-200 text-purple-800',
+      success:
+        'bg-green-50 dark:bg-green-900/30 border-green-200 dark:border-green-800 text-green-800 dark:text-green-300',
+      warning:
+        'bg-orange-50 dark:bg-orange-900/30 border-orange-200 dark:border-orange-800 text-orange-800 dark:text-orange-300',
+      error:
+        'bg-red-50 dark:bg-red-900/30 border-red-200 dark:border-red-800 text-red-800 dark:text-red-300',
+      info: 'bg-blue-50 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-300',
+      tip: 'bg-purple-50 dark:bg-purple-900/30 border-purple-200 dark:border-purple-800 text-purple-800 dark:text-purple-300',
     };
     return classes[type] || classes.info;
   };
 
   if (insights.length === 0) {
     return (
-      <div className="text-center py-8 text-gray-500">
+      <div className="text-center py-8 text-gray-500 dark:text-gray-400">
         <p>Nenhum insight disponível no momento</p>
       </div>
     );

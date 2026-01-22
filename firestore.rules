@@ -131,5 +131,35 @@ service cloud.firestore {
       // Permitir exclusão apenas do próprio documento
       allow delete: if isOwner(userId);
     }
+
+    // Regras para coleção de backups
+    match /backups/{backupId} {
+      // Permitir leitura apenas dos próprios documentos
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+
+      // Permitir criação apenas se userId corresponde ao usuário autenticado
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+
+      // Permitir atualização apenas dos próprios documentos
+      allow update: if isAuthenticated() && resource.data.userId == request.auth.uid;
+
+      // Permitir exclusão apenas dos próprios documentos
+      allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+
+    // Regras para coleção de histórico de categorização
+    match /categorizationHistory/{historyId} {
+      // Permitir leitura apenas dos próprios documentos
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+
+      // Permitir criação apenas se userId corresponde ao usuário autenticado
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+
+      // Permitir atualização apenas dos próprios documentos
+      allow update: if isAuthenticated() && resource.data.userId == request.auth.uid;
+
+      // Permitir exclusão apenas dos próprios documentos
+      allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
   }
 }
