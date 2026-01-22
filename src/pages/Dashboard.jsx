@@ -66,28 +66,31 @@ const Dashboard = () => {
     loadData();
   }, [user, currentMonth, currentYear]);
 
-  // Cálculos
-  const totalIncome = calculateTotalIncome(incomes);
-  const totalExpenses = calculateTotalExpenses(expenses);
-  const availableBalance = calculateAvailableBalance(totalIncome, totalExpenses);
-  const totalDebts = calculateTotalDebts(debts);
-  const topExpenses = getTopExpenses(expenses, 3);
+  // Cálculos memoizados para evitar recalcular em cada render
+  const totalIncome = useMemo(() => calculateTotalIncome(incomes), [incomes]);
+  const totalExpenses = useMemo(() => calculateTotalExpenses(expenses), [expenses]);
+  const availableBalance = useMemo(
+    () => calculateAvailableBalance(totalIncome, totalExpenses),
+    [totalIncome, totalExpenses]
+  );
+  const totalDebts = useMemo(() => calculateTotalDebts(debts), [debts]);
+  const topExpenses = useMemo(() => getTopExpenses(expenses, 3), [expenses]);
 
-  // Determinar cor do saldo
-  const getBalanceColor = () => {
+  // Determinar cor do saldo - memoizado
+  const getBalanceColor = useCallback(() => {
     if (availableBalance < 0) return 'text-red-600';
     if (availableBalance < totalIncome * 0.2) return 'text-yellow-600';
     return 'text-blue-600';
-  };
+  }, [availableBalance, totalIncome]);
 
-  // Determinar cor dos gastos
-  const getExpensesColor = () => {
+  // Determinar cor dos gastos - memoizado
+  const getExpensesColor = useCallback(() => {
     if (totalIncome === 0) return 'text-red-600';
     const percentage = (totalExpenses / totalIncome) * 100;
     if (percentage > 80) return 'text-red-600';
     if (percentage > 60) return 'text-yellow-600';
     return 'text-gray-600';
-  };
+  }, [totalExpenses, totalIncome]);
 
   // Cards de resumo
   const summaryCards = [

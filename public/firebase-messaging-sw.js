@@ -1,9 +1,22 @@
 /* eslint-disable no-undef */
 // Firebase Messaging Service Worker
-// Handles background notifications when app is not in focus
+// Handles background notifications and caching strategies
 
 importScripts('https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js');
+
+// Cache names
+const CACHE_NAME = 'financeiro-app-v1';
+const STATIC_CACHE = 'static-v1';
+const DYNAMIC_CACHE = 'dynamic-v1';
+
+// Assets to precache
+const PRECACHE_ASSETS = [
+  '/',
+  '/index.html',
+  '/manifest.json',
+  '/logo192.png',
+];
 
 // Initialize Firebase in service worker
 firebase.initializeApp({
@@ -16,6 +29,75 @@ firebase.initializeApp({
 });
 
 const messaging = firebase.messaging();
+
+// Install event - precache assets
+self.addEventListener('install', event => {
+  console.log('[SW] Installing service worker...');
+  event.waitUntil(
+    caches.open(STATIC_CACHE).then(cache => {
+      console.log('[SW] Precaching assets');
+      return cache.addAll(PRECACHE_ASSETS);
+    })
+  );
+  self.skipWaiting();
+});
+
+// Activate event - cleanup old caches
+self.addEventListener('activate', event => {
+  console.log('[SW] Activating service worker...');
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames
+          .filter(name => name !== STATIC_CACHE && name !== DYNAMIC_CACHE)
+          .map(name => caches.delete(name))
+      );
+    })
+  );
+  self.clients.claim();
+});
+
+// Fetch event - implement cache strategies
+self.addEventListener('fetch', event => {
+  const { request } = event;
+  
+  // Skip non-GET requests
+  if (request.method !== 'GET') return;
+  
+  // Skip Firebase requests
+  if (request.url.includes('firebaseio.com') || request.url.includes('googleapis.com')) {
+    return;
+  }
+
+  // Cache-first strategy for static assets
+  if (request.url.includes('.js') || request.url.includes('.css') || request.url.includes('.png') || request.url.includes('.jpg')) {
+    event.respondWith(
+      caches.match(request).then(cached => {
+        return cached || fetch(request).then(response => {
+          return caches.open(STATIC_CACHE).then(cache => {
+            cache.put(request, response.clone());
+            return response;
+          });
+        });
+      })
+    );
+    return;
+  }
+
+  // Network-first strategy for HTML/API requests
+  event.respondWith(
+    fetch(request)
+      .then(response => {
+        return caches.open(DYNAMIC_CACHE).then(cache => {
+          cache.put(request, response.clone());
+          return response;
+        });
+      })
+      .catch(() => {
+        return caches.match(request);
+      })
+  );
+});
 
 // Handle background messages
 messaging.onBackgroundMessage(payload => {

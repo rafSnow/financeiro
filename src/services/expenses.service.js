@@ -4,8 +4,10 @@ import {
   deleteDoc,
   doc,
   getDocs,
+  limit,
   orderBy,
   query,
+  startAfter,
   Timestamp,
   updateDoc,
   where,
@@ -147,6 +149,43 @@ export const getAllExpenses = async userId => {
     return expenses;
   } catch (error) {
     console.error('Erro ao buscar todas as despesas:', error);
+    throw error;
+  }
+};
+
+/**
+ * Busca despesas de forma paginada
+ * @param {string} userId - ID do usuário
+ * @param {object} lastDoc - Último documento da página anterior (para paginação)
+ * @param {number} limitCount - Número de documentos por página (padrão: 20)
+ * @returns {Promise<object>} Objeto com expenses e lastDoc para próxima página
+ */
+export const getExpensesPaginated = async (userId, lastDoc = null, limitCount = 20) => {
+  try {
+    let q = query(
+      collection(db, 'expenses'),
+      where('userId', '==', userId),
+      orderBy('date', 'desc'),
+      limit(limitCount)
+    );
+
+    if (lastDoc) {
+      q = query(q, startAfter(lastDoc));
+    }
+
+    const snapshot = await getDocs(q);
+    const expenses = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    return {
+      expenses,
+      lastDoc: snapshot.docs[snapshot.docs.length - 1],
+      hasMore: snapshot.docs.length === limitCount,
+    };
+  } catch (error) {
+    console.error('Erro ao buscar despesas paginadas:', error);
     throw error;
   }
 };

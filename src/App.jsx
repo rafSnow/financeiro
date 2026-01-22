@@ -1,22 +1,37 @@
+import { lazy, Suspense } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import InstallPWA from './components/InstallPWA';
 import OfflineBanner from './components/OfflineBanner';
 import PrivateRoute from './components/PrivateRoute';
-import Categories from './pages/Categories';
+
+// Páginas carregadas imediatamente (críticas)
 import Dashboard from './pages/Dashboard';
-import Debts from './pages/Debts';
-import Expenses from './pages/Expenses';
-import Goals from './pages/Goals';
-import Import from './pages/Import';
-import Income from './pages/Income';
-import Insights from './pages/Insights';
 import Login from './pages/Login';
-import NotificationSettings from './pages/NotificationSettings';
-import RecategorizeExpenses from './pages/RecategorizeExpenses';
 import Register from './pages/Register';
-import Reports from './pages/Reports';
-import Settings from './pages/Settings';
+
+// Páginas com lazy loading (não críticas)
+const Expenses = lazy(() => import('./pages/Expenses'));
+const Income = lazy(() => import('./pages/Income'));
+const Debts = lazy(() => import('./pages/Debts'));
+const Goals = lazy(() => import('./pages/Goals'));
+const Reports = lazy(() => import('./pages/Reports'));
+const Insights = lazy(() => import('./pages/Insights'));
+const Categories = lazy(() => import('./pages/Categories'));
+const Settings = lazy(() => import('./pages/Settings'));
+const Import = lazy(() => import('./pages/Import'));
+const RecategorizeExpenses = lazy(() => import('./pages/RecategorizeExpenses'));
+const NotificationSettings = lazy(() => import('./pages/NotificationSettings'));
+
+// Loading fallback
+const LoadingFallback = () => (
+  <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+    <div className="text-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+      <p className="text-gray-600 dark:text-gray-400">Carregando...</p>
+    </div>
+  </div>
+);
 
 function App() {
   return (
@@ -49,109 +64,111 @@ function App() {
         }}
       />
       <InstallPWA />
-      <Routes>
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+      <Suspense fallback={<LoadingFallback />}>
+        <Routes>
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
-        {/* Rotas protegidas */}
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/expenses"
-          element={
-            <PrivateRoute>
-              <Expenses />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/income"
-          element={
-            <PrivateRoute>
-              <Income />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/debts"
-          element={
-            <PrivateRoute>
-              <Debts />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/goals"
-          element={
-            <PrivateRoute>
-              <Goals />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/reports"
-          element={
-            <PrivateRoute>
-              <Reports />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/categories"
-          element={
-            <PrivateRoute>
-              <Categories />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/import"
-          element={
-            <PrivateRoute>
-              <Import />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/recategorize"
-          element={
-            <PrivateRoute>
-              <RecategorizeExpenses />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/notifications"
-          element={
-            <PrivateRoute>
-              <NotificationSettings />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/insights"
-          element={
-            <PrivateRoute>
-              <Insights />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/settings"
-          element={
-            <PrivateRoute>
-              <Settings />
-            </PrivateRoute>
-          }
-        />
-      </Routes>
+          {/* Rotas protegidas */}
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/expenses"
+            element={
+              <PrivateRoute>
+                <Expenses />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/income"
+            element={
+              <PrivateRoute>
+                <Income />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/debts"
+            element={
+              <PrivateRoute>
+                <Debts />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/goals"
+            element={
+              <PrivateRoute>
+                <Goals />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/reports"
+            element={
+              <PrivateRoute>
+                <Reports />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/categories"
+            element={
+              <PrivateRoute>
+                <Categories />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/import"
+            element={
+              <PrivateRoute>
+                <Import />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/recategorize"
+            element={
+              <PrivateRoute>
+                <RecategorizeExpenses />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/notifications"
+            element={
+              <PrivateRoute>
+                <NotificationSettings />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/insights"
+            element={
+              <PrivateRoute>
+                <Insights />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <PrivateRoute>
+                <Settings />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }
